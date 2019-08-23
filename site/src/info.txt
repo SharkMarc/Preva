@@ -1,0 +1,11 @@
+TODO: Formulare bekommen per email abspeichern von blogs navigieren
+TODO: responsive design
+ToDo: server bekommen einrichten !!!
+ToDo: ???
+
+
+ToDo: Programme: Github repository erstellen
+ToDo: vagrant
+ToDO: use react !
+ToDO: get WEbHosting Domain/Name server -> Bluehost (free one year)  (Wordpress?)
+ToDo: install everything to get it run

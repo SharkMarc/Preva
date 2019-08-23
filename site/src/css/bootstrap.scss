@@ -1,0 +1,50 @@
+/*!
+ * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "../../../../../assets/frontend/css/bootstrap/mixins";
+@import "../../../../../assets/frontend/css/bootstrap/functions";
+@import "../../../../../assets/frontend/css/bootstrap/variables";
+// Reset and dependencies
+@import "../../../../../assets/frontend/css/bootstrap/print";
+// Core CSS
+@import "../../../../../assets/frontend/css/bootstrap/reboot";
+@import "../../../../../assets/frontend/css/bootstrap/type";
+@import "../../../../../assets/frontend/css/bootstrap/images";
+//@import "../../../../../assets/frontend/css/bootstrap/code";
+@import "../../../../../assets/frontend/css/bootstrap/grid";
+//@import "../../../../../assets/frontend/css/bootstrap/tables";
+@import "../../../../../assets/frontend/css/bootstrap/forms";
+@import "../../../../../assets/frontend/css/bootstrap/buttons";
+// Components
+//@import "../../../../../assets/frontend/css/bootstrap/transitions";
+//@import "../../../../../assets/frontend/css/bootstrap/dropdown";
+//@import "../../../../../assets/frontend/css/bootstrap/button-group";
+@import "../../../../../assets/frontend/css/bootstrap/input-group";
+@import "../../../../../assets/frontend/css/bootstrap/custom-forms";
+//@import "../../../../../assets/frontend/css/bootstrap/nav";
+//@import "../../../../../assets/frontend/css/bootstrap/navbar";
+//@import "../../../../../assets/frontend/css/bootstrap/card";
+//@import "../../../../../assets/frontend/css/bootstrap/breadcrumb";
+//@import "../../../../../assets/frontend/css/bootstrap/pagination";
+//@import "../../../../../assets/frontend/css/bootstrap/badge";
+//@import "../../../../../assets/frontend/css/bootstrap/jumbotron";
+//@import "../../../../../assets/frontend/css/bootstrap/alert";
+//@import "../../../../../assets/frontend/css/bootstrap/progress";
+//@import "../../../../../assets/frontend/css/bootstrap/media";
+//@import "../../../../../assets/frontend/css/bootstrap/list-group";
+//@import "../../../../../assets/frontend/css/bootstrap/close";
+// Components w/ JavaScript
+//@import "../../../../../assets/frontend/css/bootstrap/modal";
+//@import "../../../../../assets/frontend/css/bootstrap/tooltip";
+//@import "../../../../../assets/frontend/css/bootstrap/popover";
+//@import "../../../../../assets/frontend/css/bootstrap/carousel";
+// Utility classes
+@import "../../../../../assets/frontend/css/bootstrap/utilities";
+
+
+
