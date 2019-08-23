@@ -34,7 +34,7 @@ class App extends React.Component{
             const helloworld="hello wolrd";
 
             let html;
-
+//comment test
         switch (page) {
             case "homepage":
                 html=<Homepage/>;
