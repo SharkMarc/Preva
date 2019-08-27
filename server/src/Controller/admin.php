@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class admin
 {
 
@@ -15,14 +12,14 @@ class admin
 
 
 //   form
-    public $formname;
+    public $firstname;
     public $surname;
     public $formEmail;
 
     /**
      * @var Blog[]
      */
-    public $blog = [];
+    public $blogs = [];
 
     private $admin;
 
