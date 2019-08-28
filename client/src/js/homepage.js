@@ -8,21 +8,30 @@ export default class Homepage extends React.Component {
 
 	render() {
 		return (
-			<div className="h-100 pt-5 background-image-homepage container">
-				<div className="card p-3 mt-3 card-border mb-3 text-center col-12 text-dark">
-					<h1>Marcs Startseite !</h1>
-					<div className="col-12">
-						Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei bilder? hmmmm
-					</div>
-					<div className="col-12">
-						Hallo its me und text zu mir
-					</div>
-					<div className="col-12">
-						geb mir dann auch noch ne bottom navbar bitte danke :>
+			<div className="h-100 background-image-homepage p-5">
+				<div className="col-10 card p-3 m-3 card-border text-center text-dark ml-auto mr-auto">
+					<h1 className="p-5">Marcs Startseite mit mega vielen tollen informationien für jedermann und frau!</h1>
+					<div className="row">
+						<div className="col-6">
+							Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei bilder? hmmmm
+							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
+							bilder? hmmmm
+							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
+							bilder? hmmmm
+							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
+							bilder? hmmmm
+							Hallo its me und text zu mir
+						</div>
+						<div className="col-6">
+							Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting
+							stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega
+							interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff
+							! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff !
+						</div>
 					</div>
 				</div>
-				<div className="row ml-auto mr-auto text-center ">
-					<div className="card p-3 card-border col-6 text-dark">
+				<div className="row ml-auto mr-auto justify-content-center text-center ">
+					<div className="card p-3 m-3 card-border col-5 text-dark">
 						<h1>Enjoy it !!</h1>
 						<div className="">
 							mega toll hier gell? :)
@@ -34,7 +43,7 @@ export default class Homepage extends React.Component {
 							zack bumm bäng
 						</div>
 					</div>
-					<div className="card p-3 card-border col-6 text-dark">
+					<div className="card p-3 m-3 card-border col-5 text-dark">
 						<h1>what is this?!</h1>
 						<div className="">
 							Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei bilder? hmmmm

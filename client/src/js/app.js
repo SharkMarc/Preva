@@ -19,6 +19,7 @@ class App extends React.Component {
 		this.loginAjax = this.loginAjax.bind(this);
 	}
 
+
 	loginAjax(data) {
 		const r = new Request("http://192.168.50.2/marcsblog/", { method: "POST", "body": JSON.stringify(data), cache: "no-cache" });
 
@@ -27,6 +28,8 @@ class App extends React.Component {
 			.then(j => this.setState({ page: "homepage" }))
 		;
 	}
+
+
 
 	handlePage(page) {
 		this.setState({ page: page });

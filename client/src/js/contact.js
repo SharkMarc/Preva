@@ -8,8 +8,8 @@ export default class Contact extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h1>Kontaktiere mich:</h1>
+			<div className="mt-5">
+				<h1 className="text-center">Kontaktiere mich:</h1>
 				<div>
 					<form role="form" action="http://192.168.50.2/marcsblog/post-method.php" encType="multipart/form-data" method="post">
 						<div className="col-12 row">

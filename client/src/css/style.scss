@@ -10,12 +10,28 @@
   background-size: cover;
   height: 100%;
 }
+.icon{
+  height:50px;
+  width:50px;
+}
 .overflow-scroll{
   overflow:scroll;
   overflow-x:hidden!important;
 }
+@media (min-width: 1200px){
+.container {
+  max-width: 100%;
+}
+}
 .background-image-blog{
   background-image:url("../assets/hyrule.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.background-image-nav{
+  background-image:url("../assets/links_hat.png");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
