@@ -1,7 +1,8 @@
 import React from "react";
-import {render} from "react-dom";
 
-export default class Login extends React.Component {
+import linksHat from "../assets/links_hat.png";
+
+export default class Register extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,7 +20,7 @@ export default class Login extends React.Component {
 			email:    this.state.email,
 			password: this.state.password
 		};
-		this.props.loginAjax(data);
+		this.props.registerAjax(data);
 	}
 
 	handleChange(e) {
@@ -33,44 +34,39 @@ export default class Login extends React.Component {
 	render() {
 		const errorMsg = this.props.errorText;
 		const errorNumber = this.props.errorNumber;
-
 		return (
 			<div>
-				<h1 className="text-center pt-5"><u>Welcome to MarcsBlog</u></h1>
+				<h1 className="text-center pt-5"><u>Register now !</u></h1>
+				<h3 className="text-center pt-3"><u>To be a Part of this awesome Blog !</u></h3>
 				<div className="card position-absolute border p-3 bg-dark login text-center mt-auto mb-auto">
-					<form id="formLogin" role="form" className="form-signin" action="http://192.168.50.2/marcsblog/controller/login.php"
+					<form id="formRegister" role="form" className="form-signin" action="http://192.168.50.2/marcsblog/register.php"
 						encType="multipart/form-data" method="post">
 						<div className="form-group">
-							<label className="label-small">Email</label>
+							<label className="label-small">Name/Email/Whatever</label>
 							<div>
+								{errorNumber === 4 || errorNumber === 6 ?
+									<div className="text-danger p-2">{this.props.errorText}</div>
+									: null}
 								<input type="text" className="form-control" name="email" required autoFocus
 									value={this.state.email} onChange={this.handleChange}/>
 							</div>
-							{errorNumber === 2 ?
-
-								<div className="text-danger p-2">{this.props.errorText}</div>
-								: null}
 						</div>
 						<div className="form-group">
-							<label className="label-small">Enter pw!</label>
+							<label className="label-small">Passwort</label>
 							<div>
+								{errorNumber === 7 ?
+									<div className="text-danger p-2">{this.props.errorText}</div>
+									: null}
 								<input type="password" className="form-control pw-form" name="password" required
 									value={this.state.password} onChange={this.handleChange}/>
 							</div>
-							{errorNumber === 1 ?
-								<div className="text-danger p-2">{this.props.errorText}</div>
-								: null}
 						</div>
 						<div className="form-group">
 							<button onClick={this.handleSubmit} className="login-btn round-border btn btn-success"
-								type="submit">Log in !
+								type="submit">Registrieren
 							</button>
 						</div>
-						{errorNumber === 5 ?
-							<div className="text-success">{this.props.errorText}</div>
-							: null}
 					</form>
-					<div className="cursor-pointer" onClick={() => this.props.handlePage("register")}><u>Registrieren ?</u></div>
 				</div>
 			</div>
 		);

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Blog extends React.Component {
+export default class Blogadmin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,6 +22,36 @@ export default class Blog extends React.Component {
 		this.addBlog = this.addBlog.bind(this);
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleDeleteBlog = this.handleDeleteBlog.bind(this);
+		this.handleSafe = this.handleSafe.bind(this);
+
+	}
+
+	componentDidMount() {
+
+		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+			method:  "GET",
+			headers: { "Content-Type": "application/json" },
+			cache:   "no-cache"
+		})
+			.then(r => {return r.json();})
+			.then((data) => this.setState({ blogs: data.blogs }));
+	}
+
+	handleSafe() {
+		const data = {
+			blogs: this.state.blogs,
+		};
+		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+			method:  "POST",
+			headers: { "Content-Type": "application/json" },
+			body:    JSON.stringify(data),
+			cache:   "no-cache"
+		})
+			.then(r => {return r.json();})
+			.then((data) => this.setState({ blogs: data.blogs }))
+			.then(function(r) {
+			});
+//		.then(blogs => this.setState({ blogs: blogs }));
 	}
 
 	addBlog() {
@@ -46,7 +76,7 @@ export default class Blog extends React.Component {
 				break;
 			}
 		}
-		this.setState({ blogs: blogs });
+		this.setState({ blogs: blogs }, this.handleSafe);
 	}
 
 	handleEdit(blogId, target, typo) {
@@ -63,25 +93,27 @@ export default class Blog extends React.Component {
 	}
 
 	render() {
-		const blogs = this.state.blogs;
+		const allblogs = this.state.blogs;
 		const headerblog = <div className="p-5 text-center"><h1>Blogs!</h1></div>;
 
 		const blogArray =
-			blogs.map(function(blog) {
+			allblogs.map(function(blog) {
 				return (
 					<div className="card text-dark text-center card-body m-3 col-10 ml-auto mr-auto" key={blog.id}>
-						<button className="col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it !</button>
+						<button className="btn btn-danger col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it</button>
 						<div className="col-12 m-3 row">
 							<div className="col-2">
 								Thema:
 							</div>
-							<input className="col-10" value={blog.theme} onChange={({ target }) => this.handleEdit(blog.id, target, "theme")} type="text"/>
+							<input className="col-10" value={blog.theme} onChange={({ target }) => this.handleEdit(blog.id, target, "theme")}
+								type="text"/>
 						</div>
 						<div className="col-12 m-3 row">
 							<div className="col-2">
 								Name:
 							</div>
-							<input className="col-10" value={blog.name} onChange={({ target }) => this.handleEdit(blog.id, target, "name")}	type="text"/>
+							<input className="col-10" value={blog.name} onChange={({ target }) => this.handleEdit(blog.id, target, "name")}
+								type="text"/>
 						</div>
 						<div className="m-3 blog">
 							Text: <textarea rows="6" className="col-12" aria-rowcount={6} value={blog.text}
@@ -92,12 +124,12 @@ export default class Blog extends React.Component {
 			}, this);
 
 		return (
-			<div className="h-100 mb-5 mt-5 background-image-blog">
+			<div className="h-100 pb-5 mb-5 mt-5 background-image-blog " onChange={this.handleSafe}>
 				{headerblog}
 				<div className="container h-75 overflow-scroll">
 					{blogArray}
 				</div>
-				<div className="col-12 text-center btn-rounded">
+				<div className="col-12 mt-2 mb-2 text-center btn-rounded">
 					<button onClick={() => this.addBlog()} className="btn col-2 bg-dark text-white ml-auto mr-auto text-center">Add Blog</button>
 				</div>
 			</div>

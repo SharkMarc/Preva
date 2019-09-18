@@ -1,10 +1,12 @@
 import React from "react";
 import {render} from "react-dom";
-import Blog from "./blog";
+import Blogadmin from "./blogadmin";
+import Bloguser from "./bloguser";
 import Contact from "./contact";
 import Nav from "./nav";
 import Homepage from "./homepage";
 import Login from "./login";
+import Register from "./register";
 
 //css
 import "../css/style.scss";
@@ -13,19 +15,62 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			page: "login",
+			page:        "login",
+			daten:       "",
+			error:       "",
+			errorNumber: null,
+			isAdmin:     null,
 		};
 		this.handlePage = this.handlePage.bind(this);
 		this.loginAjax = this.loginAjax.bind(this);
+		this.registerAjax = this.registerAjax.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 	}
 
 	loginAjax(data) {
-		const r = new Request("http://192.168.50.2/marcsblog/", { method: "POST", "body": JSON.stringify(data), cache: "no-cache" });
+		fetch("http://192.168.50.2/marcsblog/controller/login.php", {
+			method:  "POST",
+			headers: { "Content-Type": "application/json" },
+			body:    JSON.stringify(data),
+			cache:   "no-cache"
+		}).then(r => r.json())
+			.then((r) => this.handleLogin(r))
+			.then(function(r) {
+			})
+			.catch(
+				err => console.error("Caught error: ", err)
+			);
+	}
 
-		fetch(r)
-			.then(r => {return r.json();})
-			.then(j => this.setState({ page: "homepage" }))
-		;
+	registerAjax(data) {
+		fetch("http://192.168.50.2/marcsblog/controller/register.php", {
+			method:  "POST",
+			headers: { "Content-Type": "application/json" },
+			body:    JSON.stringify(data),
+			cache:   "no-cache"
+		}).then(r => r.json())
+			.then((r) => this.handleLogin(r))
+			.then(function(r) {
+			})
+			.catch(
+				err => console.error("Caught error: ", err)
+			);
+
+	}
+
+	handleLogin(r) {
+		if (r.error === 5) {
+			this.handlePage("login");
+			this.setState({ error: r.message, errorNumber: r.error, isAdmin: r.isAdmin });
+		}
+		if (r.error === 1 || r.error === 2 || r.error === 4 || r.error === 6 || r.error === 7) {
+			this.setState({ error: r.message, errorNumber: r.error, isAdmin: r.isAdmin });
+		}
+		if (r.error === 3) {
+			this.handlePage("homepage");
+			this.setState({ isAdmin: r.isAdmin });
+
+		}
 	}
 
 	handlePage(page) {
@@ -44,7 +89,7 @@ class App extends React.Component {
 
 		const nav = <Nav handlePage={(p) => this.handlePage(p)}/>;
 		const page = this.state.page;
-
+		const isAdmin = this.state.isAdmin;
 		let html;
 
 		switch (page) {
@@ -52,13 +97,20 @@ class App extends React.Component {
 				html = <Homepage/>;
 				break;
 			case "login":
-				html = <Login loginAjax={this.loginAjax}/>;
+				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
+					errorText={this.state.error}/>;
 				break;
-			case "blog":
-				html = <Blog/>;
+			case "blog": {
+				isAdmin ?
+					html = <Blogadmin/> : html = <Bloguser/>;
+			}
 				break;
 			case "contact":
-				html = <Contact handleplage={(p) => this.handlePage(p)}/>;
+				html = <Contact handlePage={(p) => this.handlePage(p)}/>;
+				break;
+			case "register":
+				html = <Register handlePage={(p) => this.handlePage(p)} registerAjax={this.registerAjax} errorNumber={this.state.errorNumber}
+					errorText={this.state.error}/>;
 				break;
 			default:
 				console.log("Unknown Page Sorry for that :-/ :" + page);
@@ -66,9 +118,13 @@ class App extends React.Component {
 		return (
 
 			<div className="h-100 text-white">
-				{nav}
+				{page === "login" || page === "register" ?
+					null : <div>{nav}</div>
+				}
 				{html}
-				{navbarBottom}
+				{page === "login" || page === "register" ?
+					null : <div>
+						{navbarBottom}</div>}
 			</div>
 		);
 	}
