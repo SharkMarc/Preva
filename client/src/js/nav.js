@@ -15,7 +15,7 @@ export default class Nav extends React.Component {
 				<div className="mt-auto mb-auto col-2 "><img src={linksHat} className="icon"/></div>
 				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("homepage")}>Startseite</div>
 				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("blog")}>Blog</div>
-				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("contact")}>twitch :></div>
+				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("contact")}>Kontakt</div>
 				<div className="mt-auto mb-auto col-4">Suchen</div>
 			</nav>
 		);

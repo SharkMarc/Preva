@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Blog extends React.Component {
+export default class Blogadmin extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -23,38 +23,35 @@ export default class Blog extends React.Component {
 		this.handleEdit = this.handleEdit.bind(this);
 		this.handleDeleteBlog = this.handleDeleteBlog.bind(this);
 		this.handleSafe = this.handleSafe.bind(this);
-		this.blogAjax = this.blogAjax.bind(this);
+
 	}
 
-	blogAjax() {
-		const data = {
-			blogs: this.state.blogs,
-		};
-		const r = new Request("http://192.168.50.2:8881/marcsblog/blog.php", { method: "POST", "body": JSON.stringify(data), cache: "no-cache" });
+	componentDidMount() {
 
-		fetch(r)
-			.then(function(r) {
-
-				console.log(r);
-				console.log(data);
-			})
-			.then((data)=>this.setState({blog:data}))
-			.then(function(r) {
-
-			});
-
-//		.then(blogs => this.setState({ blogs: blogs }));
+		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+			method:  "GET",
+			headers: { "Content-Type": "application/json" },
+			cache:   "no-cache"
+		})
+			.then(r => {return r.json();})
+			.then((data) => this.setState({ blogs: data.blogs }));
 	}
 
 	handleSafe() {
-		let blogs = this.state.blogs;
-		let data = {
-			blogs: blogs,
+		const data = {
+			blogs: this.state.blogs,
 		};
-
-		this.fetch("blog", data).then((blogs) => {
-			this.setState({ blogs: blogs });
-		});
+		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+			method:  "POST",
+			headers: { "Content-Type": "application/json" },
+			body:    JSON.stringify(data),
+			cache:   "no-cache"
+		})
+			.then(r => {return r.json();})
+			.then((data) => this.setState({ blogs: data.blogs }))
+			.then(function(r) {
+			});
+//		.then(blogs => this.setState({ blogs: blogs }));
 	}
 
 	addBlog() {
@@ -79,7 +76,7 @@ export default class Blog extends React.Component {
 				break;
 			}
 		}
-		this.setState({ blogs: blogs });
+		this.setState({ blogs: blogs }, this.handleSafe);
 	}
 
 	handleEdit(blogId, target, typo) {
@@ -103,7 +100,7 @@ export default class Blog extends React.Component {
 			allblogs.map(function(blog) {
 				return (
 					<div className="card text-dark text-center card-body m-3 col-10 ml-auto mr-auto" key={blog.id}>
-						<button className="btn btn-danger col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it !</button>
+						<button className="btn btn-danger col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it</button>
 						<div className="col-12 m-3 row">
 							<div className="col-2">
 								Thema:
@@ -127,7 +124,7 @@ export default class Blog extends React.Component {
 			}, this);
 
 		return (
-			<div className="h-100 mb-5 mt-5 background-image-blog " onChange={this.blogAjax}>
+			<div className="h-100 pb-5 mb-5 mt-5 background-image-blog " onChange={this.handleSafe}>
 				{headerblog}
 				<div className="container h-75 overflow-scroll">
 					{blogArray}
