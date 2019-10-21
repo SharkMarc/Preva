@@ -28,7 +28,7 @@ export default class Bloguser extends React.Component {
 
 	componentDidMount() {
 
-		fetch("http://192.168.50.2/marcsblog/blog.php", {
+		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
 			method:  "GET",
 			headers: { "Content-Type": "application/json" },
 			cache:   "no-cache"
@@ -103,9 +103,7 @@ export default class Bloguser extends React.Component {
 						<div className="col-12 m-3 row">
 							<h1 className="col-12">{blog.name}</h1>
 						</div>
-						<div className="m-3 blog">
-							{blog.text}
-						</div>
+						<div className="m-3 blog" dangerouslySetInnerHTML={{__html:blog.text.replace(/(?:\r\n|\r|\n)/g, '<br />')}}/>
 					</div>
 				);
 			}, this);

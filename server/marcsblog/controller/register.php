@@ -9,7 +9,7 @@ $getContent = json_decode($getContent, true);
 
 foreach ($getContent as $key => $value) {
 	if ($key === $newUser->email) {
-		echo json_encode(['error' => 4, 'message' => 'Tschisch! Name schon vorhanden', 'isAdmin' => false]);
+		echo json_encode(['error' => 4, 'message' => 'Tschisch! Name schon vorhanden sorry :-(', 'isAdmin' => false]);
 		exit;
 	}
 	if ($newUser->email === "") {
@@ -23,11 +23,8 @@ foreach ($getContent as $key => $value) {
 	if ($key !== $newUser->email && $newUser->password!=="") {
 		$currentDateTime = date('d-m-Y H:i:s');
 		$newUser         = [$newUser->email => ['pw' => $newUser->password, 'isAdmin' => false, 'lastLogin' => $currentDateTime]];
-		var_dump($newUser);
 		$getContent      = array_merge($getContent, $newUser);
-		var_dump($getContent);
 		$getContent      = json_encode($getContent);
-		var_dump($getContent);
 		file_put_contents(__DIR__."/../user.json", $getContent);
 		echo json_encode(['error' => 5, 'message' => 'Success! Time to Login !', 'isAdmin' => false]);
 		exit;
