@@ -12,15 +12,8 @@ export default class Homepage extends React.Component {
 				<div className="col-10 card p-3 m-3 card-border text-center text-dark ml-auto mr-auto">
 					<h1 className="p-5">Marcs Startseite mit mega vielen tollen informationien für jedermann und frau!</h1>
 					<div className="row">
-						<div className="text-left col-6">
-							Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei bilder? hmmmm
-							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
-							bilder? hmmmm
-							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
-							bilder? hmmmm
-							Hallo its me und text zu mir Gib mir nen Bild ! mit parallex vielleicht auch über die ganze homepage? oder drei
-							bilder? hmmmm
-							Hallo its me und text zu mir
+						<div className="text-left col-6" ref="Progress1">
+							{this.props.textContent}
 						</div>
 						<div className="text-left col-6">
 							Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting stuff ! Mega interesting

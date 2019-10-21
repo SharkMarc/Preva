@@ -39,6 +39,7 @@ export default class Blogadmin extends React.Component {
 
 	handleSafe() {
 		const data = {
+			user: this.props.user,
 			blogs: this.state.blogs,
 		};
 		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
@@ -124,7 +125,7 @@ export default class Blogadmin extends React.Component {
 			}, this);
 
 		return (
-			<div className="h-100 pb-5 mb-5 mt-5 background-image-blog " onChange={this.handleSafe}>
+			<div className="h-100 pb-5 background-image-blog " onChange={this.handleSafe}>
 				{headerblog}
 				<div className="container h-75 overflow-scroll">
 					{blogArray}

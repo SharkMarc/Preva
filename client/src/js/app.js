@@ -16,15 +16,45 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			page:        "login",
+			username:    null,
 			daten:       "",
 			error:       "",
 			errorNumber: null,
 			isAdmin:     null,
+			phrase:      "",
+			textContent: "test test drei drei vier",
 		};
 		this.handlePage = this.handlePage.bind(this);
 		this.loginAjax = this.loginAjax.bind(this);
 		this.registerAjax = this.registerAjax.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
+		this.search = this.search.bind(this);
+	}
+
+	search({ target }) {
+		this.setState({ phrase: target.value });
+
+		console.log(target.value); // searchbar text
+		let object = this.state.textContent; // get your div element using refs
+
+		let searchBarText = target.value;
+
+		if (object.includes(searchBarText) && searchBarText.length > 2) {
+			console.log("ist dabei");
+
+			let pos = object.indexOf(searchBarText);
+			let res = object.replace(/test/g, searchBarText => (
+				<span style={{ color: "red" }}>{searchBarText}</span>
+			));
+
+			this.setState({ textContent: res });
+//			console.log(object.indexOf(searchBarText));
+//			object.replace(searchBarText, <span className="bg-red">searchBarText</span>);
+//			object.split(searchBarText);
+		} else {
+			console.log("the div text doesn't contain search text");
+		}
+
 	}
 
 	loginAjax(data) {
@@ -68,7 +98,7 @@ class App extends React.Component {
 		}
 		if (r.error === 3) {
 			this.handlePage("homepage");
-			this.setState({ isAdmin: r.isAdmin });
+			this.setState({ isAdmin: r.isAdmin, username: r.username });
 
 		}
 	}
@@ -87,26 +117,31 @@ class App extends React.Component {
 				<div className="col-3"/>
 			</nav>;
 
-		const nav = <Nav handlePage={(p) => this.handlePage(p)}/>;
+		const nav = <Nav handlePage={(p) => this.handlePage(p)} phrase={this.state.phrase} search={this.search}/>;
 		const page = this.state.page;
 		const isAdmin = this.state.isAdmin;
 		let html;
 
 		switch (page) {
-			case "homepage":
-				html = <Homepage/>;
+			case "homepage": {
+				isAdmin !== null ?
+					html = <Homepage search={this.search} textContent={this.state.textContent}/> : null;
+			}
 				break;
 			case "login":
 				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
 					errorText={this.state.error}/>;
 				break;
 			case "blog": {
-				isAdmin ?
-					html = <Blogadmin/> : html = <Bloguser/>;
+				isAdmin !== null ?
+					(isAdmin ?
+						html = <Blogadmin user={this.state.username}/> : html = <Bloguser/>) : null;
 			}
 				break;
-			case "contact":
-				html = <Contact handlePage={(p) => this.handlePage(p)}/>;
+			case "contact": {
+				isAdmin !== null ?
+					html = <Contact handlePage={(p) => this.handlePage(p)}/> : null;
+			}
 				break;
 			case "register":
 				html = <Register handlePage={(p) => this.handlePage(p)} registerAjax={this.registerAjax} errorNumber={this.state.errorNumber}
@@ -121,7 +156,9 @@ class App extends React.Component {
 				{page === "login" || page === "register" ?
 					null : <div>{nav}</div>
 				}
-				{html}
+
+				<div className="h-100">{html}</div>
+
 				{page === "login" || page === "register" ?
 					null : <div>
 						{navbarBottom}</div>}
