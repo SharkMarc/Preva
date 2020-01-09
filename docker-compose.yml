@@ -1,0 +1,46 @@
+version: '3'
+services:
+  server:
+    image: nginx:latest
+    links:
+      - php
+    volumes:
+      - ./site/src:/var/www/html
+      - ./_info/docker/server/nginx-default.conf:/etc/nginx/conf.d/default.conf
+      - ./_info/docker/bashrc:/root/.bashrc
+    networks:
+      local_net:
+        ipv4_address: 192.168.50.2
+  php:
+    build:
+      context: ./_info/docker/php
+    volumes:
+      - ./site/src:/var/www/html
+      - ./_info/docker/bashrc:/root/.bashrc
+    networks:
+      local_net:
+        ipv4_address: 192.168.50.3
+  client:
+    build:
+      context: ./client
+    links:
+      - server
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client:/srv/app
+      - /srv/app/node_modules
+    networks:
+      local_net:
+        ipv4_address: 192.168.50.100
+    command: sh -c "npm install && npm run dev"
+networks:
+  local_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.50.0/24
+
+# helpful commands
+# docker-compose exec php bash -c "composer install"
+# docker-compose exec php bash -c "cd /var/www/html && bin/console doctrine:schema:update --dump-sql && bin/console doc:sch:up --force"
