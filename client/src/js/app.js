@@ -130,7 +130,7 @@ class App extends React.Component {
 				break;
 			case "login":
 				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
-					errorText={this.state.error}/>;
+							  errorText={this.state.error}/>;
 				break;
 			case "blog": {
 				isAdmin !== null ?
@@ -145,7 +145,7 @@ class App extends React.Component {
 				break;
 			case "register":
 				html = <Register handlePage={(p) => this.handlePage(p)} registerAjax={this.registerAjax} errorNumber={this.state.errorNumber}
-					errorText={this.state.error}/>;
+								 errorText={this.state.error}/>;
 				break;
 			default:
 				console.log("Unknown Page Sorry for that :-/ :" + page);
