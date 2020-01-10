@@ -28,7 +28,7 @@ export default class Blogadmin extends React.Component {
 
 	componentDidMount() {
 
-		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+		fetch("http://localhost:6318/controller/blog.php", {
 			method:  "GET",
 			headers: { "Content-Type": "application/json" },
 			cache:   "no-cache"
@@ -42,7 +42,7 @@ export default class Blogadmin extends React.Component {
 			user: this.props.user,
 			blogs: this.state.blogs,
 		};
-		fetch("http://192.168.50.2/marcsblog/controller/blog.php", {
+		fetch("http://localhost:6318/controller/blog.php", {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),

@@ -8,7 +8,6 @@ export default class Login extends React.Component {
 			email:    "",
 			password: "",
 		};
-
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -38,7 +37,7 @@ export default class Login extends React.Component {
 			<div>
 				<h1 className="text-center pt-5"><u>Welcome to MarcsBlog</u></h1>
 				<div className="card position-absolute border p-3 bg-dark login text-center mt-auto mb-auto">
-					<form id="formLogin" role="form" className="form-signin" action="http://192.168.50.2/marcsblog/controller/login.php"
+					<form id="formLogin" role="form" className="form-signin" action="http://localhost:6318/controller/login.php"
 						  encType="multipart/form-data" method="post">
 						<div className="form-group">
 							<label className="label-small">Email</label>
