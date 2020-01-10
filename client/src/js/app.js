@@ -72,7 +72,7 @@ class App extends React.Component {
 	}
 
 	registerAjax(data) {
-		fetch("http://192.168.50.2/marcsblog/controller/register.php", {
+		fetch("http://localhost:6318/marcsblog/controller/register.php", {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),
