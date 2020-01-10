@@ -39,7 +39,7 @@ export default class Register extends React.Component {
 				<h1 className="text-center pt-5"><u>Register now !</u></h1>
 				<h3 className="text-center pt-3"><u>To be a Part of this awesome Blog !</u></h3>
 				<div className="card position-absolute border p-3 bg-dark login text-center mt-auto mb-auto">
-					<form id="formRegister" role="form" className="form-signin" action="http://localhost:6318/marcsblog/register.php"
+					<form id="formRegister" role="form" className="form-signin" action="http://localhost:6318/controller/register.php"
 						encType="multipart/form-data" method="post">
 						<div className="form-group">
 							<label className="label-small">Name/Email/Whatever</label>

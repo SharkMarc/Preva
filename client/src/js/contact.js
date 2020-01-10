@@ -29,7 +29,7 @@ export default class Contact extends React.Component {
 		const data = {
 			contact: this.state.contact,
 		};
-		fetch("http://localhost:6318/marcsblog/controller/contact.php", {
+		fetch("http://localhost:6318/controller/contact.php", {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),
@@ -47,7 +47,7 @@ export default class Contact extends React.Component {
 			<div className="mt-5">
 				<h1 className="text-center">Kontaktiere mich:</h1>
 				<div>
-					<form role="form" onSubmit={this.handleContact} action="http://localhost:6318/marcsblog/controller/contact.php"
+					<form role="form" onSubmit={this.handleContact} action="http://localhost:6318/controller/contact.php"
 						encType="multipart/form-data" method="post">
 						<div className="col-12 row">
 							<input type="text" className="m-3 col-5 ml-auto mr-auto"
