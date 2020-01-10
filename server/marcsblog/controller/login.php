@@ -24,7 +24,7 @@ $currentDateTime = date('d-m-Y H:i:s');
 // / =directory seperator
 // \ =namespace seperator
 $token = new \Service\TokenGenerator(); //fully qualified classname
-var_dump($token);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($users as $key => $value) {
         if ($key === $realEmail) {

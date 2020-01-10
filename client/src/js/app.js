@@ -58,15 +58,14 @@ class App extends React.Component {
 	}
 
 	loginAjax(data) {
-		fetch("http://192.168.50.2/marcsblog/controller/login.php", {
+		fetch("http://localhost:6318/controller/login.php", {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),
 			cache:   "no-cache"
 		}).then(r => r.json())
 			.then((r) => this.handleLogin(r))
-			.then(function(r) {
-			})
+			.then(function(r) {})
 			.catch(
 				err => console.error("Caught error: ", err)
 			);
@@ -130,7 +129,7 @@ class App extends React.Component {
 				break;
 			case "login":
 				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
-							  errorText={this.state.error}/>;
+					errorText={this.state.error}/>;
 				break;
 			case "blog": {
 				isAdmin !== null ?
@@ -145,7 +144,7 @@ class App extends React.Component {
 				break;
 			case "register":
 				html = <Register handlePage={(p) => this.handlePage(p)} registerAjax={this.registerAjax} errorNumber={this.state.errorNumber}
-								 errorText={this.state.error}/>;
+					errorText={this.state.error}/>;
 				break;
 			default:
 				console.log("Unknown Page Sorry for that :-/ :" + page);

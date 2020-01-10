@@ -11,6 +11,7 @@ const paths = {
 
 module.exports = {
 	entry: path.join(paths.JS, "app.js"),
+	watchOptions: {poll: 1000},
 	output: {
 		path: paths.DIST,
 		filename: "app.bundle.js",
