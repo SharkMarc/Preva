@@ -6,8 +6,10 @@ header("Content-Type: text/text");
 
 //print_r($_FILES['userfile']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+	$bpmndiList = file_get_contents(__DIR__."/../bpmndiList.json");
+	echo $bpmndiList;
+} else {
 	$tmpName = $_FILES['userfile']['tmp_name'];
 	$content = file_get_contents($tmpName);
 	$name    = dirname(__DIR__)."/".time().".xml";
@@ -32,9 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	file_put_contents(__DIR__."/../bpmndiList.json", $bpmndiList);
 	file_put_contents(__DIR__."/../list.json", $list);
 	file_put_contents(__DIR__."/../bpmndiList2.json", $bpmndiList2);
-} else {
-	$bpmndiList = file_get_contents(__DIR__."/../bpmndiList.json");
-	echo $bpmndiList;
 }
 //print_r($list);
 //print_r($list2);

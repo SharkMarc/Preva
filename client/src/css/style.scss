@@ -51,9 +51,116 @@
   background-size: cover;
 }
 
+.image-preva {
+  position: relative;
+  background-image: url("../assets/preva_icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 40px;
+  width: 40px;
+}
+
+@keyframes blink {
+  0% {
+    opacity: .2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .2;
+  }
+}
+
+.saving span {
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.saving span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.saving span:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.modal-style {
+  z-index: 2;
+  position: fixed;
+  top: 40%;
+  left: 40%;
+}
+
+.font-family-arial {
+  font-family: Arial;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+
+.animate-flicker1 {
+  animation-name: animationTest;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-duration: 3s;
+}
+
+.animate-flicker2 {
+  animation-name: animationTest;
+  animation-delay: 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-duration: 3s;
+}
+
+.animate-flicker3 {
+  animation-name: animationTest;
+  animation-delay: 6s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-duration: 3s;
+}
+
+//animation-delay: 3s;
+
+@keyframes animationTest {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.point-animation {
+  font-size: 40px;
+}
+
+.hr-line {
+  background-color: white;
+}
+
 .card-border {
   box-shadow: 0px 1px 13px 0px #f2f996;
+}
 
+.loadingScreen {
+  animation-name: test;
 }
 
 .cursor-pointer {

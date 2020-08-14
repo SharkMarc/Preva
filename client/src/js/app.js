@@ -16,13 +16,14 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			page:        "login",
+			page:        "upload",
 			username:    null,
 			daten:       "",
 			error:       "",
 			errorNumber: null,
 			isAdmin:     null,
 			phrase:      "",
+			status:      "",
 			textContent: "test test drei drei vier",
 		};
 		this.handlePage = this.handlePage.bind(this);
@@ -73,17 +74,16 @@ class App extends React.Component {
 			);
 	}
 
-	uploadAjax(file, type){
-
+	uploadAjax(file, type) {
 		var reader = new FileReader();
 		reader.onload = function(f) {
-			const content=f.target.result;
+			const content = f.target.result;
 			console.log(content);
 //			var parser = new DOMParser();
 //			var doc = parser.parseFromString(content, "application/xml");
 //			console.log(doc);
-			const data= {
-				content:content,
+			const data = {
+				content: content,
 			};
 			console.log("data" + data);
 			fetch("http://localhost:6318/controller/upload.php", {
@@ -91,8 +91,10 @@ class App extends React.Component {
 				headers: { "Content-Type": "application/json" },
 				body:    JSON.stringify(data),
 				cache:   "no-cache"
-			}).then((data)=>console.log(data));
+			}).then((data) => console.log(data))
+				.then((data) => this.setState({ status: data }));
 		};
+		console.log("done");
 		reader.readAsDataURL(file);
 	}
 
@@ -152,10 +154,10 @@ class App extends React.Component {
 					html = <Homepage search={this.search} textContent={this.state.textContent}/> : null;
 			}
 				break;
-			case "login":
-				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
-					errorText={this.state.error}/>;
-				break;
+//			case "login":
+//				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
+//					errorText={this.state.error}/>;
+//				break;
 			case "blog": {
 				isAdmin !== null ?
 					(isAdmin ?
@@ -168,7 +170,7 @@ class App extends React.Component {
 			}
 				break;
 			case "upload": {
-					html = <Upload handlePage={(p) => this.handlePage(p)} uploadAjax={this.uploadAjax}/>
+				html = <Upload status={this.status} handlePage={(p) => this.handlePage(p)} uploadAjax={this.uploadAjax}/>;
 			}
 				break;
 			case "register":
