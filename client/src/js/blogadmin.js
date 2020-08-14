@@ -1,4 +1,5 @@
 import React from "react";
+import Chart from "chart.js";
 
 export default class Blogadmin extends React.Component {
 	constructor(props) {
@@ -27,7 +28,6 @@ export default class Blogadmin extends React.Component {
 	}
 
 	componentDidMount() {
-
 		fetch("http://localhost:6318/controller/blog.php", {
 			method:  "GET",
 			headers: { "Content-Type": "application/json" },

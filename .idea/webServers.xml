@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9d0038c4-54f7-4284-a464-859b5241636a" name="marcsblog" url="http://192.168.50.2">
+        <fileTransfer host="192.168.50.2" port="22" privateKey="C:\Users\Marc\PhpstormProjects\marcsblog\.vagrant\machines\default\virtualbox\private_key" rootFolder="/home/vagrant" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

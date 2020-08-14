@@ -3,6 +3,7 @@ import {render} from "react-dom";
 import Blogadmin from "./blogadmin";
 import Bloguser from "./bloguser";
 import Contact from "./contact";
+import Upload from "./upload";
 import Nav from "./nav";
 import Homepage from "./homepage";
 import Login from "./login";
@@ -27,6 +28,7 @@ class App extends React.Component {
 		this.handlePage = this.handlePage.bind(this);
 		this.loginAjax = this.loginAjax.bind(this);
 		this.registerAjax = this.registerAjax.bind(this);
+		this.uploadAjax = this.uploadAjax.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.search = this.search.bind(this);
 	}
@@ -69,6 +71,29 @@ class App extends React.Component {
 			.catch(
 				err => console.error("Caught error: ", err)
 			);
+	}
+
+	uploadAjax(file, type){
+
+		var reader = new FileReader();
+		reader.onload = function(f) {
+			const content=f.target.result;
+			console.log(content);
+//			var parser = new DOMParser();
+//			var doc = parser.parseFromString(content, "application/xml");
+//			console.log(doc);
+			const data= {
+				content:content,
+			};
+			console.log("data" + data);
+			fetch("http://localhost:6318/controller/upload.php", {
+				method:  "POST",
+				headers: { "Content-Type": "application/json" },
+				body:    JSON.stringify(data),
+				cache:   "no-cache"
+			}).then((data)=>console.log(data));
+		};
+		reader.readAsDataURL(file);
 	}
 
 	registerAjax(data) {
@@ -140,6 +165,10 @@ class App extends React.Component {
 			case "contact": {
 				isAdmin !== null ?
 					html = <Contact handlePage={(p) => this.handlePage(p)}/> : null;
+			}
+				break;
+			case "upload": {
+					html = <Upload handlePage={(p) => this.handlePage(p)} uploadAjax={this.uploadAjax}/>
 			}
 				break;
 			case "register":

@@ -15,7 +15,8 @@ export default class Nav extends React.Component {
 				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("homepage")}>Startseite</div>
 				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("blog")}>Blog</div>
 				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("contact")}>Kontakt</div>
-				<div className="mt-auto mb-auto col-4"><input className="form-control bg-light col-12" type="text" placeholder="Suche" aria-label="Search"
+				<div className="mt-auto mb-auto col-2 cursor-pointer" onClick={() => this.props.handlePage("upload")}>Upload</div>
+				<div className="mt-auto mb-auto col-2"><input className="form-control bg-light col-12" type="text" placeholder="Suche" aria-label="Search"
 					onChange={this.props.search} value={this.props.phrase}/></div>
 			</nav>
 		);
