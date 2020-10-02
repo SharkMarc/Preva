@@ -62,7 +62,7 @@ export default class Register extends React.Component {
 							</div>
 						</div>
 						<div className="form-group">
-							<button onClick={this.handleSubmit} className="login-btn round-border btn btn-success"
+							<button onClick={this.handleSubmit} className="rounded-button border-shadow-statistic login-btn round-border btn btn-success"
 								type="submit">Registrieren
 							</button>
 						</div>

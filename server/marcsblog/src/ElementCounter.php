@@ -44,4 +44,28 @@ class ElementCounter
 
 		return $list;
 	}
+
+	public function outGoing(SimpleXMLElement $node, $file)
+	{
+		$list = [];
+		foreach ($node as $element => $elementNode) {
+			if ($elementNode->count()) {
+				if (isset($list[$element])) {
+					if (!isset($list[$element][1])) {
+						$list[$element] = [$list[$element]];
+					}
+					$list[$element][] = $this->countChildElements($elementNode);
+				} else {
+					$list[$element] = $this->countChildElements($elementNode);
+				}
+			} else {
+				if (!isset($list[$element])) {
+					$list[$element] = 0;
+				}
+				$list[$element]++;
+			}
+		}
+
+		return array_values($list);;
+	}
 }

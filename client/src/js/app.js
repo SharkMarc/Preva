@@ -45,15 +45,11 @@ class App extends React.Component {
 		if (object.includes(searchBarText) && searchBarText.length > 2) {
 			console.log("ist dabei");
 
-			let pos = object.indexOf(searchBarText);
 			let res = object.replace(/test/g, searchBarText => (
 				<span style={{ color: "red" }}>{searchBarText}</span>
 			));
 
 			this.setState({ textContent: res });
-//			console.log(object.indexOf(searchBarText));
-//			object.replace(searchBarText, <span className="bg-red">searchBarText</span>);
-//			object.split(searchBarText);
 		} else {
 			console.log("the div text doesn't contain search text");
 		}
@@ -78,10 +74,6 @@ class App extends React.Component {
 		var reader = new FileReader();
 		reader.onload = function(f) {
 			const content = f.target.result;
-			console.log(content);
-//			var parser = new DOMParser();
-//			var doc = parser.parseFromString(content, "application/xml");
-//			console.log(doc);
 			const data = {
 				content: content,
 			};
@@ -94,7 +86,6 @@ class App extends React.Component {
 			}).then((data) => console.log(data))
 				.then((data) => this.setState({ status: data }));
 		};
-		console.log("done");
 		reader.readAsDataURL(file);
 	}
 
@@ -135,11 +126,11 @@ class App extends React.Component {
 
 	render() {
 		const navbarBottom =
-			<nav className="col-12 mr-0 ml-0 fixed-bottom row bg-dark text-center nav-height">
+			<nav className="col-12 mr-0 ml-0 fixed-bottom row bg-preva text-center nav-height">
 				<div className="col-3"/>
-				<div className="col-2 mt-auto mb-auto">Impressum</div>
-				<div className="col-2 mt-auto mb-auto">Datenschutz</div>
-				<div className="col-2 mt-auto mb-auto">Kontakt</div>
+				<div className="col-2 mt-auto mb-auto cursor-pointer hover-header">Impressum</div>
+				<div className="col-2 mt-auto mb-auto cursor-pointer hover-header">Datenschutz</div>
+				<div className="col-2 mt-auto mb-auto cursor-pointer hover-header">Kontakt</div>
 				<div className="col-3"/>
 			</nav>;
 
@@ -154,10 +145,10 @@ class App extends React.Component {
 					html = <Homepage search={this.search} textContent={this.state.textContent}/> : null;
 			}
 				break;
-//			case "login":
-//				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
-//					errorText={this.state.error}/>;
-//				break;
+			case "login":
+				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
+					errorText={this.state.error}/>;
+				break;
 			case "blog": {
 				isAdmin !== null ?
 					(isAdmin ?
@@ -182,7 +173,7 @@ class App extends React.Component {
 		}
 		return (
 
-			<div className="h-100 text-white">
+			<div className="h-100 text-black">
 				{page === "login" || page === "register" ?
 					null : <div>{nav}</div>
 				}

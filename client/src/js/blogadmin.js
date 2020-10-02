@@ -101,7 +101,7 @@ export default class Blogadmin extends React.Component {
 			allblogs.map(function(blog) {
 				return (
 					<div className="card text-dark text-center card-body m-3 col-10 ml-auto mr-auto" key={blog.id}>
-						<button className="btn btn-danger col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it</button>
+						<button className="btn border-shadow-statistic btn-danger col-2 ml-auto" onClick={() => this.handleDeleteBlog(blog.id)}>Delete it</button>
 						<div className="col-12 m-3 row">
 							<div className="col-2">
 								Thema:
@@ -130,8 +130,8 @@ export default class Blogadmin extends React.Component {
 				<div className="container h-75 overflow-scroll">
 					{blogArray}
 				</div>
-				<div className="col-12 mt-2 mb-2 text-center btn-rounded">
-					<button onClick={() => this.addBlog()} className="btn col-2 bg-dark text-white ml-auto mr-auto text-center">Add Blog</button>
+				<div className="col-12 mt-2 mb-2 text-center btn-rounded border-shadow-statistic">
+					<button onClick={() => this.addBlog()} className="btn border-shadow-statistic col-2 bg-dark text-black ml-auto mr-auto text-center">Add Blog</button>
 				</div>
 			</div>
 

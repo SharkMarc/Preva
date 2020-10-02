@@ -10,6 +10,6 @@
 	<meta name="theme-color" content="#ffffff">
 
 <body class="h-100">
-<div class="h-100 bg-dark text-white" id="root"></div>
+<div class="h-100 bg-dark text-BLACK" id="root"></div>
 <script type="text/javascript" src="/public/app.bundle.js"></script>
 </body>

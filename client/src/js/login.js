@@ -1,5 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
+import PrevaIcon from '../assets/preva_icon.png';
+
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -35,8 +37,9 @@ export default class Login extends React.Component {
 
 		return (
 			<div>
-				<h1 className="text-center pt-5"><u>Welcome to MarcsBlog</u></h1>
-				<div className="card position-absolute border p-3 bg-dark login text-center mt-auto mb-auto">
+				<h1 className="text-center pt-5"><u>Welcome to Preva</u></h1>
+				<h1 className="text-center pt-5"><img src={PrevaIcon} className="icon"/></h1>
+				<div className="card border p-3 bg-preva login text-center mt-auto mb-auto">
 					<form id="formLogin" role="form" className="form-signin" action="http://localhost:6318/controller/login.php"
 						  encType="multipart/form-data" method="post">
 						<div className="form-group">
@@ -60,7 +63,7 @@ export default class Login extends React.Component {
 								: null}
 						</div>
 						<div className="form-group">
-							<button onClick={this.handleSubmit} className="login-btn round-border btn btn-success"
+							<button onClick={this.handleSubmit} className="login-btn border-shadow-statistic round-border btn btn-success"
 									type="submit">Log in !
 							</button>
 						</div>

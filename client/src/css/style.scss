@@ -2,6 +2,49 @@
   height: 50px;
 }
 
+.bg-preva {
+  background-color: #3030d2c9 !important;
+  color: white;
+}
+
+#errorMessage {
+  color: black;
+}
+
+.bg-preva-loadingscreen {
+  height: 250px;
+  background-color: #fff !important;
+  color: #000;
+}
+
+.hover-upload:hover {
+  color: white!important;
+  border-color: white;
+  background-color: #3030d2c9;
+}
+
+.success-color {
+  background-color: #68ec0e96;
+
+}
+
+.search-icon {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  border: 2px solid #000;
+  border-radius: 12px;
+}
+
+.rounded-button {
+  border-radius: 12px !important;
+}
+
+.hover-header:hover {
+  border-left: 2px double #ffffff;
+  border-right: 2px double #ffffff;
+}
+
 .login {
   position: absolute;
   left: 25%;
@@ -74,6 +117,7 @@
 }
 
 .saving span {
+  font-size: 36px;
   animation-name: blink;
   animation-duration: 1.4s;
   animation-iteration-count: infinite;
@@ -88,49 +132,96 @@
   animation-delay: .4s;
 }
 
+.border-radius-search {
+  border-radius: 10px !important;
+}
+
+.border-shadow-statistic {
+  box-shadow: 3px 4px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.text-white {
+  color: #000000 !important;
+}
+
 .text-black {
   color: #000000;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
 .modal-style {
   z-index: 2;
-  position: fixed;
-  top: 40%;
-  left: 40%;
+  position: absolute;
+  left: 42%;
+  top: 33%;
 }
 
 .font-family-arial {
   font-family: Arial;
 }
 
+
+//Animation
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
 }
 
+.animation-style {
+  margin-top: auto;
+  padding: .5rem;
+}
+
+.animation-style-points {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: .5rem;
+}
 
 .animate-flicker1 {
   animation-name: animationTest;
-  animation-iteration-count: 1;
+  animation-iteration-count: 3;
   animation-fill-mode: both;
   animation-duration: 3s;
 }
 
-.animate-flicker2 {
-  animation-name: animationTest;
-  animation-delay: 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-duration: 3s;
+.preva-icon {
+  width: 200px;
+  height: 200px;
 }
 
-.animate-flicker3 {
-  animation-name: animationTest;
-  animation-delay: 6s;
-  animation-iteration-count: 1;
-  animation-fill-mode: both;
-  animation-duration: 3s;
+.button-border {
+  border: 1px solid black !important;
+}
+
+#test1:after {
+  content: "";
+  animation: spin 9s linear;
+}
+
+@keyframes spin {
+  0% {
+    content: "Converting Model";
+  }
+  66% {
+    content: "Analyzing Model"
+  }
+  70% {
+    content: "Prepare Analysis";
+  }
+  100% {
+    content: "Prepare Analysis";
+  }
 }
 
 //animation-delay: 3s;
@@ -147,12 +238,43 @@
   }
 }
 
+.min-height-statistic {
+  min-height: 410px;
+}
+
+//SUCCESS BOX
+.success-box-fade-out {
+  transition: opacity 3s ease-in-out;
+  opacity: 0;
+}
+
+.tableIcon {
+  height: 25px;
+  width: 25px;
+}
+
+.success-box-style {
+  display: block;
+  position: fixed !important;
+  top: 10%;
+  right: 10%;
+  background-color: #b7d8b7 !important;
+}
+
+.error-box-style {
+  display: block;
+  position: fixed !important;
+  top: 10%;
+  right: 10%;
+  background-color: #e31d1d !important;
+}
+
 .point-animation {
   font-size: 40px;
 }
 
 .hr-line {
-  background-color: white;
+  background-color: #000;
 }
 
 .card-border {
@@ -165,4 +287,9 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.activeStatistic {
+  background-color: #3030d2c9 !important;
+  color: white;
 }
