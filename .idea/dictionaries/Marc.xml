@@ -3,8 +3,11 @@
     <words>
       <w>blogadmin</w>
       <w>blogs</w>
+      <w>bpmndi</w>
+      <w>dublicated</w>
       <w>errmsg</w>
       <w>headerblog</w>
+      <w>userfile</w>
     </words>
   </dictionary>
 </component>

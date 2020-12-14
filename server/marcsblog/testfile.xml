@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:qa="http://some-company/schema/bpmn/qa" id="_RdgBELNaEeSYkoSLDs6j-w" targetNamespace="http://activiti.org/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="7.3.0">
+    <bpmn2:process id="Process_1">
+        <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Things OK?">
+            <bpmn2:incoming>Flow_154aeq1</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+            <bpmn2:outgoing>Flow_1gud2bw</bpmn2:outgoing>
+        </bpmn2:exclusiveGateway>
+        <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_2" />
+        <bpmn2:endEvent id="EndEvent_2" name="Error Propagated">
+            <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>4
+            <bpmn2:errorEventDefinition id="ErrorEventDefinition_1" />
+        </bpmn2:endEvent>
+        <bpmn2:task id="Activity_1r85inw" name="test2">
+            <bpmn2:incoming>Flow_1gud2bw</bpmn2:incoming>
+            <bpmn2:outgoing>Flow_05hc1iw</bpmn2:outgoing>
+        </bpmn2:task>
+        <bpmn2:sequenceFlow id="Flow_1gud2bw" sourceRef="ExclusiveGateway_1" targetRef="Activity_1r85inw" />
+        <bpmn2:exclusiveGateway id="Gateway_1c4bjpk">
+            <bpmn2:incoming>Flow_05hc1iw</bpmn2:incoming>
+            <bpmn2:outgoing>Flow_110kjz5</bpmn2:outgoing>
+            <bpmn2:outgoing>Flow_0nnmx1c</bpmn2:outgoing>
+        </bpmn2:exclusiveGateway>
+        <bpmn2:sequenceFlow id="Flow_05hc1iw" sourceRef="Activity_1r85inw" targetRef="Gateway_1c4bjpk" />
+        <bpmn2:endEvent id="Event_1wznylb" name="ende1">
+            <bpmn2:incoming>Flow_110kjz5</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="Flow_110kjz5" sourceRef="Gateway_1c4bjpk" targetRef="Event_1wznylb" />
+        <bpmn2:endEvent id="Event_1v7n8e4" name="ende2">
+            <bpmn2:incoming>Flow_0nnmx1c</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="Flow_0nnmx1c" sourceRef="Gateway_1c4bjpk" targetRef="Event_1v7n8e4" />
+        <bpmn2:startEvent id="Event_0iri5oy">
+            <bpmn2:outgoing>Flow_154aeq1</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:sequenceFlow id="Flow_154aeq1" sourceRef="Event_0iri5oy" targetRef="ExclusiveGateway_1" />
+    </bpmn2:process>
+</bpmn2:definitions>

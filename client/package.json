@@ -23,6 +23,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^1.6.12",
     "chart.js": "^2.9.3",
     "primereact": "^5.0.0-rc.1",
     "react": "^16.4.2",

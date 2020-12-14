@@ -77,14 +77,12 @@ class App extends React.Component {
 			const data = {
 				content: content,
 			};
-			console.log("data" + data);
 			fetch("http://localhost:6318/controller/upload.php", {
 				method:  "POST",
 				headers: { "Content-Type": "application/json" },
 				body:    JSON.stringify(data),
 				cache:   "no-cache"
-			}).then((data) => console.log(data))
-				.then((data) => this.setState({ status: data }));
+			}).then(data => data.json());
 		};
 		reader.readAsDataURL(file);
 	}
@@ -102,7 +100,6 @@ class App extends React.Component {
 			.catch(
 				err => console.error("Caught error: ", err)
 			);
-
 	}
 
 	handleLogin(r) {
@@ -161,7 +158,7 @@ class App extends React.Component {
 			}
 				break;
 			case "upload": {
-				html = <Upload status={this.status} handlePage={(p) => this.handlePage(p)} uploadAjax={this.uploadAjax}/>;
+				html = <Upload status={this.status} handlePage={(p) => this.handlePage(p)} uploadAjax={(d,p)=>this.uploadAjax(d,p)}/>;
 			}
 				break;
 			case "register":
@@ -174,15 +171,15 @@ class App extends React.Component {
 		return (
 
 			<div className="h-100 text-black">
-				{page === "login" || page === "register" ?
-					null : <div>{nav}</div>
-				}
+				{/*{page === "login" || page === "register" ?*/}
+				{/*	null : <div>{nav}</div>*/}
+				{/*}*/}
 
 				<div className="h-100">{html}</div>
 
-				{page === "login" || page === "register" ?
-					null : <div>
-						{navbarBottom}</div>}
+				{/*{page === "login" || page === "register" ?*/}
+				{/*	null : <div>*/}
+				{/*		{navbarBottom}</div>}*/}
 			</div>
 		);
 	}

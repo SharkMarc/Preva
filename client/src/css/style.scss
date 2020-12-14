@@ -11,21 +11,46 @@
   color: black;
 }
 
+.padingTitle {
+  padding: .75rem;
+}
+
+.messureIcon {
+  width: 250px;
+  height: 250px;
+}
+
 .bg-preva-loadingscreen {
   height: 250px;
   background-color: #fff !important;
   color: #000;
 }
 
+#uploadButton2:focus {
+  outline: 0 !important;
+}
+
 .hover-upload:hover {
-  color: white!important;
+  color: white !important;
   border-color: white;
   background-color: #3030d2c9;
 }
 
 .success-color {
   background-color: #68ec0e96;
+}
 
+.traffic-light{
+  height:16px;
+  width:16px;
+}
+
+.table-heading-padding{
+  padding: .7rem!important;
+}
+
+.hr-border{
+  border-top: 2px solid rgba(0,0,0,.1);
 }
 
 .search-icon {
@@ -158,11 +183,19 @@
   z-index: 1;
 }
 
+.submitButton {
+  border: none;
+  background: white;
+}
+
 .modal-style {
   z-index: 2;
-  position: absolute;
-  left: 42%;
+  position: fixed;
+  right: 0;
+  left: 0;
   top: 33%;
+  width: 400px;
+  height: 222px;
 }
 
 .font-family-arial {
@@ -257,6 +290,7 @@
   display: block;
   position: fixed !important;
   top: 10%;
+  width: 451px !important;
   right: 10%;
   background-color: #b7d8b7 !important;
 }
@@ -266,6 +300,7 @@
   position: fixed !important;
   top: 10%;
   right: 10%;
+  width: 451px !important;;
   background-color: #e31d1d !important;
 }
 
