@@ -57,7 +57,7 @@ class App extends React.Component {
 	}
 
 	loginAjax(data) {
-		fetch("http://localhost:6318/controller/login.php", {
+		fetch(Route.login, {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),
@@ -77,7 +77,7 @@ class App extends React.Component {
 			const data = {
 				content: content,
 			};
-			fetch("http://localhost:6318/controller/upload.php", {
+			fetch(Route.upload, {
 				method:  "POST",
 				headers: { "Content-Type": "application/json" },
 				body:    JSON.stringify(data),
@@ -88,7 +88,7 @@ class App extends React.Component {
 	}
 
 	registerAjax(data) {
-		fetch("http://localhost:6318/controller/register.php", {
+		fetch(Route.register, {
 			method:  "POST",
 			headers: { "Content-Type": "application/json" },
 			body:    JSON.stringify(data),

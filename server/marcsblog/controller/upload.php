@@ -5,13 +5,14 @@ require dirname(__DIR__)."/vendor/autoload.php";
 
 //print_r($_FILES['userfile']);
 $taskConnection = [];
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$bpmndiList = file_get_contents(__DIR__."/../bpmndiList.json");
+//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//	$bpmndiList = file_get_contents(__DIR__."/../bpmndiList.json");
 //} else {
 
 	$tmpName = $_FILES['userfile']['tmp_name'];
 //$content = file_get_contents(__DIR__."/../test4.xml");
-	$content = file_get_contents(__DIR__."/../dublicatedXor_v2.xml");
+//	$content = file_get_contents(__DIR__."/../dublicatedXor_v2.xml");
+	$content = file_get_contents(__DIR__."/../xorAnd.xml");
 	$name    = dirname(__DIR__)."/".time().".xml";
 	file_put_contents($name, $content);
 	$strAll = substr($content, 0);
@@ -27,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$bpmndiList  = (new \MarcsBlog\ElementCounter)->countElements($listBpmndi, $bpmndi);
 	$list2       = (new \MarcsBlog\ElementCounter)->countChildElements($laodfile);
 	$bpmndiList2 = (new \MarcsBlog\ElementCounter)->countChildElements($bpmndi);
-	var_dump("count elements");
-	var_dump($list);
-
-	var_dump("count child elements");
-	var_dump($list2);
+//	var_dump("count elements");
+//	var_dump($list);
+//
+//	var_dump("count child elements");
+//	var_dump($list2);
 
 	$everything = [];
 	file_put_contents(__DIR__."/../uploadList.json", $everything);
@@ -74,26 +75,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$taskConnection = json_encode($taskConnection);
 	file_put_contents(__DIR__."/../objectSummary.json", $taskConnection);
 //
-} else {
-	$returnThisArray = [];
-	$getContent      = file_get_contents(__DIR__."/../objectSummary.json");
-	$bpmndiList      = file_get_contents(__DIR__."/../bpmndiList.json");
-	$list            = file_get_contents(__DIR__."/../list.json");
-
-	$getContent = json_decode($getContent);
-	$bpmndiList = json_decode($bpmndiList);
-	$list=json_decode($list);
-
-	$returnThisArray["objectSummary"] = $getContent;
-	$returnThisArray["bpmndiList"]    = $bpmndiList;
-	$returnThisArray["list"]    = $list;
-
-	$returnThisArray = json_encode($returnThisArray);
-//	$bpmndi = file_get_contents(__DIR__."/../bpmndi.json");
+//} else {
+//	$returnThisArray = [];
+//	$getContent      = file_get_contents(__DIR__."/../objectSummary.json");
+//	$bpmndiList      = file_get_contents(__DIR__."/../bpmndiList.json");
+//	$list            = file_get_contents(__DIR__."/../list.json");
+//
+//	$getContent = json_decode($getContent);
+//	$bpmndiList = json_decode($bpmndiList);
+//	$list=json_decode($list);
+//
+//	$returnThisArray["objectSummary"] = $getContent;
+//	$returnThisArray["bpmndiList"]    = $bpmndiList;
+//	$returnThisArray["list"]    = $list;
+//
+//	$returnThisArray = json_encode($returnThisArray);
+////	$bpmndi = file_get_contents(__DIR__."/../bpmndi.json");
 //	echo ["getContent"=>$getContent];
-	echo $returnThisArray;
-//	echo ["objectSummary" => $getContent, "bpmndiList" => $bpmndiList,"list"=>$list];
-}
+//	echo $returnThisArray;
+////	echo ["objectSummary" => $getContent, "bpmndiList" => $bpmndiList,"list"=>$list];
+//}
 //print_r($test);
 //}
 //print_r($bpmndiList);

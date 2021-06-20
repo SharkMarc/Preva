@@ -339,7 +339,7 @@ class NodeConnections extends NodeProvider
 	public function buildTree($node, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $parallelGateways, $subProcess, $endEvent)
 	{
 
-//		ich rufe mich selbst auf unter bedingung when astgabel for each do while ansonsten linear
+//		ich rufe mich selbst auf unter der bedingung when astgabel for each do while ansonsten linear
 
 //		check outgoing
 
@@ -349,7 +349,6 @@ class NodeConnections extends NodeProvider
 
 			if (is_array($node->outgoing)) {
 				$countedOutogings = count($node->outgoing);
-				$countedIncomings = count($node->incoming);
 				$outgoings        = $node->outgoing;
 				$incomings        = $node->incoming;
 
@@ -418,15 +417,20 @@ class NodeConnections extends NodeProvider
 				}
 				if ($nextType === "parallelGateway") {
 					var_dump("check ob in liste dann mach hier weiter");
-					var_dump(count($nextNode->incomings));
-					for($i=0;$i<$nextNode->incomings;$i++){
+					var_dump("ich bin das parallelgateway mit den mehreren incomings");
+					var_dump($nextNode);
+//					$countedIncomings = count($node->incoming);
+//					var_dump(count($countedIncomings));
+//					var_dump(count($nextNode->incoming));
+
+					for($i=0;$i<$nextNode->incoming;$i++){
 
 					}
 				}
 			}
 			$hasOutgoing = false;
 		}
-		var_dump($node);
+		var_dump("hier", $node);
 	}
 
 	public function outGoingTo($startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $parallelGateways, $subProcess, $endEvent)

@@ -11,5 +11,5 @@
 
 <body class="h-100">
 <div class="h-100 bg-dark text-BLACK" id="root"></div>
-<script type="text/javascript" src="/public/app.bundle.js"></script>
+<script type="text/javascript" src="/server/public/app.bundle.js"></script>
 </body>
