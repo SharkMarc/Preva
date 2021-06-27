@@ -6,6 +6,7 @@ import SearchIcon from '../assets/search_png.png';
 import BurgerNav from '../assets/burger-nav.png';
 import UploadIcon from '../assets/upload.png';
 import DownloadIcon from '../assets/download.png';
+//import DownloadPDF from '../assets/freelancermap.pdf';
 import BackIcon from '../assets/back.png';
 import PDFIcon from '../assets/pdf.png';
 import PrevaGif from '../assets/preva.gif';
@@ -20,7 +21,6 @@ export default class Upload extends React.Component {
 			countList:         [],
 			bpmnList:          [],
 			allLists:          [],
-			statisticPage:     false,
 			statisticSwitch:   'Size',
 			selectedStatistic: 'Size',
 			dataName:          '',
@@ -32,13 +32,11 @@ export default class Upload extends React.Component {
 		this.click = this.click.bind(this);
 		this.showUploadButton = this.showUploadButton.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
-		this.handleBackToUpload = this.handleBackToUpload.bind(this);
 		this.handleSwitch = this.handleSwitch.bind(this);
 		this.mixedChart = this.mixedChart.bind(this);
-		this.handleStatisticPage = this.handleStatisticPage.bind(this);
 		this.handleStatisticArray = this.handleStatisticArray.bind(this);
 		this.handleData = this.handleData.bind(this);
-		this.handleSidebar = this.handleSidebar.bind(this);
+
 	}
 
 	handleStatisticArray() {
@@ -93,10 +91,6 @@ export default class Upload extends React.Component {
 				}
 			}
 		});
-	}
-
-	handleBackToUpload(statisticPage) {
-		this.setState({ statisticPage: !statisticPage });
 	}
 
 	showUploadButton() {
@@ -192,11 +186,9 @@ export default class Upload extends React.Component {
 		} else {
 			modalId.style.display = 'none';
 		}
-		window.setTimeout(() => this.setState({ statisticPage: true }), 9000);
-	}
-
-	handleStatisticPage() {
-		this.setState({ statisticPage: true });
+		window.setTimeout(
+			() => this.props.handleStatisticPage(), 9000
+		);
 	}
 
 	handleSubmit(e) {
@@ -236,20 +228,7 @@ export default class Upload extends React.Component {
 		this.setState({ [name]: value });
 	}
 
-	handleSidebar(e) {
-		let id = document.getElementById('sidebar');
-		if (id.classList.contains('slide-in')) {
-			id.classList.remove('slide-in');
-			id.classList.add('slide-out');
 
-		} else {
-			id.classList.add('slide-in');
-			id.classList.remove('slide-out');
-			id.classList.remove('d-none');
-
-		}
-//	document.getElementById("sidebar").classList.toggle("d-none");
-	}
 
 	render() {
 		let status = this.props.status;
@@ -294,21 +273,11 @@ export default class Upload extends React.Component {
 			}
 		}
 		let array = ['Size', 'Separability', 'Sequentiality', 'Structuredness', 'Cyclicity', 'Concurrency', 'Cognitive'];
-		let statisticPage = this.state.statisticPage;
+		let statisticPage = this.props.statisticPage;
+		let handleStartPage = this.props.handleStartPage;
 
 		return (
-			<div className="  col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
-				<div className="d-flex mt-2 col-12">
-					<div className='col-lg-1 col-md-2 my-auto' onClick={() => this.handleSidebar()}>
-						<img src={BurgerNav} className={'burger-nav'}/>
-					</div>
-					<div className='col-10 d-flex border-right-left justify-content-center'>
-						<img src={PrevaGif} className="preva-icon" alt={'preva'}/>
-						<h1 className={'header-preva'}>Preva</h1>
-					</div>
-				</div>
-
-				<hr className="mt-0 hr-line"/>
+			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
 				<div id={'sidebar'} className={'d-none'}>
 					<ul>
 						<li>
@@ -330,7 +299,7 @@ export default class Upload extends React.Component {
 				</div>
 				{!statisticPage ?
 					<div>
-						<div className="pt-5 justify-content-center">
+						<div className="pt-4 justify-content-center">
 							<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
 								method="post"
 								id="formUpload"
@@ -381,13 +350,19 @@ export default class Upload extends React.Component {
 												<div className='get-started list-container my-4'/>
 											</div>
 											<div className={'col-lg-6 col-md-12 my-auto second-list-order-text'}>
+
 												<div className={'card mx-0'}>
 													<h3>Guidance</h3>
+													<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 													Here u can find a checklist to ensure your Processmodel is set up properly
-													<div className="p-2 search-icon hover-upload">
+													<a className="p-2 search-icon hover-upload"
+//														href={DownloadPDF}
+
+														download>
 														<img src={DownloadIcon} className="icon-text"/>
 														&nbsp;Download
-													</div>
+													</a>
+
 												</div>
 											</div>
 										</div>
@@ -416,7 +391,7 @@ export default class Upload extends React.Component {
 						</div>
 					</div>
 					:
-					<div>
+					<div className='pt-4'>
 						<div className="container">
 							<div className="row">
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
@@ -470,7 +445,7 @@ export default class Upload extends React.Component {
 									<div className="btn col-md-12 col-lg-2 ml-auto">
 										<button
 											className="d-flex justify-content-center  btn border-shadow-statistic button-border hover-upload w-100"
-											onClick={() => this.handleBackToUpload(this.state.statisticPage)}>
+											onClick={() => this.props.handleStartPage()}>
 											<img src={BackIcon} className='icon-text mr-1 my-auto'/>
 											<div>
 												back
@@ -489,7 +464,7 @@ export default class Upload extends React.Component {
 										method="post">
 										<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 										<button
-											className="d-flex justify-content-center  btn w-100 border-shadow-statistic button-border hover-upload"
+											className="d-flex justify-content-center btn w-100 border-shadow-statistic button-border hover-upload"
 											type='submit'>
 											<img src={PDFIcon} className='icon-text mr-1 my-auto'/>
 											<div>Create Pdf</div>

@@ -27,6 +27,7 @@
     "chart.js": "^2.9.3",
     "primereact": "^5.0.0-rc.1",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "react-pdf": "^5.3.0"
   }
 }
