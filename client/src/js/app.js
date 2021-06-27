@@ -170,12 +170,12 @@ class App extends React.Component {
 		}
 		return (
 
-			<div className="h-100 text-black">
+			<div className=" text-black">
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}
 				{/*}*/}
 
-				<div className="h-100">{html}</div>
+				<div className="">{html}</div>
 
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>*/}

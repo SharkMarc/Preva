@@ -294,33 +294,35 @@ export default class Upload extends React.Component {
 		let statisticPage = this.state.statisticPage;
 
 		return (
-			<div className=" h-100 mt-5 col-12 p-5 h-100 mx-auto my-auto font-family-arial">
+			<div className="  col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
 				<div className="d-flex mt-2 col-12">
-					<div className='col-1 my-auto' onClick={() => this.handleSidebar()}>
+					<div className='col-lg-1 col-md-2 my-auto' onClick={() => this.handleSidebar()}>
 						<img src={BurgerNav} className={'burger-nav'}/>
 					</div>
 					<div className='col-10 d-flex border-right-left justify-content-center'>
 						<img src={PrevaGif} className="preva-icon" alt={'preva'}/>
 						<h1 className={'header-preva'}>Preva</h1>
 					</div>
-					<div className={'col-1'}/>
 				</div>
 
 				<hr className="mt-0 hr-line"/>
 				<div id={'sidebar'} className={'d-none'}>
 					<ul>
 						<li>
-							<div>test</div>
-							<hr className={'hr-content'}/>
+							<div>Product</div>
 						</li>
+						<hr className={'hr-content'}/>
+
 						<li>
-							<div>test</div>
-							<hr className={'hr-content'}/>
+							<div>Motivation</div>
 						</li>
+						<hr className={'hr-content'}/>
+
 						<li>
-							<div>test</div>
-							<hr className={'hr-content'}/>
+							<div>Team</div>
 						</li>
+						<hr className={'hr-content'}/>
+
 					</ul>
 				</div>
 				{!statisticPage ?
@@ -334,26 +336,23 @@ export default class Upload extends React.Component {
 									<div className="mx-auto text-left">
 										<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
 										{/*<h4 className="col-12 mb-3 text-center">Please select your process model...</h4>*/}
-										<div className="row col-12 justify-content-center">
-
-										</div>
-										<div className="d-flex list-container">
-											<div className={'d-flex image-upload'}>
-												<div className={'card col-5 my-auto ml-auto'}>
+										<div className={'row'}>
+											<div className={' col-lg-6 col-md-12 my-auto'}>
+												<div className='card mx-0'>
 													<h3>Upload</h3>
 													Click here to upload your Processmodel!
 													<div className="cursor-pointer py-2 text-center">
 
 														<div className="p-2 search-icon hover-upload"
 															onClick={() => this.click(status)}>
-																<img src={UploadIcon} className="icon-text"/>
-																&nbsp;Upload
-																<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
-																	className="d-none"
-																	type="file"/>
+															<img src={UploadIcon} className="icon-text"/>
+															&nbsp;Upload
+															<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
+																className="d-none"
+																type="file"/>
 														</div>
 													</div>
-													<div className="cursor-pointer py-2 text-center">
+													<div className="cursor-pointer col-md-12 py-2 text-center">
 
 														<button id="uploadButton2" type="submit"
 															onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
@@ -368,11 +367,18 @@ export default class Upload extends React.Component {
 													</div>
 												</div>
 											</div>
+											<div className={'col-lg-6 col-md-12 pa-2'}>
+												<div className="image-upload list-container my-4"/>
+											</div>
 										</div>
 										<hr className={'content-hr'}/>
-										<div className="d-flex list-container">
-											<div className={'d-flex get-started background-position-right'}>
-												<div className={'card col-5 my-auto mr-auto'}>
+										<div className="row">
+
+											<div className="col-md-12 col-lg-6 mx-auto pa-2 second-list-order-image">
+												<div className='get-started list-container my-4'/>
+											</div>
+											<div className={'col-lg-6 col-md-12 my-auto second-list-order-text'}>
+												<div className={'card mx-0'}>
 													<h3>Guidance</h3>
 													Here u can find a checklist to ensure your Processmodel is set up properly
 													<div className="p-2 search-icon hover-upload"
@@ -383,14 +389,6 @@ export default class Upload extends React.Component {
 												</div>
 											</div>
 										</div>
-
-										{/*<input onChange={() => this.showUploadButton()} name="userfile" id="userfile" className="d-none"*/}
-										{/*	type="file"/>*/}
-										{/*<button onClick={(e) => this.handleSubmit(e)}>go test it</button>*/}
-										{/*<button id="uploadButton"*/}
-										{/*	className="cursor-pointer col-2 p-2 btn-success border-shadow-statistic text-center d-none"*/}
-										{/*	type="submit">i am real upload*/}
-										{/*</button>*/}
 									</div>
 								</div>
 							</form>
@@ -404,8 +402,8 @@ export default class Upload extends React.Component {
 						<ErrorBox PrevaIcon={PrevaIcon} dnone={dnone}/>
 						<div className="overlay" id="loadingScreen" style={dnone}>
 							<div className="mx-auto rounded-button modal-style bg-preva-loadingscreen">
-								<div className="h-100" role="document">
-									<div className="h-100 p-4 border-rounded row">
+								<div className="" role="document">
+									<div className=" p-4 border-rounded row">
 										<h4 id="test1" className="col-12 text-center animate-flicker1 animation-style"/>
 										<div className="col-12 pt-0 mt-0 text-center saving animation-style-points">
 											<span> .</span><span>.</span><span>. </span></div>

@@ -8,7 +8,7 @@ export default class Homepage extends React.Component {
 
 	render() {
 		return (
-			<div className="h-100 overflow-scroll background-image-homepage p-5">
+			<div className=" overflow-scroll background-image-homepage p-5">
 				<div className="col-10 card p-3 m-3 card-border text-center text-dark ml-auto mr-auto">
 					<h1 className="p-5">Marcs Startseite mit mega vielen tollen informationien für jedermann und frau!</h1>
 					<div className="row">

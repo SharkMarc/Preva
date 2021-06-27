@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100" lang="en">
+<html class="" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Marcs Blog</title>
@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<meta name="theme-color" content="#ffffff">
 
-<body class="h-100">
-<div class="h-100 bg-dark text-BLACK" id="root"></div>
+<body class="">
+<div class="bg-dark text-BLACK" id="root"></div>
 <script type="text/javascript" src="/server/public/app.bundle.js"></script>
 </body>
