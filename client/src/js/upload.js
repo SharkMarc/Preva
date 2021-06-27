@@ -6,6 +6,8 @@ import SearchIcon from '../assets/search_png.png';
 import BurgerNav from '../assets/burger-nav.png';
 import UploadIcon from '../assets/upload.png';
 import DownloadIcon from '../assets/download.png';
+import BackIcon from '../assets/back.png';
+import PDFIcon from '../assets/pdf.png';
 import PrevaGif from '../assets/preva.gif';
 import Speedometa from '../assets/speedometer.png';
 
@@ -302,7 +304,7 @@ export default class Upload extends React.Component {
 					</div>
 					<div className='col-10 d-flex border-right-left justify-content-center'>
 						<img src={PrevaGif} className="preva-icon" alt={'preva'}/>
-						<h1 className={'header-preva'}>PrEva</h1>
+						<h1 className={'header-preva'}>Preva</h1>
 					</div>
 				</div>
 
@@ -417,7 +419,7 @@ export default class Upload extends React.Component {
 					<div>
 						<div className="container">
 							<div className="row">
-								<div className="col-4 p-1 min-height-statistic">
+								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
 									<div className="card border-shadow-statistic">
 										<table className="table min-height-statistic mb-0">
 											<thead>
@@ -446,29 +448,33 @@ export default class Upload extends React.Component {
 										</table>
 									</div>
 								</div>
-								<div className="col-4 p-1">
+								<div className="col-lg-6 col-xl-4 col-md-12 p-1">
 									<div className="card border-shadow-statistic">
 										<div>{html}</div>
 									</div>
 								</div>
-								<div className="col-4 p-1">
-									<div className="card border-shadow-statistic min-height-statistic col-12">
+								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
+									<div className="card border-shadow-statistic min-height-statistic w-100">
 										{/*<canvas id="myChart" width="400" height="400"></canvas>*/}
-										<div><h2 className={'text-center'}><b>Trend</b></h2>
-											<hr className={'mt-0 hr-border'}/>
+										<div><h2 className='text-center'><b>Trend</b></h2>
+											<hr className='mt-0 hr-border'/>
 											<div>This card is an example.</div>
 											<br/>
 											<div className="text-center">
-												<img src={Speedometa} className={'messureIcon'}/>
+												<img src={Speedometa} className='messureIcon'/>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div className="py-3 pl-3 ml-auto">
-									<div className="btn px-0">
-										<button className="btn border-shadow-statistic button-border hover-upload"
-											onClick={() => this.handleBackToUpload(this.state.statisticPage)}> Back
-											Button
+								<div className="pt-3 col-12 analyse-buttons">
+									<div className="btn col-md-12 col-lg-2 ml-auto">
+										<button
+											className="d-flex justify-content-center  btn border-shadow-statistic button-border hover-upload w-100"
+											onClick={() => this.handleBackToUpload(this.state.statisticPage)}>
+											<img src={BackIcon} className='icon-text mr-1 my-auto'/>
+											<div>
+												back
+											</div>
 										</button>
 									</div>
 
@@ -477,13 +483,18 @@ export default class Upload extends React.Component {
 									{/*		onClick={() => this.getData()}> get data*/}
 									{/*	</button>*/}
 									{/*</div>*/}
+
 									{/* CREATE PDF */}
-									<form className="btn pl-0" action={'http://localhost:6318/controller/makepdf.php'} method="post">
+									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
+										method="post">
 										<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
-										<button className="btn border-shadow-statistic button-border hover-upload" type='submit'>Create Pdf
+										<button
+											className="d-flex justify-content-center  btn w-100 border-shadow-statistic button-border hover-upload"
+											type='submit'>
+											<img src={PDFIcon} className='icon-text mr-1 my-auto'/>
+											<div>Create Pdf</div>
 										</button>
 									</form>
-									{/*<button onClick={}>drucke mir ne pdf aus bitte </button>*/}
 								</div>
 							</div>
 						</div>
@@ -494,8 +505,7 @@ export default class Upload extends React.Component {
 	}
 
 }
-const SuccessBox = ({ dnone, PrevaIcon }
-) => (
+const SuccessBox = ({ dnone, PrevaIcon }) => (
 	<div className="card p-3 success-box-style" id="successBox" style={dnone}>
 		<div className="row">
 			<div className="col-3 text-center my-auto">

@@ -9,9 +9,21 @@
 
 #errorMessage {
   color: black;
-  img{
-    background:#e31d1d !important
+
+  img {
+    background: #e31d1d !important
   }
+}
+
+@media (min-width: 1200px) {
+  .analyse-buttons {
+    text-align: right;
+  }
+
+}
+
+.analyse-buttons {
+
 }
 
 
@@ -41,7 +53,11 @@
 }
 
 .success-color {
-  background-color: #68ec0e96;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #b7d8b7 !important
+  }
 }
 
 .traffic-light {
@@ -110,15 +126,16 @@
   .second-list-order-image {
     order: 2
   }
-  #errorMessage ,#successBox{
-    right:0;
-    left:0;
-    width:90%!important;
+  #errorMessage, #successBox {
+    right: 0;
+    left: 0;
+    width: 90% !important;
   }
 }
-#successBox{
-  img{
-    background:#b7d8b7 !important
+
+#successBox {
+  img {
+    background: #b7d8b7 !important
   }
 }
 
@@ -454,6 +471,11 @@
 
 .min-height-statistic {
   min-height: 410px;
+
+  tbody tr:hover {
+    background-color: #7d7dd7c7 !important;
+    color: white;
+  }
 }
 
 //SUCCESS BOX
