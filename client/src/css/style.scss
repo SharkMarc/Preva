@@ -9,7 +9,11 @@
 
 #errorMessage {
   color: black;
+  img{
+    background:#e31d1d !important
+  }
 }
+
 
 .padingTitle {
   padding: .75rem;
@@ -54,6 +58,8 @@
 }
 
 .search-icon {
+  width: 100%;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -104,8 +110,17 @@
   .second-list-order-image {
     order: 2
   }
+  #errorMessage ,#successBox{
+    right:0;
+    left:0;
+    width:90%!important;
+  }
 }
-
+#successBox{
+  img{
+    background:#b7d8b7 !important
+  }
+}
 
 .get-started {
   background-image: url("../assets/get-started.jpg");

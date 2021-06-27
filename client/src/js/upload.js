@@ -4,7 +4,8 @@ import StatisticTable from './statistic/statistictable';
 import PrevaIcon from '../assets/preva_icon.png';
 import SearchIcon from '../assets/search_png.png';
 import BurgerNav from '../assets/burger-nav.png';
-import UploadIcon from '../assets/upload_icon.png';
+import UploadIcon from '../assets/upload.png';
+import DownloadIcon from '../assets/download.png';
 import PrevaGif from '../assets/preva.gif';
 import Speedometa from '../assets/speedometer.png';
 
@@ -301,7 +302,7 @@ export default class Upload extends React.Component {
 					</div>
 					<div className='col-10 d-flex border-right-left justify-content-center'>
 						<img src={PrevaGif} className="preva-icon" alt={'preva'}/>
-						<h1 className={'header-preva'}>Preva</h1>
+						<h1 className={'header-preva'}>PrEva</h1>
 					</div>
 				</div>
 
@@ -352,7 +353,7 @@ export default class Upload extends React.Component {
 																type="file"/>
 														</div>
 													</div>
-													<div className="cursor-pointer col-md-12 py-2 text-center">
+													<div className="cursor-pointer py-2 text-center">
 
 														<button id="uploadButton2" type="submit"
 															onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
@@ -381,9 +382,8 @@ export default class Upload extends React.Component {
 												<div className={'card mx-0'}>
 													<h3>Guidance</h3>
 													Here u can find a checklist to ensure your Processmodel is set up properly
-													<div className="p-2 search-icon hover-upload"
-													>
-														<img src={UploadIcon} className="icon-text"/>
+													<div className="p-2 search-icon hover-upload">
+														<img src={DownloadIcon} className="icon-text"/>
 														&nbsp;Download
 													</div>
 												</div>
@@ -494,16 +494,11 @@ export default class Upload extends React.Component {
 	}
 
 }
-
-const SuccessBox = ({
-	                    dnone
-	                    ,
-	                    PrevaIcon
-                    }
+const SuccessBox = ({ dnone, PrevaIcon }
 ) => (
 	<div className="card p-3 success-box-style" id="successBox" style={dnone}>
 		<div className="row">
-			<div className="col-3">
+			<div className="col-3 text-center my-auto">
 				<img src={PrevaIcon} className="icon"/>
 			</div>
 			<div className="col-9 pr-0">
@@ -514,12 +509,10 @@ const SuccessBox = ({
 	</div>
 );
 
-const ErrorBox = (
-	{ dnone, PrevaIcon }
-) => (
+const ErrorBox = ({ dnone, PrevaIcon }) => (
 	<div className="card p-3 error-box-style" id="errorMessage" style={dnone}>
 		<div className="row">
-			<div className="col-3">
+			<div className="col-3 text-center my-auto">
 				<img src={PrevaIcon} className="icon"/>
 			</div>
 			<div className="col-9 pr-0">
