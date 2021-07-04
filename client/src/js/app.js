@@ -159,12 +159,16 @@ class App extends React.Component {
 
 	render() {
 		const navbarBottom =
-			<nav className="footer col-12 mr-0 ml-0 d-flex text-center nav-height">
-				<div className="col-lg-3"/>
-				<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header" onClick={() => this.handlePage('impressum')}>Impressum</div>
-				<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Datenschutz</div>
-				<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Kontakt</div>
-				<div className="col-lg-3"/>
+			<nav className="footer w-100 mr-0 ml-0 ">
+				<div className="d-flex nav-height my-auto col-12  text-center">
+					<div className="col-lg-3"/>
+					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
+						onClick={() => this.handlePage('impressum')}>Impressum
+					</div>
+					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Datenschutz</div>
+					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Kontakt</div>
+					<div className="col-lg-3"/>
+				</div>
 			</nav>;
 
 		const header =
@@ -192,14 +196,14 @@ class App extends React.Component {
 				break;
 
 			case 'impressum': {
-					html = <Impressum
-						handleBackToUpload={(e) => this.handleBackToUpload(e)}
-						status={this.status}
-						statisticPage={this.state.statisticPage}
-						handleStartPage={() => this.handleStartPage()}
-						handlePage={(p) => this.handlePage(p)}
-						handleStatisticPage={() => this.handleStatisticPage()}
-						uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
+				html = <Impressum
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handlePage={(p) => this.handlePage(p)}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
 
 			}
 				break;
@@ -243,9 +247,9 @@ class App extends React.Component {
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}
 				{/*}*/}
-
-				{html}
-
+				<div className="mb-5">
+					{html}
+				</div>
 				{navbarBottom}
 			</div>
 		);

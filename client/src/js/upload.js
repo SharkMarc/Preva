@@ -357,6 +357,7 @@ export default class Upload extends React.Component {
 													Here u can find a checklist to ensure your Processmodel is set up properly
 													<a className="p-2 search-icon hover-upload"
 //														href={DownloadPDF}
+														href={"/freelancermap.pdf"}
 
 														download>
 														<img src={DownloadIcon} className="icon-text"/>
