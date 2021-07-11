@@ -7,6 +7,8 @@ export default class Statistics extends React.Component {
 		const text = this.props.text;
 		const title = this.props.title;
 		const attributes = this.props.attributes;
+		const noaAmount = this.props.noa ? this.props.noa : '';
+		const noacAmount = noaAmount ? noaAmount + attributes['exclusiveGateway'] : '';
 
 		return (
 			<div className="min-height-statistic col-12">
@@ -16,17 +18,28 @@ export default class Statistics extends React.Component {
 				<hr className="mt-0 hr-border"/>
 				<div>{text}</div>
 				<br/>
-				{attributes ?
+				{title === 'Size' ?
 					<div>
-						<div>Example metric "Start event": <b>{attributes['startEvent']}</b></div>
-						<div>Example metric "Task": <b>{attributes['task']}</b></div>
-						<div>Example metric "Exclusive gateways": <b>{attributes['exclusiveGateway']}</b></div>
-						<div>Example metric "End event": <b>{attributes['endEvent']}</b></div>
+						<div>Number of ativities (NOA):
+							<b>{noaAmount?noaAmount:"0.00"}</b>
+						</div>
+						<div>Number of activities control-flow elements (NOAC):
+							<b>{noacAmount}</b>
+						</div>
+						<div>Coefficient of Network Complexity (CNC):
+							<b>{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</b>
+						</div>
+						<div>Density:
+							<b>{(attributes['sequenceFlow'] /
+								(noacAmount + attributes['startEvent'] + attributes['endEvent'])
+								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</b>
+						</div>
 					</div>
 					: null}
 			</div>
 		);
 	}
+
 }
 
 

@@ -19,6 +19,7 @@ export default class Upload extends React.Component {
 			bpmn:              '',
 			bpmndiList:        [],
 			countList:         [],
+			noa:               [],
 			bpmnList:          [],
 			objectSummary:     [],
 			allLists:          [],
@@ -37,52 +38,50 @@ export default class Upload extends React.Component {
 		this.mixedChart = this.mixedChart.bind(this);
 		this.handleStatisticArray = this.handleStatisticArray.bind(this);
 		this.handleData = this.handleData.bind(this);
-		this.getNOA=this.getNOA.bind(this);
-		this.getNOAC=this.getNOAC.bind(this);
-		this.getCNC=this.getCNC.bind(this);
-		this.getDensity=this.getDensity.bind(this);
-		this.getSeparability=this.getSeparability.bind(this);
-		this.getSequentiality=this.getSequentiality.bind(this);
-		this.getDiameter=this.getDiameter.bind(this);
+		this.getNOA = this.getNOA.bind(this);
+		this.getNOAC = this.getNOAC.bind(this);
+		this.getCNC = this.getCNC.bind(this);
+		this.getDensity = this.getDensity.bind(this);
+		this.getSeparability = this.getSeparability.bind(this);
+		this.getSequentiality = this.getSequentiality.bind(this);
+		this.getDiameter = this.getDiameter.bind(this);
 	}
-
 
 //	SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE
-	getNOA(){
+	getNOA() {
 //		manualTask, businessRuleTask, callActivity, manualTask, receiveTask, scriptTask, sendTask, serviceTask, task, subProcess, userTask
 //		anzahl der exclusiveGateways
-		return this.state.countList['exclusiveGateways'];
+		return;
 	}
 
-	getNOAC(){
+	getNOAC() {
 //		anzahl der exclusiveGateways+xor's
 		return this.state.countList['exclusiveGateways'];
 	}
 
-	getCNC(){
+	getCNC() {
 //		anzahl der sequenceflows / getNOAC
 		return this.getNOAC() / this.state.countList['sequenceFlow'];
 	}
 
-	getDensity(){
+	getDensity() {
 //		anzahl der sequenceflows / exclusiveGateways * (exclusiveGateways - xor's)
-		return  this.state.countList['sequenceFlow'] / this.state.countList['exclusiveGateways'] * (this.state.countList['exclusiveGateways']-12);
+		return this.state.countList['sequenceFlow'] / this.state.countList['exclusiveGateways'] * (this.state.countList['exclusiveGateways'] - 12);
 	}
 
-
 //	STRUCTURE --- STRUCTURE --- STRUCTURE --- STRUCTURE
-	getSeparability(){
+	getSeparability() {
 //		dunno :(
 	}
 
-	getSequentiality(){
+	getSequentiality() {
 //		anzahl der exclusiveGateways IN DEN XORS / alle nodes
 //	    bzw bin mir nicht sicher
 	}
-	getDiameter(){
+
+	getDiameter() {
 //		der längste weg von einem start zum ende
 	}
-
 
 	handleStatisticArray() {
 	}
@@ -266,7 +265,8 @@ export default class Upload extends React.Component {
 				countList:     data['list'],
 				bpmndiList:    data['bpmndiList'],
 				objectSummary: data['objectSummary'],
-				noaList: data['noa']
+				noaList:       data['noa'],
+				noa:           data['noa']
 			}))
 		;
 	}
@@ -290,7 +290,8 @@ export default class Upload extends React.Component {
 		if (statisticSwitch) {
 			switch (statisticSwitch) {
 				case 'Size': {
-					html = <Statistics title={'Size'} attributes={this.state.countList} text={'This card is an example.'}/>;
+					html = <Statistics title={'Size'} attributes={this.state.countList} noa={this.state.noa}
+						text={'This card is an example.'}/>;
 				}
 					break;
 				case 'Separability': {
