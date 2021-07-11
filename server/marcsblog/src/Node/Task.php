@@ -10,6 +10,8 @@ class Task
 
 	public $type        = "task";
 
+	public $spezialType = "";
+
 	public $hasOutgoing = true;
 
 	public $incoming    = null;

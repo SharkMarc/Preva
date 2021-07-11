@@ -16,10 +16,11 @@ export default class Upload extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			bpmn:              'test attribut1',
+			bpmn:              '',
 			bpmndiList:        [],
 			countList:         [],
 			bpmnList:          [],
+			objectSummary:     [],
 			allLists:          [],
 			statisticSwitch:   'Size',
 			selectedStatistic: 'Size',
@@ -28,7 +29,7 @@ export default class Upload extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.getData = this.getData.bind(this);
-		this.chart = this.chart.bind(this);
+//		this.chart = this.chart.bind(this);
 		this.click = this.click.bind(this);
 		this.showUploadButton = this.showUploadButton.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
@@ -36,8 +37,52 @@ export default class Upload extends React.Component {
 		this.mixedChart = this.mixedChart.bind(this);
 		this.handleStatisticArray = this.handleStatisticArray.bind(this);
 		this.handleData = this.handleData.bind(this);
-
+		this.getNOA=this.getNOA.bind(this);
+		this.getNOAC=this.getNOAC.bind(this);
+		this.getCNC=this.getCNC.bind(this);
+		this.getDensity=this.getDensity.bind(this);
+		this.getSeparability=this.getSeparability.bind(this);
+		this.getSequentiality=this.getSequentiality.bind(this);
+		this.getDiameter=this.getDiameter.bind(this);
 	}
+
+
+//	SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE
+	getNOA(){
+//		manualTask, businessRuleTask, callActivity, manualTask, receiveTask, scriptTask, sendTask, serviceTask, task, subProcess, userTask
+//		anzahl der exclusiveGateways
+		return this.state.countList['exclusiveGateways'];
+	}
+
+	getNOAC(){
+//		anzahl der exclusiveGateways+xor's
+		return this.state.countList['exclusiveGateways'];
+	}
+
+	getCNC(){
+//		anzahl der sequenceflows / getNOAC
+		return this.getNOAC() / this.state.countList['sequenceFlow'];
+	}
+
+	getDensity(){
+//		anzahl der sequenceflows / exclusiveGateways * (exclusiveGateways - xor's)
+		return  this.state.countList['sequenceFlow'] / this.state.countList['exclusiveGateways'] * (this.state.countList['exclusiveGateways']-12);
+	}
+
+
+//	STRUCTURE --- STRUCTURE --- STRUCTURE --- STRUCTURE
+	getSeparability(){
+//		dunno :(
+	}
+
+	getSequentiality(){
+//		anzahl der exclusiveGateways IN DEN XORS / alle nodes
+//	    bzw bin mir nicht sicher
+	}
+	getDiameter(){
+//		der längste weg von einem start zum ende
+	}
+
 
 	handleStatisticArray() {
 	}
@@ -49,49 +94,49 @@ export default class Upload extends React.Component {
 	mixedChart() {
 	}
 
-	chart() {
-//		let bpmndiList = this.bpmndiList;
-
-		let status = this.props.status;
-
-		var ctx = document.getElementById('myChart').getContext('2d');
-		var myChart = new Chart(ctx, {
-			type:    'bar',
-			data:    {
-				labels:   ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-				datasets: [{
-					label:           '# of Votes',
-					data:            [12, 19, 3, 5, 2, 3],
-					backgroundColor: [
-						'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)',
-						'rgba(255, 206, 86, 0.2)',
-						'rgba(75, 192, 192, 0.2)',
-						'rgba(153, 102, 255, 0.2)',
-						'rgba(255, 159, 64, 0.2)'
-					],
-					borderColor:     [
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(255, 206, 86, 1)',
-						'rgba(75, 192, 192, 1)',
-						'rgba(153, 102, 255, 1)',
-						'rgba(255, 159, 64, 1)'
-					],
-					borderWidth:     1
-				}]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero: true
-						}
-					}]
-				}
-			}
-		});
-	}
+//	chart() {
+////		let bpmndiList = this.bpmndiList;
+//
+//		let status = this.props.status;
+//
+//		var ctx = document.getElementById('myChart').getContext('2d');
+//		var myChart = new Chart(ctx, {
+//			type:    'bar',
+//			data:    {
+//				labels:   ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//				datasets: [{
+//					label:           '# of Votes',
+//					data:            [12, 19, 3, 5, 2, 3],
+//					backgroundColor: [
+//						'rgba(255, 99, 132, 0.2)',
+//						'rgba(54, 162, 235, 0.2)',
+//						'rgba(255, 206, 86, 0.2)',
+//						'rgba(75, 192, 192, 0.2)',
+//						'rgba(153, 102, 255, 0.2)',
+//						'rgba(255, 159, 64, 0.2)'
+//					],
+//					borderColor:     [
+//						'rgba(255, 99, 132, 1)',
+//						'rgba(54, 162, 235, 1)',
+//						'rgba(255, 206, 86, 1)',
+//						'rgba(75, 192, 192, 1)',
+//						'rgba(153, 102, 255, 1)',
+//						'rgba(255, 159, 64, 1)'
+//					],
+//					borderWidth:     1
+//				}]
+//			},
+//			options: {
+//				scales: {
+//					yAxes: [{
+//						ticks: {
+//							beginAtZero: true
+//						}
+//					}]
+//				}
+//			}
+//		});
+//	}
 
 	showUploadButton() {
 		// get any fileType
@@ -207,6 +252,7 @@ export default class Upload extends React.Component {
 	};
 
 	getData() {
+//		Route.upload for the server
 		fetch(Route.upload, {
 			method:  'GET',
 			headers: {
@@ -215,9 +261,14 @@ export default class Upload extends React.Component {
 			cache:   'no-cache'
 		})
 			.then(data => {return data.json();})
-			.then((data) => this.setState({ allLists: data, countList: data['list'] }))
-			.then(function(data) {
-			});
+			.then((data) => this.setState({
+				allLists:      data,
+				countList:     data['list'],
+				bpmndiList:    data['bpmndiList'],
+				objectSummary: data['objectSummary'],
+				noaList: data['noa']
+			}))
+		;
 	}
 
 	handleChange(e) {
@@ -227,8 +278,6 @@ export default class Upload extends React.Component {
 
 		this.setState({ [name]: value });
 	}
-
-
 
 	render() {
 		let status = this.props.status;
@@ -314,7 +363,6 @@ export default class Upload extends React.Component {
 													<h3>Upload</h3>
 													Click here to upload your Processmodel!
 													<div className="cursor-pointer py-2 text-center">
-
 														<div className="p-2 search-icon hover-upload"
 															onClick={() => this.click(status)}>
 															<img src={UploadIcon} className="icon-text"/>
@@ -356,8 +404,8 @@ export default class Upload extends React.Component {
 													<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 													Here u can find a checklist to ensure your Processmodel is set up properly
 													<a className="p-2 search-icon hover-upload"
-//														href={DownloadPDF}
-														href={"/freelancermap.pdf"}
+														//														href={DownloadPDF}
+														href={'/ConventionGuidline_Preva_v1.pdf'}
 
 														download>
 														<img src={DownloadIcon} className="icon-text"/>
@@ -442,7 +490,7 @@ export default class Upload extends React.Component {
 										</div>
 									</div>
 								</div>
-								<div className="pt-3 col-12 analyse-buttons">
+								<div className="pt-3 mb-5 col-12 analyse-buttons">
 									<div className="btn col-md-12 col-lg-2 ml-auto">
 										<button
 											className="d-flex justify-content-center  btn border-shadow-statistic button-border hover-upload w-100"
@@ -454,11 +502,11 @@ export default class Upload extends React.Component {
 										</button>
 									</div>
 
-									{/*<div className="btn">*/}
-									{/*	<button className="btn border-shadow-statistic button-border hover-upload"*/}
-									{/*		onClick={() => this.getData()}> get data*/}
-									{/*	</button>*/}
-									{/*</div>*/}
+									<div className="btn">
+										<button className="btn border-shadow-statistic button-border hover-upload"
+											onClick={() => this.getData()}> get data
+										</button>
+									</div>
 
 									{/* CREATE PDF */}
 									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}

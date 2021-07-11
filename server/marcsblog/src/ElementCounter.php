@@ -66,6 +66,6 @@ class ElementCounter
 			}
 		}
 
-		return array_values($list);;
+		return array_values($list);
 	}
 }

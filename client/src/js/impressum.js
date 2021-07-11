@@ -10,7 +10,8 @@ export default class Homepage extends React.Component {
 		return (
 			<div className="col-12 h-100">
 
-			HELLO WORLD BRUH ! adsfas  fddasfa asdffadsd fsddf sdfs d s dsfd fsads
+			Owner: <br/>
+			Florian Spree, Marc Spree
 			</div>
 		);
 	}

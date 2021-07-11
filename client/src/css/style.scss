@@ -56,7 +56,10 @@
 #uploadButton2:focus {
   outline: 0 !important;
 }
-
+a.hover-upload{
+  color:#000;
+  text-decoration:unset;
+}
 .hover-upload:hover {
   color: white !important;
   border-color: white;

@@ -19,6 +19,33 @@ interface Nodes
 class NodeProvider implements Nodes
 {
 
+	public function getNoa($nodeType)
+	{
+		$noa = [
+			'manualTask',
+			'businessRuleTask',
+			'callActivity',
+			'manualTask',
+			'receiveTask',
+			'scriptTask',
+			'sendTask',
+			'serviceTask',
+			'task',
+			'subProcess',
+			'userTask',
+		];
+
+		for ($i = 0; $i < count($noa); $i++) {
+			if ($noa[$i] === $nodeType) {
+//				var_dump("ich returne");
+//				var_dump($noa[$i]);
+				return $noa[$i];
+			}
+		}
+
+		return false;
+	}
+
 	public function getNodes(SimpleXMLElement $node, $elementType)
 	{
 		$list = [];
@@ -61,17 +88,19 @@ class NodeProvider implements Nodes
 			foreach ($node as $element => $elementNode) {
 				if ($element === $elementType) {
 					$attribute                                       = $elementNode->attributes();
-					$parallelGateway                                 = new ParallelGatewayNode((string)$attribute->id, (string)$attribute->name, (array)$elementNode->outgoing,(array)$elementNode->incoming);
+					$parallelGateway                                 = new ParallelGatewayNode((string)$attribute->id, (string)$attribute->name, (array)$elementNode->outgoing, (array)$elementNode->incoming);
 					$list["parallelGateway"][(string)$attribute->id] = $parallelGateway;
 				}
 			}
 		}
 
-		if ($elementType === "task") {
+//		if ($this->getNoa($elementType)) {
+		if ($this->getNoa($elementType)) {
 			foreach ($node as $element => $elementNode) {
 				if ($element === $elementType) {
 					$attribute                            = $elementNode->attributes();
 					$task                                 = new Task((string)$attribute->id, (string)$attribute->name);
+					$task->spezialType                    = (string)$this->getNoa($elementType);
 					$task->outgoing                       = (string)$elementNode->outgoing;
 					$task->incoming                       = (string)$elementNode->incoming;
 					$list["task"][(string)$attribute->id] = $task;
