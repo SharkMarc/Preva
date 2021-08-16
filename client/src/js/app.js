@@ -7,6 +7,8 @@ import Upload from './upload';
 import Nav from './nav';
 import Homepage from './homepage';
 import Impressum from './impressum';
+import AboutUs from './aboutus';
+import Product from './product';
 import Login from './login';
 import Register from './register';
 
@@ -44,17 +46,21 @@ class App extends React.Component {
 
 	handleSidebar(e) {
 		let id = document.getElementById('sidebar');
+
 		if (id.classList.contains('slide-in')) {
 			id.classList.remove('slide-in');
 			id.classList.add('slide-out');
-
 		} else {
 			id.classList.add('slide-in');
 			id.classList.remove('slide-out');
 			id.classList.remove('d-none');
 
 		}
-//	document.getElementById("sidebar").classList.toggle("d-none");
+//		document.addEventListener('scroll', function(e) {
+//			document.getElementById('sidebar').classList.add('slide-in');
+//			document.getElementById('sidebar').classList.remove('slide-out');
+//			document.getElementById('sidebar').classList.remove('d-none');
+//		})
 	}
 
 	search({ target }) {
@@ -144,8 +150,11 @@ class App extends React.Component {
 		}
 	}
 
-	handlePage(page) {
+	handlePage(page, sidebar=false) {
 		console.log(page);
+		if(sidebar){
+			this.handleSidebar();
+		}
 		this.setState({ page: page });
 	}
 
@@ -154,13 +163,20 @@ class App extends React.Component {
 	}
 
 	handleStartPage() {
+		let id = document.getElementById('sidebar');
+
+		if (id.classList.contains('slide-in')) {
+			id.classList.remove('slide-in');
+			id.classList.add('slide-out');
+		}
+
 		this.setState({ page: 'upload', statisticPage: false });
 	}
 
 	render() {
 		const navbarBottom =
-			<nav className="footer w-100 mr-0 ml-0 ">
-				<div className="d-flex nav-height my-auto col-12  text-center">
+			<nav className="footer">
+				<div className="d-flex nav-height my-auto col-12  text-center pl-0">
 					<div className="col-lg-3"/>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
 						onClick={() => this.handlePage('impressum')}>Impressum
@@ -172,14 +188,33 @@ class App extends React.Component {
 			</nav>;
 
 		const header =
-			<div className="d-flex col-12 header">
-				<div className='col-lg-1 col-md-2 my-auto' onClick={() => this.handleSidebar()}>
-					<img src={BurgerNav} className={'burger-nav'}/>
+			<div>
+				<div className="d-flex col-12 header">
+					<div className='col-lg-1 col-md-2 my-auto' onClick={() => this.handleSidebar()}>
+						<img src={BurgerNav} className={'burger-nav'}/>
+					</div>
+					<div className='col-10 d-flex border-right-left justify-content-center'>
+						<img onClick={() => this.handleStartPage()} src={PrevaGif} className="preva-icon cursor-pointer" alt={'preva'}/>
+						<h1 onClick={() => this.handleStartPage()} className='header-preva  cursor-pointer'>Preva</h1>
+					</div>
 				</div>
-				<div className='col-10 d-flex border-right-left justify-content-center'
-					onClick={() => this.props.handleStartPage()}>
-					<img src={PrevaGif} className="preva-icon" alt={'preva'}/>
-					<h1 className={'header-preva'}>Preva</h1>
+				<div id={'sidebar'} className={'d-none'}>
+					<ul>
+						<li>
+							<div>Product</div>
+							{/*<div onClick={() => this.handlePage('product', true)}>Product</div>*/}
+						</li>
+						<hr className={'hr-content'}/>
+
+						<li>
+							<div>Motivation</div>
+						</li>
+						<hr className={'hr-content'}/>
+						<li onClick={() => this.handlePage('aboutus', true)}>
+							<div>Team</div>
+						</li>
+						<hr className={'hr-content'}/>
+					</ul>
 				</div>
 			</div>;
 
@@ -204,13 +239,37 @@ class App extends React.Component {
 					handlePage={(p) => this.handlePage(p)}
 					handleStatisticPage={() => this.handleStatisticPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
-
 			}
 				break;
+
+			case 'aboutus': {
+				html = <AboutUs
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handlePage={(p) => this.handlePage(p)}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					/>;
+			}
+				break;
+			case 'product': {
+				html = <Product
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handlePage={(p) => this.handlePage(p)}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					/>;
+			}
+				break;
+
 			case 'login':
 				html = <Login handlePage={(p) => this.handlePage(p)} loginAjax={this.loginAjax} errorNumber={this.state.errorNumber}
 					errorText={this.state.error}/>;
 				break;
+
 			case 'blog': {
 				isAdmin !== null ?
 					(isAdmin ?
@@ -240,8 +299,10 @@ class App extends React.Component {
 			default:
 				console.log('Unknown Page Sorry for that :-/ :' + page);
 		}
-		return (
 
+
+
+		return (
 			<div className="h-100">
 				{header}
 				{/*{page === "login" || page === "register" ?*/}

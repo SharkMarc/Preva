@@ -3,13 +3,10 @@ import Statistics from './statistic/statistics';
 import StatisticTable from './statistic/statistictable';
 import PrevaIcon from '../assets/preva_icon.png';
 import SearchIcon from '../assets/search_png.png';
-import BurgerNav from '../assets/burger-nav.png';
 import UploadIcon from '../assets/upload.png';
 import DownloadIcon from '../assets/download.png';
-//import DownloadPDF from '../assets/freelancermap.pdf';
 import BackIcon from '../assets/back.png';
 import PDFIcon from '../assets/pdf.png';
-import PrevaGif from '../assets/preva.gif';
 import Speedometa from '../assets/speedometer.png';
 
 export default class Upload extends React.Component {
@@ -238,10 +235,8 @@ export default class Upload extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		const file = document.getElementById('userfile').files[0];
-		console.log(file);
 		this.props.uploadAjax(file);
 		this.getData();
-
 	};
 
 	handleData(e) {
@@ -324,29 +319,9 @@ export default class Upload extends React.Component {
 		}
 		let array = ['Size', 'Separability', 'Sequentiality', 'Structuredness', 'Cyclicity', 'Concurrency', 'Cognitive'];
 		let statisticPage = this.props.statisticPage;
-		let handleStartPage = this.props.handleStartPage;
 
 		return (
 			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
-				<div id={'sidebar'} className={'d-none'}>
-					<ul>
-						<li>
-							<div>Product</div>
-						</li>
-						<hr className={'hr-content'}/>
-
-						<li>
-							<div>Motivation</div>
-						</li>
-						<hr className={'hr-content'}/>
-
-						<li>
-							<div>Team</div>
-						</li>
-						<hr className={'hr-content'}/>
-
-					</ul>
-				</div>
 				{!statisticPage ?
 					<div>
 						<div className="pt-4 justify-content-center">
@@ -503,11 +478,11 @@ export default class Upload extends React.Component {
 										</button>
 									</div>
 
-									<div className="btn">
-										<button className="btn border-shadow-statistic button-border hover-upload"
-											onClick={() => this.getData()}> get data
-										</button>
-									</div>
+									{/*<div className="btn">*/}
+									{/*	<button className="btn border-shadow-statistic button-border hover-upload"*/}
+									{/*		onClick={() => this.getData()}> get data*/}
+									{/*	</button>*/}
+									{/*</div>*/}
 
 									{/* CREATE PDF */}
 									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}

@@ -56,10 +56,12 @@
 #uploadButton2:focus {
   outline: 0 !important;
 }
-a.hover-upload{
-  color:#000;
-  text-decoration:unset;
+
+a.hover-upload {
+  color: #000;
+  text-decoration: unset;
 }
+
 .hover-upload:hover {
   color: white !important;
   border-color: white;
@@ -351,6 +353,7 @@ a.hover-upload{
 
 #sidebar {
   position: fixed;
+  padding-top: 12px;
   top: 73px;
   width: 100%;
   z-index: 3;
@@ -428,7 +431,7 @@ a.hover-upload{
 
 .footer {
   position: fixed !important;
-  bottom:0;
+  bottom: 0;
 }
 
 .border-right-left {
@@ -556,4 +559,50 @@ a.hover-upload{
 .activeStatistic {
   background-color: #3030d2c9 !important;
   color: white;
+}
+
+//ABOUT US
+
+#aboutUs {
+  .teamimg {
+    width: 400px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .container-two {
+      .marc-icon {
+        order: 2;
+      }
+    }
+  }
+
+  .content-hr {
+    width: 97%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .panel {
+    padding: 8px 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    .border-right-side {
+      background: #000;
+      left: -1px;
+      border-top-right-radius: 25%;
+    }
+
+    .point-header {
+      padding: 8px 16px;
+      font-weight: bold;
+      background: #000;
+      color: #fff;
+
+      .point-header-text {
+
+      }
+    }
+  }
 }
