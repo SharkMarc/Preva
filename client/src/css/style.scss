@@ -398,6 +398,7 @@ a.hover-upload {
   h1 {
     text-transform: uppercase;
     text-align: center;
+    word-break: break-all;
   }
 
   hr {
@@ -482,6 +483,12 @@ a.hover-upload {
 
     i {
       color: #000 !important;
+    }
+
+  }
+  @media (max-width: 1200px) {
+    #carousel-example-generic {
+      padding: 50px 16px !important;
     }
   }
 

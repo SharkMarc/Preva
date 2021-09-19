@@ -22,11 +22,11 @@ export default class Product extends React.Component {
 						<div id="carousel-example-generic" className="carousel slide" data-bs-ride="carousel">
 							<div className="carousel-inner">
 								<div className="carousel-item active">
-									<div className="d-flex">
-										<div className="col-5">
+									<div className="flex-wrap">
+										<div className="col-md-5 col-12">
 											<img src={lightbulb} className="colournew"/>
 										</div>
-										<div className="col-7 text-area">
+										<div className="col-md-7 col-12 text-area">
 											<h2>Understandability</h2>
 											<hr className="bold-hr"/>
 											<div className="content">Evaluate the understandability of your process models</div>
@@ -34,11 +34,11 @@ export default class Product extends React.Component {
 									</div>
 								</div>
 								<div className="carousel-item">
-									<div className="d-flex">
-										<div className="col-5">
+									<div className="flex-wrap">
+										<div className="col-md-5 col-12">
 											<img src={bellregular} className="colournew"/>
 										</div>
-										<div className="col-7 main-content text-area">
+										<div className="col-md-7 col-12 main-content text-area">
 											<h2>Error probability</h2>
 											<hr className="bold-hr"/>
 											<div className="content">Evaluate the error probability of your process models</div>
@@ -48,11 +48,11 @@ export default class Product extends React.Component {
 								</div>
 
 								<div className="carousel-item">
-									<div className="d-flex">
-										<div className="col-5">
+									<div className="flex-wrap">
+										<div className="col-md-5 col-12 ">
 											<img src={spaceshuttle} className="colournew"/>
 										</div>
-										<div className="content col-7 text-area">
+										<div className="content col-12 col-md-7 text-area">
 											<h2 content="text-center">Prediction readyness</h2>
 											<hr className="bold-hr"/>
 											<div className="content">Evaluate the prediction readyness of your process models</div>
