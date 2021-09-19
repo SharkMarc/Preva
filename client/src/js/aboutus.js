@@ -12,7 +12,7 @@ export default class Register extends React.Component {
 
 	render() {
 		return (
-			<div id={'aboutUs'}>
+			<section id={'aboutUs'}>
 				<div className='container-one'>
 					<div className='col-12 row'>
 						<div className='col-12 col-md-6'>
@@ -120,7 +120,7 @@ export default class Register extends React.Component {
 					</div>
 					<hr className='content-hr'/>
 				</div>
-			</div>
+			</section>
 		);
 	}
 }

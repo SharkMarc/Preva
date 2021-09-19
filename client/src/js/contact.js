@@ -44,8 +44,9 @@ export default class Contact extends React.Component {
 
 	render() {
 		return (
-			<div className="mt-5">
-				<h1 className="text-center">Kontaktiere mich:</h1>
+			<section id={"contactForm"} className="mt-5">
+				<h1 className="text-center">Get in touch</h1>
+				<hr/>
 				<div>
 					<form role="form" onSubmit={this.handleContact} action="http://localhost:6318/controller/contact.php"
 						encType="multipart/form-data" method="post">
@@ -65,14 +66,14 @@ export default class Contact extends React.Component {
 								placeholder="Anliegen"/>
 							<textarea rows="6" className="m-3 col-11 ml-auto mr-auto"
 								onChange={({ target }) => this.handleChange(target, "text")} name="text" value={this.state.contact.text}
-								placeholder="Anliegen"/>
-							<div className="col-12 text-center">
+								placeholder="Was möchtest du uns mitteilen?"/>
+							<div className="col-11 px-0 mx-auto text-center">
 								<button className="" type="submit" onSubmit={() => this.props.handlePage("homepage")}>Absenden</button>
 							</div>
 						</div>
 					</form>
 				</div>
-			</div>
+			</section>
 		);
 	}
 }

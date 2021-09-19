@@ -7,15 +7,18 @@ import Upload from './upload';
 import Nav from './nav';
 import Homepage from './homepage';
 import Impressum from './impressum';
+import DataPolicy from './data-policy';
 import AboutUs from './aboutus';
 import Product from './product';
 import Login from './login';
 import Register from './register';
+import Motivation from './motivation';
 
 //css
 import '../css/style.scss';
 import BurgerNav from '../assets/burger-nav.png';
 import PrevaGif from '../assets/preva.gif';
+import WIP from '../assets/MarthaMitHelm.png';
 
 class App extends React.Component {
 	constructor(props) {
@@ -151,7 +154,6 @@ class App extends React.Component {
 	}
 
 	handlePage(page, sidebar=false) {
-		console.log(page);
 		if(sidebar){
 			this.handleSidebar();
 		}
@@ -174,15 +176,26 @@ class App extends React.Component {
 	}
 
 	render() {
+		const underConstruction=
+			<section id={"wip"}>
+				<h1 className="col-12">Work in progress</h1>
+				<hr/>
+				<img src={WIP} className="d-flex wip-martha my-auto"/>
+			</section>;
+
+
+
 		const navbarBottom =
-			<nav className="footer">
-				<div className="d-flex nav-height my-auto col-12  text-center pl-0">
+			<nav className="footer w-100">
+				<div className="d-flex nav-height my-auto col-12 text-center pl-0">
 					<div className="col-lg-3"/>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
 						onClick={() => this.handlePage('impressum')}>Impressum
 					</div>
-					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Datenschutz</div>
-					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header">Kontakt</div>
+					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
+						onClick={() => this.handlePage('dataPolicy')}>Datenschutz</div>
+					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
+						onClick={() => this.handlePage('contact')}>Kontakt</div>
 					<div className="col-lg-3"/>
 				</div>
 			</nav>;
@@ -198,15 +211,20 @@ class App extends React.Component {
 						<h1 onClick={() => this.handleStartPage()} className='header-preva  cursor-pointer'>Preva</h1>
 					</div>
 				</div>
-				<div id={'sidebar'} className={'d-none'}>
+				<div id='sidebar' className='d-none'>
 					<ul>
+						<li onClick={() => this.handlePage('upload', true)}>
+							<div>Home</div>
+							{/*<div onClick={() => this.handlePage('product', true)}>Product</div>*/}
+						</li>
+						<hr className={'hr-content'}/>
 						<li>
 							<div>Product</div>
 							{/*<div onClick={() => this.handlePage('product', true)}>Product</div>*/}
 						</li>
 						<hr className={'hr-content'}/>
 
-						<li>
+						<li onClick={() => this.handlePage('motivation', true)}>
 							<div>Motivation</div>
 						</li>
 						<hr className={'hr-content'}/>
@@ -232,6 +250,31 @@ class App extends React.Component {
 
 			case 'impressum': {
 				html = <Impressum
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handlePage={(p) => this.handlePage(p)}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
+			}
+				break;
+
+
+			case 'dataPolicy': {
+				html = <DataPolicy
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handlePage={(p) => this.handlePage(p)}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
+			}
+				break;
+
+			case 'motivation': {
+				html = <Motivation
 					handleBackToUpload={(e) => this.handleBackToUpload(e)}
 					status={this.status}
 					statisticPage={this.state.statisticPage}
@@ -277,8 +320,15 @@ class App extends React.Component {
 			}
 				break;
 			case 'contact': {
-				isAdmin !== null ?
-					html = <Contact handlePage={(p) => this.handlePage(p)}/> : null;
+					html = <Contact
+						handlePage={(p) => this.handlePage(p)}
+						handleBackToUpload={(e) => this.handleBackToUpload(e)}
+						status={this.status}
+						statisticPage={this.state.statisticPage}
+						handleStartPage={() => this.handleStartPage()}
+						handleStatisticPage={() => this.handleStatisticPage()}
+						uploadAjax={(d, p) => this.uploadAjax(d, p)}
+					/>;
 			}
 				break;
 			case 'upload': {
@@ -311,6 +361,8 @@ class App extends React.Component {
 				<div className="mb-5">
 					{html}
 				</div>
+				{page === 'impressum'|| page === "dataPolicy"  || page === "Contact" || page === "motivation"? underConstruction : null}
+
 				{navbarBottom}
 			</div>
 		);

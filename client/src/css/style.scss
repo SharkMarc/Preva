@@ -595,7 +595,7 @@ a.hover-upload {
     }
 
     .point-header {
-      padding: 8px 16px;
+      padding: 1px 16px;
       font-weight: bold;
       background: #000;
       color: #fff;
@@ -604,5 +604,114 @@ a.hover-upload {
 
       }
     }
+  }
+}
+
+section {
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+    max-width: 700px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 991px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1110px;
+  }
+}
+
+input, textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cdcdd0;
+  border-radius: 10px;
+  background-color: #fff;
+  background-clip: padding-box;
+  font-size: 14px;
+  font-weight: 400;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000;
+  &:focus-visible{
+    outline-offset:unset;
+    outline:unset;
+  }
+  &:focus {
+    border-color: #21cda4;
+    outline: 0;
+  }
+}
+
+#contactForm {
+  hr{
+    max-width:50%;
+  }
+  input, textarea {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cdcdd0;
+    border-radius: 10px;
+    background-color: #fff;
+    background-clip: padding-box;
+    font-size: 14px;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000;
+    &:focus-visible{
+      outline-offset:unset;
+      outline:unset;
+    }
+    &:focus {
+      border-color: #21cda4;
+      outline: 0;
+    }
+  }
+
+  button {
+
+    padding: 12px 8px;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    border: 1px solid #000;
+    border-radius: 12px;
+    background-color:#fff;
+    &:hover, &:focus{
+      color: white !important;
+      border-color: white;
+      background-color: #3030d2c9;
+    }
+  }
+}
+
+#wip {
+  h1 {
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  hr {
+    max-width: 50%;
+  }
+
+  .wip-martha {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
   }
 }

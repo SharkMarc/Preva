@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$bpmndiList  = (new \MarcsBlog\ElementCounter)->countElements($listBpmndi, $bpmndi);
 	$list2       = (new \MarcsBlog\ElementCounter)->countChildElements($laodfile);
 	$bpmndiList2 = (new \MarcsBlog\ElementCounter)->countChildElements($bpmndi);
+
 //	echo round((microtime(true)-$start)*1000);
 //	echo " ms: \n";
 //	echo "\n";
@@ -145,5 +146,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$returnThisArray = json_encode($returnThisArray);
 	echo $returnThisArray;
 }
-//print_r($bpmndiList);
-//print_r($bpmndiList2);

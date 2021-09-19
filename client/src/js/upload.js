@@ -19,7 +19,9 @@ export default class Upload extends React.Component {
 			noa:               [],
 			bpmnList:          [],
 			objectSummary:     [],
+			testVersion:[],
 			allLists:          [],
+			seperability:      [],
 			statisticSwitch:   'Size',
 			selectedStatistic: 'Size',
 			dataName:          '',
@@ -42,6 +44,8 @@ export default class Upload extends React.Component {
 		this.getSeparability = this.getSeparability.bind(this);
 		this.getSequentiality = this.getSequentiality.bind(this);
 		this.getDiameter = this.getDiameter.bind(this);
+		this.handleSeperabilities = this.handleSeperabilities.bind(this);
+		this.handleInsideElements = this.handleInsideElements.bind(this);
 	}
 
 //	SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE
@@ -51,6 +55,32 @@ export default class Upload extends React.Component {
 		return;
 	}
 
+	handleInsideElements(outgoingArray) {
+		return console.log('outgoingArray', outgoingArray);
+
+		for (let i = 0; i < outgoingArray.length; i++) {
+//			if(outgoingArray['['type']==='exclusiveGateway'){
+//
+//			}
+		}
+	}
+	handleSeperabilities(){
+		let summary=this.state.objectSummary;
+		let array1=[];
+		let sumupUntilArray=0;
+		console.log(summary);
+		console.log(summary[0]);
+		console.log(summary["outgoing"]);
+		summary.map((name, i)=>console.log(name));
+		for(let i =0; i<summary.length; i++){
+			console.log(summary[i]);
+			console.log(summary[i]["outgoing"])
+
+			if(summary[i]["outgoing"]){
+				sumupUntilArray=this.handleInsideElements(summary[i]["outgoing"]);
+			}
+		}
+	}
 	getNOAC() {
 //		anzahl der exclusiveGateways+xor's
 		return this.state.countList['exclusiveGateways'];
@@ -89,50 +119,6 @@ export default class Upload extends React.Component {
 
 	mixedChart() {
 	}
-
-//	chart() {
-////		let bpmndiList = this.bpmndiList;
-//
-//		let status = this.props.status;
-//
-//		var ctx = document.getElementById('myChart').getContext('2d');
-//		var myChart = new Chart(ctx, {
-//			type:    'bar',
-//			data:    {
-//				labels:   ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//				datasets: [{
-//					label:           '# of Votes',
-//					data:            [12, 19, 3, 5, 2, 3],
-//					backgroundColor: [
-//						'rgba(255, 99, 132, 0.2)',
-//						'rgba(54, 162, 235, 0.2)',
-//						'rgba(255, 206, 86, 0.2)',
-//						'rgba(75, 192, 192, 0.2)',
-//						'rgba(153, 102, 255, 0.2)',
-//						'rgba(255, 159, 64, 0.2)'
-//					],
-//					borderColor:     [
-//						'rgba(255, 99, 132, 1)',
-//						'rgba(54, 162, 235, 1)',
-//						'rgba(255, 206, 86, 1)',
-//						'rgba(75, 192, 192, 1)',
-//						'rgba(153, 102, 255, 1)',
-//						'rgba(255, 159, 64, 1)'
-//					],
-//					borderWidth:     1
-//				}]
-//			},
-//			options: {
-//				scales: {
-//					yAxes: [{
-//						ticks: {
-//							beginAtZero: true
-//						}
-//					}]
-//				}
-//			}
-//		});
-//	}
 
 	showUploadButton() {
 		// get any fileType
@@ -286,11 +272,11 @@ export default class Upload extends React.Component {
 			switch (statisticSwitch) {
 				case 'Size': {
 					html = <Statistics title={'Size'} attributes={this.state.countList} noa={this.state.noa}
-						text={'This card is an example.'}/>;
+						text={''}/>;
 				}
 					break;
-				case 'Separability': {
-					html = <Statistics title={'Separability'} attributes={false} text={'This card is empty.'}/>;
+				case 'structure': {
+					html = <Statistics title={'Structure'} attributes={this.state.countList} noa={this.state.noa} text={''}/>;
 				}
 					break;
 				case 'Sequentiality': {
@@ -483,7 +469,7 @@ export default class Upload extends React.Component {
 									{/*		onClick={() => this.getData()}> get data*/}
 									{/*	</button>*/}
 									{/*</div>*/}
-
+									<button onClick={()=>this.handleSeperabilities()}>testen</button>
 									{/* CREATE PDF */}
 									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
 										method="post">

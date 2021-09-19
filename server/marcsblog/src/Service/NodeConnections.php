@@ -306,37 +306,65 @@ class NodeConnections extends NodeProvider
 
 //		ich rufe mich selbst auf unter der bedingung when astgabel for each do while ansonsten linear
 
-//		check outgoing
+		$insideOfExclusive = false;
 
+//		check outgoing
 		$hasOutgoing = $this->hasOutgoing($node);
 
 		while ($hasOutgoing) {
-
 			if (is_array($node->outgoing)) {
 				$countedOutogings = count($node->outgoing);
 				$outgoings        = $node->outgoing;
+				$countedIncomings = count($node->incoming);
 				$incomings        = $node->incoming;
 
 				if ($node->type === "exclusiveGateway") {
-					for ($i = 0; $i < $countedOutogings; $i++) {
-						$outgoings[$i];
-						$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $outgoings[$i]);
-						$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
+					if (count($countedIncomings) > 1) {
+						for ($i = 0; $i < $incomings; $i++) {
+							if ($i>0) {
+								$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $node->outgoing[$i]);
+								$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
+								$findRefTargetId    = $this->handleFindRefTarget($sequenceFlow);
 
-						$findRefTargetId         = $this->handleFindRefTarget($sequenceFlow);
-						$nextNode                = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask,
-							$callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "node");
-						$nextKey                 = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "key");
-						$nextType                = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "type");
-						$sequenceFlow->targetRef = $nextKey;
+								$nextNode = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "node");
+								$nextKey  = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "key");
+								$nextType = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "type");
 
-						foreach ($sequenceFlow as $sequenceFlowKey => $sequenceFlowValue) {
-							$sequenceFlow->targetRef = [$nextKey => $nextNode];
+								$sequenceFlow->targetRef = $nextKey;
+
+								foreach ($sequenceFlow as $sequenceFlowKey => $sequenceFlowValue) {
+									$sequenceFlow->targetRef = [$nextKey => $nextNode];
+								}
+
+								foreach ($nextNode as $nextNodeKey => $nextNodeValue) {
+									if ($nextNodeKey === "hasOutgoing" && $nextNodeValue) {
+										$this->buildTree($nextNode, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $parallelGateways, $subProcess, $endEvent);
+									}
+								}
+							}
 						}
+					}
+					if (count($countedOutogings) > 1) {
+						for ($i = 1; $i < $countedOutogings; $i++) {
+							$outgoings[$i];
+							$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $outgoings[$i]);
+							$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
 
-						foreach ($nextNode as $nextNodeKey => $nextNodeValue) {
-							if ($nextNodeKey === "hasOutgoing" && $nextNodeValue) {
-								$this->buildTree($nextNode, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $parallelGateways, $subProcess, $endEvent);
+							$findRefTargetId         = $this->handleFindRefTarget($sequenceFlow);
+							$nextNode                = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask,
+								$callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "node");
+							$nextKey                 = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "key");
+							$nextType                = $this->searchTargetRef($findRefTargetId, $exclusiveGateways, $parallelGateways, $taskNode, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, "type");
+							$sequenceFlow->targetRef = $nextKey;
+
+							foreach ($sequenceFlow as $sequenceFlowKey => $sequenceFlowValue) {
+								$sequenceFlow->targetRef = [$nextKey => $nextNode];
+							}
+
+							foreach ($nextNode as $nextNodeKey => $nextNodeValue) {
+								if ($nextNodeKey === "hasOutgoing" && $nextNodeValue) {
+									$this->buildTree($nextNode, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $parallelGateways, $subProcess, $endEvent);
+								}
 							}
 						}
 					}
@@ -399,9 +427,10 @@ class NodeConnections extends NodeProvider
 //		var_dump("hier", $node);
 	}
 
-	public function outGoingTo($startEvent, $taskNode, $sequenceFlows, $exclusiveGateways,
-	                           $inclusiveGateways, $parallelGateways, $subProcess, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask,
-	                           $endEvent)
+	public
+	function outGoingTo($startEvent, $taskNode, $sequenceFlows, $exclusiveGateways,
+	                    $inclusiveGateways, $parallelGateways, $subProcess, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask,
+	                    $endEvent)
 	{
 		$taskWays     = [];
 		$outgoingList = [];

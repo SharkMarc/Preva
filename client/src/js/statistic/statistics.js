@@ -36,6 +36,27 @@ export default class Statistics extends React.Component {
 						</div>
 					</div>
 					: null}
+
+
+				{title === 'structure' ?
+					<div>
+						<div>Seperability:
+							<b>{noacAmount}/</b>
+
+						</div>
+						<div>Number of activities control-flow elements (NOAC):
+						</div>
+						<div>Coefficient of Network Complexity (CNC):
+							<b>{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</b>
+						</div>
+						<div>Density:
+							<b>{(attributes['sequenceFlow'] /
+								(noacAmount + attributes['startEvent'] + attributes['endEvent'])
+								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</b>
+						</div>
+					</div>
+					: null}
+
 			</div>
 		);
 	}

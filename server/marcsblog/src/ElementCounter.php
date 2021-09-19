@@ -10,7 +10,7 @@ class ElementCounter
 	public function countElements(array $list, SimpleXMLElement $node): array
 	{
 		foreach ($node as $childname => $childnode) {
-			If (!isset($list[$childname])) {
+			if (!isset($list[$childname])) {
 				$list[$childname] = 0;
 			}
 			$list[$childname]++;
