@@ -187,8 +187,6 @@ a.hover-upload {
 .card {
   border-radius: 8px;
   padding: 16px !important;
-  padding-top: 16px !important;
-  padding-bottom: 16px !important;
   margin: 16px !important;
   background-color: #fff;
   box-shadow: 0 4px 10px #00000578;
@@ -202,6 +200,11 @@ a.hover-upload {
 .icon-text {
   height: 16px;
   width: 16px;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .overflow-scroll {
@@ -353,7 +356,6 @@ a.hover-upload {
 
 #sidebar {
   position: fixed;
-  padding-top: 12px;
   top: 73px;
   width: 100%;
   z-index: 3;
@@ -370,19 +372,30 @@ a.hover-upload {
     list-style: none;
 
     li {
-      padding: 8px 16px;
+      padding: 16px;
 
       &:hover {
         color: white !important;
         border-color: white;
         background-color: #3030d2c9;
       }
+      border: 0;
+      border-bottom: 2px solid rgba(0,0,0,.3);
     }
 
     .li:hover {
       text-underline: red;
     }
   }
+}
+
+#navbarBackdrop.showing {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
 }
 
 .slide-out {
@@ -640,10 +653,12 @@ input, textarea {
   letter-spacing: normal;
   text-align: left;
   color: #000;
-  &:focus-visible{
-    outline-offset:unset;
-    outline:unset;
+
+  &:focus-visible {
+    outline-offset: unset;
+    outline: unset;
   }
+
   &:focus {
     border-color: #21cda4;
     outline: 0;
@@ -651,9 +666,10 @@ input, textarea {
 }
 
 #contactForm {
-  hr{
-    max-width:50%;
+  hr {
+    max-width: 50%;
   }
+
   input, textarea {
     display: block;
     width: 100%;
@@ -670,10 +686,12 @@ input, textarea {
     letter-spacing: normal;
     text-align: left;
     color: #000;
-    &:focus-visible{
-      outline-offset:unset;
-      outline:unset;
+
+    &:focus-visible {
+      outline-offset: unset;
+      outline: unset;
     }
+
     &:focus {
       border-color: #21cda4;
       outline: 0;
@@ -690,8 +708,9 @@ input, textarea {
     position: relative;
     border: 1px solid #000;
     border-radius: 12px;
-    background-color:#fff;
-    &:hover, &:focus{
+    background-color: #fff;
+
+    &:hover, &:focus {
       color: white !important;
       border-color: white;
       background-color: #3030d2c9;

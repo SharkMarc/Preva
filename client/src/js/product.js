@@ -34,25 +34,22 @@ export default class Product extends React.Component {
 										<div className="carousel-item active">
 											<a
 											>
-												<img src="/images/survey/2020/new/de/carousel/1-titelbild-freelancer-kompass-2020.PNG"
+												<img src={FloIcon}
 													className="img-responsive"
 													alt="titelbild-freelancer-kompass-2020"/>
 											</a>
 										</div>
 
 										<div className="carousel-item">
-											<a
-											>
-												<img src="/images/survey/2020/new/de/carousel/2-agenda-freelancer-kompass-2020.PNG"
+											<a>
+												<img src={FloIcon}
 													alt="agenda-freelancer-kompass-2020"/>
 											</a>
 										</div>
 
 										<div className="carousel-item">
-											<a
-											>
-												<img
-													src="/images/survey/2020/new/de/carousel/3-einkommenszufriedenheit-freelancer-kompass-2020.PNG"
+											<a>
+												<img src={FloIcon}
 													alt="einkommenszufriedenheit-freelancer-kompass-2020"/>
 											</a>
 										</div>

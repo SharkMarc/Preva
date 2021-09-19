@@ -34,6 +34,7 @@ class App extends React.Component {
 			status:        '',
 			statisticPage: false,
 			textContent:   'test test drei drei vier',
+			backdrop:      false,
 		};
 		this.handlePage = this.handlePage.bind(this);
 		this.loginAjax = this.loginAjax.bind(this);
@@ -53,17 +54,17 @@ class App extends React.Component {
 		if (id.classList.contains('slide-in')) {
 			id.classList.remove('slide-in');
 			id.classList.add('slide-out');
+			document.getElementById('navbarBackdrop').classList.remove('showing');
+
+			this.setState({ backdrop: false });
 		} else {
 			id.classList.add('slide-in');
 			id.classList.remove('slide-out');
 			id.classList.remove('d-none');
+			document.getElementById('navbarBackdrop').classList.add('showing');
 
+			this.setState({ backdrop: true });
 		}
-//		document.addEventListener('scroll', function(e) {
-//			document.getElementById('sidebar').classList.add('slide-in');
-//			document.getElementById('sidebar').classList.remove('slide-out');
-//			document.getElementById('sidebar').classList.remove('d-none');
-//		})
 	}
 
 	search({ target }) {
@@ -153,8 +154,8 @@ class App extends React.Component {
 		}
 	}
 
-	handlePage(page, sidebar=false) {
-		if(sidebar){
+	handlePage(page, sidebar = false) {
+		if (sidebar) {
 			this.handleSidebar();
 		}
 		this.setState({ page: page });
@@ -176,14 +177,12 @@ class App extends React.Component {
 	}
 
 	render() {
-		const underConstruction=
-			<section id={"wip"}>
+		const underConstruction =
+			<section id={'wip'}>
 				<h1 className="col-12">Work in progress</h1>
 				<hr/>
 				<img src={WIP} className="d-flex wip-martha my-auto"/>
 			</section>;
-
-
 
 		const navbarBottom =
 			<nav className="footer w-100">
@@ -193,9 +192,11 @@ class App extends React.Component {
 						onClick={() => this.handlePage('impressum')}>Impressum
 					</div>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
-						onClick={() => this.handlePage('dataPolicy')}>Datenschutz</div>
+						onClick={() => this.handlePage('dataPolicy')}>Datenschutz
+					</div>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
-						onClick={() => this.handlePage('contact')}>Kontakt</div>
+						onClick={() => this.handlePage('contact')}>Kontakt
+					</div>
 					<div className="col-lg-3"/>
 				</div>
 			</nav>;
@@ -203,35 +204,29 @@ class App extends React.Component {
 		const header =
 			<div>
 				<div className="d-flex col-12 header">
-					<div className='col-lg-1 col-md-2 my-auto' onClick={() => this.handleSidebar()}>
+					<div className="col-lg-1 col-md-2 my-auto" onClick={() => this.handleSidebar()}>
 						<img src={BurgerNav} className={'burger-nav'}/>
 					</div>
-					<div className='col-10 d-flex border-right-left justify-content-center'>
+					<div className="col-10 d-flex border-right-left justify-content-center">
 						<img onClick={() => this.handleStartPage()} src={PrevaGif} className="preva-icon cursor-pointer" alt={'preva'}/>
-						<h1 onClick={() => this.handleStartPage()} className='header-preva  cursor-pointer'>Preva</h1>
+						<h1 onClick={() => this.handleStartPage()} className="header-preva  cursor-pointer">Preva</h1>
 					</div>
 				</div>
-				<div id='sidebar' className='d-none'>
+				<div id="sidebar" className="d-none">
 					<ul>
 						<li onClick={() => this.handlePage('upload', true)}>
 							<div>Home</div>
-							{/*<div onClick={() => this.handlePage('product', true)}>Product</div>*/}
 						</li>
-						<hr className={'hr-content'}/>
-						<li>
+						<li onClick={() => this.handlePage('product', true)}>
 							<div>Product</div>
-							{/*<div onClick={() => this.handlePage('product', true)}>Product</div>*/}
 						</li>
-						<hr className={'hr-content'}/>
 
 						<li onClick={() => this.handlePage('motivation', true)}>
 							<div>Motivation</div>
 						</li>
-						<hr className={'hr-content'}/>
 						<li onClick={() => this.handlePage('aboutus', true)}>
 							<div>Team</div>
 						</li>
-						<hr className={'hr-content'}/>
 					</ul>
 				</div>
 			</div>;
@@ -259,7 +254,6 @@ class App extends React.Component {
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
 			}
 				break;
-
 
 			case 'dataPolicy': {
 				html = <DataPolicy
@@ -293,7 +287,7 @@ class App extends React.Component {
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
 					handleStatisticPage={() => this.handleStatisticPage()}
-					/>;
+				/>;
 			}
 				break;
 			case 'product': {
@@ -304,7 +298,7 @@ class App extends React.Component {
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
 					handleStatisticPage={() => this.handleStatisticPage()}
-					/>;
+				/>;
 			}
 				break;
 
@@ -320,15 +314,15 @@ class App extends React.Component {
 			}
 				break;
 			case 'contact': {
-					html = <Contact
-						handlePage={(p) => this.handlePage(p)}
-						handleBackToUpload={(e) => this.handleBackToUpload(e)}
-						status={this.status}
-						statisticPage={this.state.statisticPage}
-						handleStartPage={() => this.handleStartPage()}
-						handleStatisticPage={() => this.handleStatisticPage()}
-						uploadAjax={(d, p) => this.uploadAjax(d, p)}
-					/>;
+				html = <Contact
+					handlePage={(p) => this.handlePage(p)}
+					handleBackToUpload={(e) => this.handleBackToUpload(e)}
+					status={this.status}
+					statisticPage={this.state.statisticPage}
+					handleStartPage={() => this.handleStartPage()}
+					handleStatisticPage={() => this.handleStatisticPage()}
+					uploadAjax={(d, p) => this.uploadAjax(d, p)}
+				/>;
 			}
 				break;
 			case 'upload': {
@@ -350,10 +344,10 @@ class App extends React.Component {
 				console.log('Unknown Page Sorry for that :-/ :' + page);
 		}
 
-
-
 		return (
+
 			<div className="h-100">
+				<div id="navbarBackdrop" onClick={() => this.handleSidebar()}></div>
 				{header}
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}
@@ -361,7 +355,7 @@ class App extends React.Component {
 				<div className="mb-5">
 					{html}
 				</div>
-				{page === 'impressum'|| page === "dataPolicy"  || page === "Contact" || page === "motivation"? underConstruction : null}
+				{page === 'impressum' || page === 'dataPolicy' || page === 'Contact' || page === 'motivation' ? underConstruction : null}
 
 				{navbarBottom}
 			</div>
