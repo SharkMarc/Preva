@@ -379,8 +379,9 @@ a.hover-upload {
         border-color: white;
         background-color: #3030d2c9;
       }
+
       border: 0;
-      border-bottom: 2px solid rgba(0,0,0,.3);
+      border-bottom: 2px solid rgba(0, 0, 0, .3);
     }
 
     .li:hover {
@@ -388,6 +389,104 @@ a.hover-upload {
     }
   }
 }
+
+.colournew {
+  color: #fff;
+}
+
+#product {
+  h1 {
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  hr {
+    width: 50%;
+  }
+
+  #carousel-example-generic {
+    padding: 100px 100px;
+
+    img {
+      height: 150px;
+    }
+
+    .text-area {
+      display: inline-block;
+      margin-top: auto;
+      margin-bottom: auto;
+
+      hr {
+        border-top: 2px solid #000;
+      }
+
+      h2 {
+        margin-top: auto;
+      }
+
+      h2, .content {
+        text-align: center;
+        width: 100%;
+      }
+
+      .main-content {
+
+        text-align: center;
+      }
+
+      .content {
+        color: lightgray;
+      }
+    }
+
+    .carousel-item.active {
+      text-align: center;
+    }
+
+    .carousel-indicators {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      padding: 0;
+      margin-right: 15%;
+      margin-bottom: 1rem;
+      margin-left: 15%;
+      list-style: none;
+    }
+
+    .carousel-inner {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .carousel-control-next {
+      border: unset;
+      background-image: linear-gradient(
+                      270deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .001));
+    }
+
+    .carousel-control-prev {
+      border: unset;
+      background-image: linear-gradient(
+                      270deg, rgba(0, 0, 0, .001), rgba(0, 0, 0, .25));
+    }
+
+    i {
+      color: #000 !important;
+    }
+  }
+
+}
+
 
 #navbarBackdrop.showing {
   position: fixed;
