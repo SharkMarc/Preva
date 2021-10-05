@@ -56,7 +56,7 @@ class App extends React.Component {
 			id.classList.add('slide-out');
 			document.getElementById('navbarBackdrop').classList.remove('showing');
 
-			if (fixed) {
+			if (document.querySelector('body').classList.contains('overflow-hidden')) {
 				document.querySelector('body').classList.remove('overflow-hidden');
 			}
 
