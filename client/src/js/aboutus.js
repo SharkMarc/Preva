@@ -10,7 +10,7 @@ export default class Register extends React.Component {
 			aboutus:
 				[{
 					id:           1,
-					name:         'Florian Spree',
+					name:         'Florian',
 					position:     'Founder and Concept',
 					telltheworld: 'Flo has been there at the very beginning. He \n' +
 						              'helped to create the vision and shaped Preva \n' +
@@ -20,7 +20,7 @@ export default class Register extends React.Component {
 					img:          FloIcon,
 				}, {
 					id:           2,
-					name:         'Marc Spree',
+					name:         'Marc',
 					position:     'Head of Development',
 					telltheworld: 'Marc has proven himself to be an \n' +
 						              'outstanding teamplayer and ambitious \n' +

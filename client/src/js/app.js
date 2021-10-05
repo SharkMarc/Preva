@@ -48,7 +48,7 @@ class App extends React.Component {
 		this.handleSidebar = this.handleSidebar.bind(this);
 	}
 
-	handleSidebar(e) {
+	handleSidebar(fixed) {
 		let id = document.getElementById('sidebar');
 
 		if (id.classList.contains('slide-in')) {
@@ -202,33 +202,68 @@ class App extends React.Component {
 			</nav>;
 
 		const header =
-			<div>
-				<div className="d-flex col-12 header">
-					<div className="col-lg-1 col-md-2 my-auto" onClick={() => this.handleSidebar()}>
-						<img src={BurgerNav} className={'burger-nav'}/>
+			<div id={'headerNavigation'}>
+				<div className="header medium-width d-flex">
+					<div className="my-auto preva-image" onClick={() => this.handleSidebar()}>
+						<div className="d-flex">
+							<img onClick={() => this.handleStartPage()} src={PrevaGif} className="preva-icon cursor-pointer" alt={'preva'}/>
+							<h1 onClick={() => this.handleStartPage()} className="header-preva cursor-pointer">Preva</h1>
+						</div>
 					</div>
-					<div className="col-10 d-flex border-right-left justify-content-center">
-						<img onClick={() => this.handleStartPage()} src={PrevaGif} className="preva-icon cursor-pointer" alt={'preva'}/>
-						<h1 onClick={() => this.handleStartPage()} className="header-preva  cursor-pointer">Preva</h1>
+					<div className="border-left-preva d-flex">
+						<div className="header-item" onClick={() => this.handlePage('product', true)}>Product</div>
+						<div className="header-item" onClick={() => this.handlePage('motivation', true)}>Motivation</div>
+						<div className="header-item" onClick={() => this.handlePage('aboutus', true)}>Team</div>
 					</div>
 				</div>
-				<div id="sidebar" className="d-none">
-					<ul>
-						<li onClick={() => this.handlePage('upload', true)}>
-							<div>Home</div>
-						</li>
-						<li onClick={() => this.handlePage('product', true)}>
-							<div>Product</div>
-						</li>
 
-						<li onClick={() => this.handlePage('motivation', true)}>
-							<div>Motivation</div>
-						</li>
-						<li onClick={() => this.handlePage('aboutus', true)}>
-							<div>Team</div>
-						</li>
-					</ul>
+				{/*<div id="sidebar" className="d-none">*/}
+				{/*	<ul>*/}
+				{/*		<li onClick={() => this.handlePage('upload', true)}>*/}
+				{/*			<div>Home</div>*/}
+				{/*		</li>*/}
+				{/*		<li onClick={() => this.handlePage('product', true)}>*/}
+				{/*			<div>Product</div>*/}
+				{/*		</li>*/}
+
+				{/*		<li onClick={() => this.handlePage('motivation', true)}>*/}
+				{/*			<div>Motivation</div>*/}
+				{/*		</li>*/}
+				{/*		<li >*/}
+				{/*			<div>Team</div>*/}
+				{/*		</li>*/}
+				{/*	</ul>*/}
+				{/*</div>*/}
+				<div className="mobile-width">
+					<div className="d-flex col-12 header">
+						<div className="col-lg-1 col-md-2 my-auto" onClick={() => this.handleSidebar('fixed')}>
+							<img src={BurgerNav} className={'burger-nav'}/>
+						</div>
+						<div className="col-10 d-flex border-right-left justify-content-center">
+							<img onClick={() => this.handleStartPage()} src={PrevaGif} className="preva-icon cursor-pointer" alt={'preva'}/>
+							<h1 onClick={() => this.handleStartPage()} className="header-preva  cursor-pointer">Preva</h1>
+						</div>
+					</div>
+					<div id="sidebar" className="d-none">
+						<ul>
+							<li onClick={() => this.handlePage('upload', true)}>
+								<div>Home</div>
+							</li>
+							<li onClick={() => this.handlePage('product', true)}>
+								<div>Product</div>
+							</li>
+
+							<li onClick={() => this.handlePage('motivation', true)}>
+								<div>Motivation</div>
+							</li>
+							<li onClick={() => this.handlePage('aboutus', true)}>
+								<div>Team</div>
+							</li>
+						</ul>
+					</div>
 				</div>
+				<div id="dummyHeader"/>
+
 			</div>;
 
 		const nav = <Nav handlePage={(p) => this.handlePage(p)} phrase={this.state.phrase} search={this.search}/>;
@@ -352,12 +387,13 @@ class App extends React.Component {
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}
 				{/*}*/}
-				<div className="mb-5">
+				<div className="mb-5 ">
 					{html}
 				</div>
 				{page === 'impressum' || page === 'dataPolicy' || page === 'Contact' || page === 'motivation' ? underConstruction : null}
 
 				{navbarBottom}
+				<div className="dummy-footer"/>
 			</div>
 		);
 	}

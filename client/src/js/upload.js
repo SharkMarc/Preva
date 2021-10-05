@@ -310,7 +310,7 @@ export default class Upload extends React.Component {
 			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
 				{!statisticPage ?
 					<div>
-						<div className="pt-4 justify-content-center">
+						<div className="justify-content-center">
 							<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
 								method="post"
 								id="formUpload"

@@ -60,24 +60,22 @@ export default class Product extends React.Component {
 									</div>
 								</div>
 							</div>
-
-							<button className="carousel-control-prev" type="button" data-bs-target="#carousel-example-generic"
-								data-bs-slide="prev">
+							<div className={'text-right mt-2'}>
+								<button className="carousel-icon" type="button" data-bs-target="#carousel-example-generic"
+									data-bs-slide="prev">
 				                    <span className="carousel-control-prev-icon">
-				                        <i className="fas fa-chevron-left"></i>
 				                    </span>
-							</button>
+								</button>
 
-							<button className="carousel-control-next" type="button" data-bs-target="#carousel-example-generic"
-								data-bs-slide="next">
+								<button className="carousel-icon ml-2" type="button" data-bs-target="#carousel-example-generic"
+									data-bs-slide="next">
 					                    <span className="carousel-control-next-icon">
-					                        <i className="fas fa-chevron-right"></i>
 					                    </span>
-							</button>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
-
 			</section>
 		);
 	}
