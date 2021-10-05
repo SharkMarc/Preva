@@ -56,12 +56,20 @@ class App extends React.Component {
 			id.classList.add('slide-out');
 			document.getElementById('navbarBackdrop').classList.remove('showing');
 
+			if (fixed) {
+				document.querySelector('body').classList.remove('overflow-hidden');
+			}
+
 			this.setState({ backdrop: false });
 		} else {
 			id.classList.add('slide-in');
 			id.classList.remove('slide-out');
 			id.classList.remove('d-none');
 			document.getElementById('navbarBackdrop').classList.add('showing');
+
+			if (fixed) {
+				document.querySelector('body').classList.add('overflow-hidden');
+			}
 
 			this.setState({ backdrop: true });
 		}
