@@ -689,14 +689,6 @@ a.hover-upload {
     max-width: 100%;
   }
 
-  @media (max-width: 991px) {
-    .container-two {
-      .marc-icon {
-        order: 2;
-      }
-    }
-  }
-
   .card {
     margin-right: 0;
     margin-left: 0;
@@ -723,10 +715,6 @@ a.hover-upload {
       font-weight: bold;
       background: #000;
       color: #fff;
-
-      .point-header-text {
-
-      }
     }
   }
 }
