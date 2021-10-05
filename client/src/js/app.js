@@ -225,23 +225,6 @@ class App extends React.Component {
 					</div>
 				</div>
 
-				{/*<div id="sidebar" className="d-none">*/}
-				{/*	<ul>*/}
-				{/*		<li onClick={() => this.handlePage('upload', true)}>*/}
-				{/*			<div>Home</div>*/}
-				{/*		</li>*/}
-				{/*		<li onClick={() => this.handlePage('product', true)}>*/}
-				{/*			<div>Product</div>*/}
-				{/*		</li>*/}
-
-				{/*		<li onClick={() => this.handlePage('motivation', true)}>*/}
-				{/*			<div>Motivation</div>*/}
-				{/*		</li>*/}
-				{/*		<li >*/}
-				{/*			<div>Team</div>*/}
-				{/*		</li>*/}
-				{/*	</ul>*/}
-				{/*</div>*/}
 				<div className="mobile-width">
 					<div className="d-flex col-12 header">
 						<div className="col-lg-1 col-md-2 my-auto" onClick={() => this.handleSidebar('fixed')}>
