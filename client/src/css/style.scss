@@ -1,9 +1,14 @@
+$purple: #CF33CF;
+$teal: #10D2C4;
+$blue: #0045C6;
+
 .nav-height {
   position: fixed;
   background: #000;
   color: #fff;
   height: 50px;
 }
+
 
 .header {
   position: sticky !important;
@@ -364,7 +369,7 @@ a.hover-upload {
 
 #headerNavigation {
   .medium-width {
-    margin-bottom: 16px;
+    //margin-bottom: 16px;
 
     .border-left-preva.d-flex:after {
       content: " ";
@@ -950,4 +955,53 @@ input, textarea {
 
 .position-fixed {
   position: fixed;
+}
+
+.preva-btn {
+  min-width: 168px;
+  height: 44px;
+  line-height: 2;
+  color: $blue;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  border: 1px solid $blue;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 6px;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover, &:active {
+    color: white !important;
+    border-color: white;
+    background-color: $blue;
+  }
+}
+
+#home {
+  .full-height-bg {
+    background-image: url("../assets/gardiant-background-2.png");
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .full-height-bg-height {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 95vh;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  }
 }

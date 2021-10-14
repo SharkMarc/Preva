@@ -19,7 +19,7 @@ export default class Upload extends React.Component {
 			noa:               [],
 			bpmnList:          [],
 			objectSummary:     [],
-			testVersion:[],
+			testVersion:       [],
 			allLists:          [],
 			seperability:      [],
 			statisticSwitch:   'Size',
@@ -64,23 +64,25 @@ export default class Upload extends React.Component {
 //			}
 		}
 	}
-	handleSeperabilities(){
-		let summary=this.state.objectSummary;
-		let array1=[];
-		let sumupUntilArray=0;
+
+	handleSeperabilities() {
+		let summary = this.state.objectSummary;
+		let array1 = [];
+		let sumupUntilArray = 0;
 		console.log(summary);
 		console.log(summary[0]);
-		console.log(summary["outgoing"]);
-		summary.map((name, i)=>console.log(name));
-		for(let i =0; i<summary.length; i++){
+		console.log(summary['outgoing']);
+		summary.map((name, i) => console.log(name));
+		for (let i = 0; i < summary.length; i++) {
 			console.log(summary[i]);
-			console.log(summary[i]["outgoing"])
+			console.log(summary[i]['outgoing']);
 
-			if(summary[i]["outgoing"]){
-				sumupUntilArray=this.handleInsideElements(summary[i]["outgoing"]);
+			if (summary[i]['outgoing']) {
+				sumupUntilArray = this.handleInsideElements(summary[i]['outgoing']);
 			}
 		}
 	}
+
 	getNOAC() {
 //		anzahl der exclusiveGateways+xor's
 		return this.state.countList['exclusiveGateways'];
@@ -310,77 +312,84 @@ export default class Upload extends React.Component {
 			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
 				{!statisticPage ?
 					<div>
-						<div className="justify-content-center">
-							<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
-								method="post"
-								id="formUpload"
-								onSubmit={(e) => this.handleSubmit(e)}>
-								<div className="col-12 text-center mb-3">
-									<div className="mx-auto text-left">
-										<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
-										{/*<h4 className="col-12 mb-3 text-center">Please select your process model...</h4>*/}
-										<div className={'row'}>
-											<div className={' col-lg-6 col-md-12 my-auto'}>
-												<div className='card mx-0'>
-													<h3>Upload</h3>
-													Click here to upload your Processmodel!
-													<div className="cursor-pointer py-2 text-center">
-														<div className="p-2 search-icon hover-upload"
-															onClick={() => this.click(status)}>
-															<img src={UploadIcon} className="icon-text"/>
-															&nbsp;Upload
-															<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
-																className="d-none"
-																type="file"/>
+						<div id="home" className="justify-content-center">
+							<div className="full-height-bg-height full-height-bg ">
+								<h1> test</h1><br/>
+								<p>text darunter</p>
+								<div className="preva-btn">text</div>
+							</div>
+						</div>
+								<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
+									method="post"
+									id="formUpload"
+									onSubmit={(e) => this.handleSubmit(e)}>
+									<div className="col-12 text-center mb-3">
+										<div className="mx-auto text-left">
+											<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
+											{/*<h4 className="col-12 mb-3 text-center">Please select your process model...</h4>*/}
+											<div className={'row'}>
+												<div className={' col-lg-6 col-md-12 my-auto'}>
+													<div className="card mx-0">
+														<h3>Upload</h3>
+														Click here to upload your Processmodel!
+														<div className="cursor-pointer py-2 text-center">
+															<div className="p-2 search-icon hover-upload"
+																onClick={() => this.click(status)}>
+																<img src={UploadIcon} className="icon-text"/>
+																&nbsp;Upload
+																<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
+																	className="d-none"
+																	type="file"/>
+															</div>
 														</div>
-													</div>
-													<div className="cursor-pointer py-2 text-center">
+														<div className="cursor-pointer py-2 text-center">
 
-														<button id="uploadButton2" type="submit"
-															onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
-															className="cursor-pointer success-color py-2 text-center submitButton d-none search-icon justify-content-center w-100"
-														>
-															<img src={SearchIcon} className="icon-text my-auto"/>
-															&nbsp;Analysis
-														</button>
-														<div className="col-4 my-auto" style={dnone}>
-															<div id="fileName"/>
+															<button id="uploadButton2" type="submit"
+																onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
+																className="cursor-pointer success-color py-2 text-center submitButton d-none search-icon justify-content-center w-100"
+															>
+																<img src={SearchIcon} className="icon-text my-auto"/>
+																&nbsp;Analysis
+															</button>
+															<div className="col-4 my-auto" style={dnone}>
+																<div id="fileName"/>
+															</div>
 														</div>
 													</div>
 												</div>
+												<div className={'col-lg-6 col-md-12 pa-2'}>
+													<div className="image-upload list-container my-4"/>
+												</div>
 											</div>
-											<div className={'col-lg-6 col-md-12 pa-2'}>
-												<div className="image-upload list-container my-4"/>
-											</div>
-										</div>
-										<hr className={'content-hr'}/>
-										<div className="row">
+											<hr className={'content-hr'}/>
+											<div className="row">
 
-											<div className="col-md-12 col-lg-6 mx-auto pa-2 second-list-order-image">
-												<div className='get-started list-container my-4'/>
-											</div>
-											<div className={'col-lg-6 col-md-12 my-auto second-list-order-text'}>
+												<div className="col-md-12 col-lg-6 mx-auto pa-2 second-list-order-image">
+													<div className="get-started list-container my-4"/>
+												</div>
+												<div className={'col-lg-6 col-md-12 my-auto second-list-order-text'}>
 
-												<div className={'card mx-0'}>
-													<h3>Guidance</h3>
-													<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
-													Here u can find a checklist to ensure your Processmodel is set up properly
-													<a className="p-2 search-icon hover-upload"
-														//														href={DownloadPDF}
-														href={'/ConventionGuidline_Preva_v1.pdf'}
+													<div className={'card mx-0'}>
+														<h3>Guidance</h3>
+														<input type="text" name="dataName" className="d-none"
+															defaultValue={this.state.dataName}/>
+														Here u can find a checklist to ensure your Processmodel is set up properly
+														<a className="p-2 search-icon hover-upload"
+															//														href={DownloadPDF}
+															href={'/ConventionGuidline_Preva_v1.pdf'}
 
-														download>
-														<img src={DownloadIcon} className="icon-text"/>
-														&nbsp;Download
-													</a>
+															download>
+															<img src={DownloadIcon} className="icon-text"/>
+															&nbsp;Download
+														</a>
 
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</form>
-						</div>
+								</form>
+
 
 						{/* SUCCESS-BOX*/}
 						<SuccessBox PrevaIcon={PrevaIcon} dnone={dnone}/>
@@ -402,7 +411,7 @@ export default class Upload extends React.Component {
 						</div>
 					</div>
 					:
-					<div className='pt-4'>
+					<div className="pt-4">
 						<div className="container">
 							<div className="row">
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
@@ -442,12 +451,12 @@ export default class Upload extends React.Component {
 								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
 									<div className="card border-shadow-statistic min-height-statistic w-100">
 										{/*<canvas id="myChart" width="400" height="400"></canvas>*/}
-										<div><h2 className='text-center'><b>Trend</b></h2>
-											<hr className='mt-0 hr-border'/>
+										<div><h2 className="text-center"><b>Trend</b></h2>
+											<hr className="mt-0 hr-border"/>
 											<div>This card is an example.</div>
 											<br/>
 											<div className="text-center">
-												<img src={Speedometa} className='messureIcon'/>
+												<img src={Speedometa} className="messureIcon"/>
 											</div>
 										</div>
 									</div>
@@ -457,7 +466,7 @@ export default class Upload extends React.Component {
 										<button
 											className="d-flex justify-content-center  btn border-shadow-statistic button-border hover-upload w-100"
 											onClick={() => this.props.handleStartPage()}>
-											<img src={BackIcon} className='icon-text mr-1 my-auto'/>
+											<img src={BackIcon} className="icon-text mr-1 my-auto"/>
 											<div>
 												back
 											</div>
@@ -469,15 +478,15 @@ export default class Upload extends React.Component {
 									{/*		onClick={() => this.getData()}> get data*/}
 									{/*	</button>*/}
 									{/*</div>*/}
-									<button onClick={()=>this.handleSeperabilities()}>testen</button>
+									<button onClick={() => this.handleSeperabilities()}>testen</button>
 									{/* CREATE PDF */}
 									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
 										method="post">
 										<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 										<button
 											className="d-flex justify-content-center btn w-100 border-shadow-statistic button-border hover-upload"
-											type='submit'>
-											<img src={PDFIcon} className='icon-text mr-1 my-auto'/>
+											type="submit">
+											<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
 											<div>Create Pdf</div>
 										</button>
 									</form>
