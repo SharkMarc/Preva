@@ -8,6 +8,9 @@ import DownloadIcon from '../assets/download.png';
 import BackIcon from '../assets/back.png';
 import PDFIcon from '../assets/pdf.png';
 import Speedometa from '../assets/speedometer.png';
+import Cloudupload from '../assets/cloudupload.png';
+import ConventionGuide from '../assets/ConventionGuide.png';
+import NumberOne from '../assets/1.png';
 
 export default class Upload extends React.Component {
 	constructor(props) {
@@ -314,82 +317,86 @@ export default class Upload extends React.Component {
 					<div>
 						<div id="home" className="justify-content-center">
 							<div className="full-height-bg-height full-height-bg ">
-								<h1> test</h1><br/>
+								<h1> Learn how to mesure<br/>business process models</h1><br/>
 								<p>text darunter</p>
 								<div className="preva-btn">text</div>
 							</div>
 						</div>
-								<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
-									method="post"
-									id="formUpload"
-									onSubmit={(e) => this.handleSubmit(e)}>
-									<div className="col-12 text-center mb-3">
-										<div className="mx-auto text-left">
-											<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
-											{/*<h4 className="col-12 mb-3 text-center">Please select your process model...</h4>*/}
-											<div className={'row'}>
-												<div className={' col-lg-6 col-md-12 my-auto'}>
-													<div className="card mx-0">
-														<h3>Upload</h3>
-														Click here to upload your Processmodel!
-														<div className="cursor-pointer py-2 text-center">
-															<div className="p-2 search-icon hover-upload"
-																onClick={() => this.click(status)}>
-																<img src={UploadIcon} className="icon-text"/>
-																&nbsp;Upload
-																<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
-																	className="d-none"
-																	type="file"/>
-															</div>
-														</div>
-														<div className="cursor-pointer py-2 text-center">
+						<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
+							method="post"
+							id="formUpload"
+							onSubmit={(e) => this.handleSubmit(e)}>
+							<section>
+								<div className="introduction-container">
+									<h2>How to get started</h2>
+									<p>Use placeholder for better understanding</p>
+								</div>
+								<div className="mx-auto text-left">
+									<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
 
-															<button id="uploadButton2" type="submit"
-																onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
-																className="cursor-pointer success-color py-2 text-center submitButton d-none search-icon justify-content-center w-100"
-															>
-																<img src={SearchIcon} className="icon-text my-auto"/>
-																&nbsp;Analysis
-															</button>
-															<div className="col-4 my-auto" style={dnone}>
-																<div id="fileName"/>
-															</div>
-														</div>
-													</div>
+									<div className="row">
+										<div className={'col-lg-6 col-md-12 my-auto'}>
+											<div className={'outline-number-content-1'}>
+												<h3>Guidance</h3>
+												<input type="text" name="dataName" className="d-none"
+													defaultValue={this.state.dataName}/>
+												<p>Here u can find a checklist to ensure your Processmodel is set up properly</p>
+												<div className="d-flex">
+													<a className="preva-btn"
+														//														href={DownloadPDF}
+														href={'/ConventionGuidline_Preva_v1.pdf'}
+
+														download>
+														<img src={DownloadIcon} className="icon-text"/>
+														&nbsp;Download
+													</a>
 												</div>
-												<div className={'col-lg-6 col-md-12 pa-2'}>
-													<div className="image-upload list-container my-4"/>
-												</div>
+												<div className="outline-number">1</div>
+
 											</div>
-											<hr className={'content-hr'}/>
-											<div className="row">
-
-												<div className="col-md-12 col-lg-6 mx-auto pa-2 second-list-order-image">
-													<div className="get-started list-container my-4"/>
+										</div>
+										<div className="col-md-12 col-lg-6 mx-auto pa-2 text-center">
+											<img src={ConventionGuide} className="cloud-upload"/>
+										</div>
+									</div>
+									<hr className={'content-hr'}/>
+									<div className="row">
+										<div className={'col-lg-6 col-md-12 pa-2 text-center'}>
+											<img src={Cloudupload} className="cloud-upload"/>
+										</div>
+										<div className=" col-lg-6 col-md-12 my-auto">
+											{/*<img src={NumberOne} className="cloud-upload"/>*/}
+											<div className="outline-number-content-2">
+												<h3>Upload</h3>
+												<p>Click here to upload your Processmodel!</p>
+												<div className="ml-auto preva-btn"
+													onClick={() => this.click(status)}>
+													<img src={UploadIcon} className="icon-text"/>
+													&nbsp;Upload
+													<input onChange={() => this.showUploadButton()} name="userfile" id="userfile"
+														className="d-none"
+														type="file"/>
 												</div>
-												<div className={'col-lg-6 col-md-12 my-auto second-list-order-text'}>
-
-													<div className={'card mx-0'}>
-														<h3>Guidance</h3>
-														<input type="text" name="dataName" className="d-none"
-															defaultValue={this.state.dataName}/>
-														Here u can find a checklist to ensure your Processmodel is set up properly
-														<a className="p-2 search-icon hover-upload"
-															//														href={DownloadPDF}
-															href={'/ConventionGuidline_Preva_v1.pdf'}
-
-															download>
-															<img src={DownloadIcon} className="icon-text"/>
-															&nbsp;Download
-														</a>
-
+												<div className="cursor-pointer py-2 text-center">
+													<button id="uploadButton2" type="submit"
+														onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
+														className="cursor-pointer success-color py-2 text-center submitButton d-none preva-btn justify-content-center w-100"
+													>
+														<img src={SearchIcon} className="icon-text my-auto"/>
+														&nbsp;Analysis
+													</button>
+													<div className="col-4 my-auto" style={dnone}>
+														<div id="fileName"/>
 													</div>
+													<div className="outline-number">2</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</form>
 
+								</div>
+							</section>
+						</form>
 
 						{/* SUCCESS-BOX*/}
 						<SuccessBox PrevaIcon={PrevaIcon} dnone={dnone}/>
