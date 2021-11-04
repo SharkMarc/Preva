@@ -9,7 +9,9 @@ import BackIcon from '../assets/back.png';
 import PDFIcon from '../assets/pdf.png';
 import Speedometa from '../assets/speedometer.png';
 import Cloudupload from '../assets/cloudupload.png';
-import ConventionGuide from '../assets/ConventionGuide.png';
+import DashboardImg from '../assets/dashboard.png';
+import Export from '../assets/export.png';
+import ConventionGuide from '../assets/conventionGuide.png';
 import NumberOne from '../assets/1.png';
 
 export default class Upload extends React.Component {
@@ -322,22 +324,25 @@ export default class Upload extends React.Component {
 								<div className="preva-btn">text</div>
 							</div>
 						</div>
-						<form className="col-12" action="http://localhost:6318/controller/upload.php" encType="multipart/form-data"
+						<form className="col-12" action={Route.upload} encType="multipart/form-data"
 							method="post"
 							id="formUpload"
 							onSubmit={(e) => this.handleSubmit(e)}>
+
 							<section>
 								<div className="introduction-container">
 									<h2>How to get started</h2>
 									<p>Use placeholder for better understanding</p>
 								</div>
+
 								<div className="mx-auto text-left">
 									<input className="form-control" accept="image/*" type="hidden" name="MAX_FILE_SIZE" value="30000"/>
 
 									<div className="row">
-										<div className={'col-lg-6 col-md-12 my-auto'}>
+										<div className={'col-lg-6 col-md-12 my-auto order-responsive-second'}>
 											<div className={'outline-number-content-1'}>
 												<h3>Guidance</h3>
+												<hr id="guidance"/>
 												<input type="text" name="dataName" className="d-none"
 													defaultValue={this.state.dataName}/>
 												<p>Here u can find a checklist to ensure your Processmodel is set up properly</p>
@@ -355,11 +360,13 @@ export default class Upload extends React.Component {
 
 											</div>
 										</div>
-										<div className="col-md-12 col-lg-6 mx-auto pa-2 text-center">
+										<div className="col-md-12 col-lg-6 mx-auto pa-2 text-center order-responsive-first">
 											<img src={ConventionGuide} className="cloud-upload"/>
 										</div>
 									</div>
+
 									<hr className={'content-hr'}/>
+
 									<div className="row">
 										<div className={'col-lg-6 col-md-12 pa-2 text-center'}>
 											<img src={Cloudupload} className="cloud-upload"/>
@@ -368,6 +375,7 @@ export default class Upload extends React.Component {
 											{/*<img src={NumberOne} className="cloud-upload"/>*/}
 											<div className="outline-number-content-2">
 												<h3>Upload</h3>
+												<hr id="uploadTitle"/>
 												<p>Click here to upload your Processmodel!</p>
 												<div className="ml-auto preva-btn"
 													onClick={() => this.click(status)}>
@@ -394,6 +402,38 @@ export default class Upload extends React.Component {
 										</div>
 									</div>
 
+									<hr className={'content-hr'}/>
+
+									<div className="row">
+										<div className={'col-lg-6 col-md-12 my-auto order-responsive-second'}>
+											<div className={'outline-number-content-3'}>
+												<h3>Dashboard</h3>
+												<hr id="dashboardImg"/>
+												<p>Get your process model analyzed and use the dashboard to check out the characteristics of your
+													model</p>
+												<div className="outline-number">3</div>
+											</div>
+										</div>
+										<div className="col-md-12 col-lg-6 mx-auto pa-2 text-center order-responsive-first">
+											<img src={DashboardImg} className="cloud-upload dashboard-img"/>
+										</div>
+									</div>
+
+									<hr className={'content-hr'}/>
+
+									<div className="row">
+										<div className={'col-lg-6 col-md-12 pa-2 text-center export'}>
+											<img src={Export} className="cloud-upload"/>
+										</div>
+										<div className=" col-lg-6 col-md-12 my-auto">
+											<div className="outline-number-content-4">
+												<h3>Export</h3>
+												<hr id="export"/>
+												<p>Use the export functionality to share the results with your colleagues</p>
+												<div className="outline-number">4</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</section>
 						</form>
