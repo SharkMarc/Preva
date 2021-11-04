@@ -1108,7 +1108,7 @@ h2, h3 {
       //TODO: verlinkung in impressum dfonts.org/fonts/integral-cf-font/
     }
 
-    p{
+    p {
       color: #fff;
       font-size: 2rem;
       margin-left: 15%;
@@ -1129,6 +1129,10 @@ h2, h3 {
       font-weight: bold;
     }
   }
+}
+
+.video-responsive {
+  max-width: 100%;
 }
 
 #formUpload {

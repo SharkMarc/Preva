@@ -16,7 +16,7 @@ export default class Product extends React.Component {
 	render() {
 
 		const YoutubeEmbed = ({ embedId }) => (
-			<div className="video-responsive">
+			<div className="video-responsive w-100">
 				<iframe
 					width="853"
 					height="480"
