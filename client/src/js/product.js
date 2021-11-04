@@ -16,7 +16,7 @@ export default class Product extends React.Component {
 	render() {
 
 		const YoutubeEmbed = ({ embedId }) => (
-			<div className="video-responsive w-100">
+			<div className="video-responsive">
 				<iframe
 					width="853"
 					height="480"
@@ -25,19 +25,20 @@ export default class Product extends React.Component {
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen
 					title="Embedded youtube"
+					className="video"
 				/>
 			</div>
 		);
 		return (
 			<div>
 				<div id="home" className="justify-content-center">
-					<div className="full-height-bg-height full-height-bg col-12">
+					<div className="full-height-bg-height full-height-bg col-12 youtube-video">
 						<h1>The new state of the art<br/> business process model metric suite</h1><br/>
 						<p>Check out the features</p>
 						<YoutubeEmbed embedId="suE3J0agZr8" />
 					</div>
 				</div>
-				<section id={'product'}>
+				<section id='product' className="col-12">
 					<h2 className="text-center">What value preva provides</h2>
 					<p className="text-center font-weight-bold">Preva creates a value for all processes around the world</p>
 					<div className="section-two">
@@ -56,7 +57,7 @@ export default class Product extends React.Component {
 												<img src={lightbulb} className="colournew"/>
 											</div>
 											<div className="col-md-7 col-12 text-area">
-												<h3>Understandability</h3>
+												<h3 className="responsive smaller">Understand&shy;ability</h3>
 												<hr className="bold-hr"/>
 												<div className="content">Evaluate the understandability of your process models</div>
 											</div>
