@@ -318,10 +318,10 @@ export default class Upload extends React.Component {
 				{!statisticPage ?
 					<div>
 						<div id="home" className="justify-content-center">
-							<div className="full-height-bg-height full-height-bg ">
-								<h1> Learn how to mesure<br/>business process models</h1><br/>
-								<p>text darunter</p>
-								<div className="preva-btn">text</div>
+							<div className="full-height-bg-height full-height-bg col-12">
+								<h1>Learn how to mesure<br/>business process models</h1><br/>
+								<p>Check out how to generate the best value out of your business process models and enable your business</p>
+								<div onClick={() => this.props.handlePage('product', true)} className="preva-btn">Learn more</div>
 							</div>
 						</div>
 						<form className="col-12" action={Route.upload} encType="multipart/form-data"
@@ -332,7 +332,7 @@ export default class Upload extends React.Component {
 							<section>
 								<div className="introduction-container">
 									<h2>How to get started</h2>
-									<p>Use placeholder for better understanding</p>
+									<p className="font-weight-bold">Use placeholder for better understanding</p>
 								</div>
 
 								<div className="mx-auto text-left">

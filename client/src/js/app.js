@@ -50,28 +50,29 @@ class App extends React.Component {
 
 	handleSidebar(fixed) {
 		let id = document.getElementById('sidebar');
+		if (window.innerWidth < 992) {
+			if (id.classList.contains('slide-in')) {
+				id.classList.remove('slide-in');
+				id.classList.add('slide-out');
+				document.getElementById('navbarBackdrop').classList.remove('showing');
 
-		if (id.classList.contains('slide-in')) {
-			id.classList.remove('slide-in');
-			id.classList.add('slide-out');
-			document.getElementById('navbarBackdrop').classList.remove('showing');
+				if (document.querySelector('body').classList.contains('overflow-hidden')) {
+					document.querySelector('body').classList.remove('overflow-hidden');
+				}
 
-			if (document.querySelector('body').classList.contains('overflow-hidden')) {
-				document.querySelector('body').classList.remove('overflow-hidden');
+				this.setState({ backdrop: false });
+			} else {
+				id.classList.add('slide-in');
+				id.classList.remove('slide-out');
+				id.classList.remove('d-none');
+				document.getElementById('navbarBackdrop').classList.add('showing');
+
+				if (fixed) {
+					document.querySelector('body').classList.add('overflow-hidden');
+				}
+
+				this.setState({ backdrop: true });
 			}
-
-			this.setState({ backdrop: false });
-		} else {
-			id.classList.add('slide-in');
-			id.classList.remove('slide-out');
-			id.classList.remove('d-none');
-			document.getElementById('navbarBackdrop').classList.add('showing');
-
-			if (fixed) {
-				document.querySelector('body').classList.add('overflow-hidden');
-			}
-
-			this.setState({ backdrop: true });
 		}
 	}
 
