@@ -9,54 +9,135 @@ export default class Statistics extends React.Component {
 		const attributes = this.props.attributes;
 		const noaAmount = this.props.noa ? this.props.noa : '';
 		const noacAmount = noaAmount ? noaAmount + attributes['exclusiveGateway'] : '';
-
+//		onClick={() => this.handlePage('product', true)}
+		const handlePage = this.props.handlePage;
 		return (
 			<div className="min-height-statistic col-12">
-				<h2 className="text-center">
+				<h3>
 					<b>{title}</b>
-				</h2>
-				<hr className="mt-0 hr-border"/>
-				<div>{text}</div>
+					<hr/>
+				</h3>
 				<br/>
+
+				{title === 'All' ?
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Size:<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Structure:<br/>
+							<div className="amount">{noacAmount}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Operators:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">
+							Cycle:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] /
+								(noacAmount + attributes['startEvent'] + attributes['endEvent'])
+								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Cognitive weight:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+					</div>
+					: null}
+
 				{title === 'Size' ?
-					<div>
-						<div>Number of ativities (NOA):
-							<b>{noaAmount?noaAmount:"0.00"}</b>
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Number of ativities (NOA):<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
 						</div>
-						<div>Number of activities control-flow elements (NOAC):
-							<b>{noacAmount}</b>
+						<div className="text col-12">Number of activities control-flow elements (NOAC):<br/>
+							<div className="amount">{noacAmount}</div>
+							<hr/>
 						</div>
-						<div>Coefficient of Network Complexity (CNC):
-							<b>{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</b>
+						<div className="text col-12">Coefficient of Network Complexity (CNC):<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
 						</div>
-						<div>Density:
-							<b>{(attributes['sequenceFlow'] /
+						<div className="text col-12">
+							Density:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] /
 								(noacAmount + attributes['startEvent'] + attributes['endEvent'])
-								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</b>
+								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</div>
+							<hr/>
 						</div>
 					</div>
 					: null}
 
-
-				{title === 'structure' ?
-					<div>
-						<div>Seperability:
-							<b>{noacAmount}/</b>
-
+				{title === 'Structure' ?
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Seperability:<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
 						</div>
-						<div>Number of activities control-flow elements (NOAC):
+						<div className="text col-12">Sequentiality:<br/>
+							<div className="amount">{noacAmount}</div>
+							<hr/>
 						</div>
-						<div>Coefficient of Network Complexity (CNC):
-							<b>{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</b>
-						</div>
-						<div>Density:
-							<b>{(attributes['sequenceFlow'] /
-								(noacAmount + attributes['startEvent'] + attributes['endEvent'])
-								* (noacAmount + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</b>
+						<div className="text col-12">Diameter:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
 						</div>
 					</div>
 					: null}
 
+				{title === 'Operator' ?
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Maximum nesting depth:<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Average degree of connectors:<br/>
+							<div className="amount">{noacAmount}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Maximum degree of Connectors:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Binary decissions:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Control flow complexity (CFC):<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Concurrency:<br/>
+							<div className="amount">{(attributes['sequenceFlow'] / noacAmount).toFixed(2)}</div>
+							<hr/>
+						</div>
+					</div>
+					: null}
+
+				{title === 'Cycle' ?
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Cyclicity:<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
+						</div>
+						<div className="text col-12">Cyclomatic Number:<br/>
+							<div className="amount">{noacAmount}</div>
+							<hr/>
+						</div>
+					</div>
+					: null}
+
+				{title === 'Cognitive' ?
+					<div className="statistics flex-wrap">
+						<div className="text col-12">Cognitive weigth:<br/>
+							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<hr/>
+						</div>
+					</div>
+					: null}
 			</div>
 		);
 	}

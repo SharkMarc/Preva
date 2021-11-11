@@ -14,6 +14,9 @@ import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
 import NumberOne from '../assets/1.png';
 
+import RadarChart from 'react-svg-radar-chart';
+import 'react-svg-radar-chart/build/css/index.css'
+
 export default class Upload extends React.Component {
 	constructor(props) {
 		super(props);
@@ -27,8 +30,8 @@ export default class Upload extends React.Component {
 			testVersion:       [],
 			allLists:          [],
 			seperability:      [],
-			statisticSwitch:   'Size',
-			selectedStatistic: 'Size',
+			statisticSwitch:   'All',
+			selectedStatistic: 'All',
 			dataName:          '',
 		};
 
@@ -275,43 +278,109 @@ export default class Upload extends React.Component {
 		let dnone = {
 			display: 'none',
 		};
+		let data = [
+			{
+				data: {
+					battery: 0.7,
+					design: .8,
+					useful: 0.9,
+					speed: 0.67,
+					weight: 0.8
+				},
+				meta: { color: 'blue' }
+			}
+//			,
+//			{
+//				data: {
+//					battery: 0.6,
+//					design: .85,
+//					useful: 0.5,
+//					speed: 0.6,
+//					weight: 0.7
+//				},
+//				meta: { color: 'red' }
+//			}
+		];
+
+		let captions = {
+			// columns
+			battery: 'Battery Capacity',
+			design: 'Design',
+			useful: 'Usefulness',
+			speed: 'Speed',
+			weight: 'Weight'
+		};
+
 		if (statisticSwitch) {
 			switch (statisticSwitch) {
+				case 'All': {
+					html = <Statistics title={'All'} attributes={this.state.countList} noa={this.state.noa}/>;
+				}
+					break;
+
 				case 'Size': {
-					html = <Statistics title={'Size'} attributes={this.state.countList} noa={this.state.noa}
-						text={''}/>;
+					html = <Statistics title={'Size'} attributes={this.state.countList} noa={this.state.noa}/>;
+					data = [
+						{
+							data: {
+								first:  this.state.noa,
+								second: 2,
+								third:  3,
+								forth:  0.67,
+							},
+							meta: { color: 'blue' }
+						}
+					];
+
+					captions = {
+						// columns
+						first:  'Size',
+						second: 'Structure',
+						third:  'Cycle',
+						forth:  'Cognitive weight',
+					};
 				}
 					break;
-				case 'structure': {
-					html = <Statistics title={'Structure'} attributes={this.state.countList} noa={this.state.noa} text={''}/>;
+				case 'Structure': {
+					html = <Statistics title={'Structure'} attributes={this.state.countList} noa={this.state.noa}/>;
 				}
 					break;
-				case 'Sequentiality': {
-					html = <Statistics title={'Sequentiality'} attributes={this.state.countList} text={'hier wird die statistik angezeit'}/>;
+
+				case 'Operator': {
+					html = <Statistics title={'Operator'} attributes={this.state.countList} noa={this.state.noa}/>;
 				}
 					break;
-				case 'Structuredness': {
-					html = <Statistics title={'Structuredness'} attributes={this.state.countList} text={'hier wird die statistik angezeit'}/>;
+
+				case 'Cycle': {
+					html = <Statistics title={'Cycle'} attributes={this.state.countList} noa={this.state.noa}/>;
 				}
 					break;
-				case 'Cyclicity': {
-					html = <Statistics title={'Cyclicity'} attributes={this.state.countList} text={'hier wird die statistik angezeit'}/>;
-				}
-					break;
-				case 'Concurrency': {
-					html = <Statistics title={'Concurrency'} attributes={this.state.countList} text={'hier wird die statistik angezeit'}/>;
-				}
-					break;
+
 				case 'Cognitive': {
-					html = <Statistics title={'Cognitive'} attributes={this.state.countList} text={'hier wird die statistik angezeit'}/>;
+					html = <Statistics title={'Cognitive'} attributes={this.state.countList} noa={this.state.noa}/>;
 				}
 					break;
 				default:
 					console.log('Unknown Page Sorry for that :-/ :' + statisticSwitch);
 			}
 		}
-		let array = ['Size', 'Separability', 'Sequentiality', 'Structuredness', 'Cyclicity', 'Concurrency', 'Cognitive'];
+		let array = ['All', 'Size', 'Structure', 'Operator', 'Cycle', 'Cognitive'];
 		let statisticPage = this.props.statisticPage;
+
+
+		if (statisticSwitch) {
+			switch (statisticSwitch) {
+				case 'Size': {
+
+				}
+					break;
+			}
+		}
+
+
+
+//		TODO: forschleife gib jeweils den state vom aktuellem statistics dann, jeden werd
+
 
 		return (
 			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
@@ -385,10 +454,10 @@ export default class Upload extends React.Component {
 														className="d-none"
 														type="file"/>
 												</div>
-												<div className="cursor-pointer py-2 text-center">
+												<div className="cursor-pointer py-2 ml-auto">
 													<button id="uploadButton2" type="submit"
 														onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
-														className="cursor-pointer success-color py-2 text-center submitButton d-none preva-btn justify-content-center w-100"
+														className="submitButton d-none preva-btn"
 													>
 														<img src={SearchIcon} className="icon-text my-auto"/>
 														&nbsp;Analysis
@@ -462,32 +531,32 @@ export default class Upload extends React.Component {
 						<div className="container">
 							<div className="row">
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-									<div className="card border-shadow-statistic">
-										<table className="table min-height-statistic mb-0">
-											<thead>
-											<tr>
-												<th scope="col" className={'table-heading-padding'}><h5 className="my-auto"><b>Category</b></h5>
-												</th>
-												<th scope="col" className="table-heading-padding text-center"><h5 className="my-auto">
-													<b>Status</b></h5></th>
-												<th scope="col" className="table-heading-padding text-center"><h5 className="my-auto">
-													<b>Action</b></h5></th>
-											</tr>
-											</thead>
-											<tbody>
-											{array.map((value, i) => {
-												return <StatisticTable
-													bpmndiList={this.state.bpmndiList}
-													id={array[i]}
-													key={i}
-													selectedStatistic={selectedStatistic}
-													handleSwitch={() => this.handleSwitch(array[i], array[i])}
-													name={array[i]}
-													status={i}
-												/>;
-											})}
-											</tbody>
-										</table>
+									<div className="card no-border-top border-shadow-statistic">
+										<div className="table min-height-statistic mb-0 flex-wrap">
+											<div id="Categories" className="flex-wrap col-12">
+												<h5 className="my-auto col-6 p-0">Category
+													<hr className="w-100"/>
+												</h5>
+												<h5 className="my-auto col-6 p-0 text-center">Status
+													<hr className="w-100"/>
+												</h5>
+											</div>
+
+											<div className="col-12 p-0">
+												{/*<hr className="category-hr"/>*/}
+												{array.map((value, i) => {
+													return <StatisticTable
+														bpmndiList={this.state.bpmndiList}
+														id={array[i]}
+														key={i}
+														selectedStatistic={selectedStatistic}
+														handleSwitch={() => this.handleSwitch(array[i], array[i])}
+														name={array[i]}
+														status={i}
+													/>;
+												})}
+											</div>
+										</div>
 									</div>
 								</div>
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1">
@@ -496,16 +565,17 @@ export default class Upload extends React.Component {
 									</div>
 								</div>
 								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
+
 									<div className="card border-shadow-statistic min-height-statistic w-100">
-										{/*<canvas id="myChart" width="400" height="400"></canvas>*/}
-										<div><h2 className="text-center"><b>Trend</b></h2>
-											<hr className="mt-0 hr-border"/>
-											<div>This card is an example.</div>
-											<br/>
-											<div className="text-center">
-												<img src={Speedometa} className="messureIcon"/>
-											</div>
-										</div>
+										<h3>
+											<b>Trend</b>
+											<hr/>
+										</h3>
+										<RadarChart
+											captions={captions}
+											data={data}
+											size={450}
+										/>
 									</div>
 								</div>
 								<div className="pt-3 mb-5 col-12 analyse-buttons">
@@ -525,7 +595,7 @@ export default class Upload extends React.Component {
 									{/*		onClick={() => this.getData()}> get data*/}
 									{/*	</button>*/}
 									{/*</div>*/}
-									<button onClick={() => this.handleSeperabilities()}>testen</button>
+									{/*<button onClick={() => this.handleSeperabilities()}>testen</button>*/}
 									{/* CREATE PDF */}
 									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
 										method="post">

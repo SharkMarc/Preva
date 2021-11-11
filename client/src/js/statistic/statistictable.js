@@ -15,19 +15,16 @@ export default class StatisticTable extends React.Component {
 		const selectedStatistic = this.props.selectedStatistic;
 
 		return (
-			<tr id={id}
-				className={selectedStatistic === name ? 'activeStatistic' : 'cursor-pointer'}
+			<div id={id}
+				className={selectedStatistic === name ? 'activeStatistic flex-wrap min-height-50' : 'cursor-pointer flex-wrap min-height-50'}
 				onClick={handleSwitch} key={id}>
-				<td scope="row">
+				<div className="col-6 my-auto">
 					{name}
-				</td>
-				<td scope="row" className="text-center">
+				</div>
+				<div className="col-6 my-auto text-center">
 					<img src={!status ? Green :(status === 1 ? Orange : Red)} className={'traffic-light'}/>
-				</td>
-				<td scope="row" className="text-center">
-					<div><img src={Expand} className="tableIcon"/></div>
-				</td>
-			</tr>
+				</div>
+			</div>
 		);
 	}
 }
