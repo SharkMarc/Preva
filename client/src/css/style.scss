@@ -1198,7 +1198,11 @@ h2, h3, h5 {
       font-size: 1.5rem;
     }
   }
+
   @media (max-width: 767px) {
+    .full-height-bg p {
+      font-size: 1.2rem;
+    }
     .full-height-bg-height {
       max-height: 100% !important;
     }
