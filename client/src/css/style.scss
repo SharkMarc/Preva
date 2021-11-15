@@ -1145,6 +1145,68 @@ h2, h3, h5 {
   }
 }
 
+.testChart {
+  width: auto;
+  height: auto !important;
+}
+
+.motivation-left {
+  img {
+    width: 150px;
+    height: 150px;
+  }
+
+  background-image: url("../assets/background-motivation.png");
+  background-repeat: no-repeat;
+  height: 400px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  color: #fff;
+  background-size: contain;
+
+  hr {
+    border: 0;
+    border-top: 4px solid #cf33cf;
+    margin: 1px 190px 0.5rem 20px;
+  }
+
+  @media (max-width: 764px) {
+    background-size: cover;
+    hr {
+      margin: 1px;
+    }
+  }
+}
+
+.motivation-right {
+  img {
+    width: 150px;
+    height: 150px;
+  }
+
+  background-image: url("../assets/motivation-background-right.png");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  height: 400px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  color: #fff;
+  background-size: contain;
+
+  hr {
+    margin: 1px 21px 0.5rem 230px;
+    border: 0;
+    border-top: 4px solid $teal;
+  }
+
+  @media (max-width: 764px) {
+    background-size: cover;
+    hr {
+      margin: 1px;
+    }
+  }
+}
+
 #home {
   .full-height-bg {
     background-image: url("../assets/gardiant-background-2.png");

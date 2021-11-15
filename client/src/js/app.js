@@ -382,7 +382,7 @@ class App extends React.Component {
 				<div className="mb-5 ">
 					{html}
 				</div>
-				{page === 'impressum' || page === 'dataPolicy' || page === 'Contact' || page === 'motivation' ? underConstruction : null}
+				{page === 'impressum' || page === 'dataPolicy' || page === 'Contact' ? underConstruction : null}
 
 				{navbarBottom}
 				<div className="dummy-footer"/>

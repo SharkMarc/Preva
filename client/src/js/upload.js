@@ -304,11 +304,11 @@ export default class Upload extends React.Component {
 
 		let captions = {
 			// columns
-			battery: 'Battery Capacity',
-			design: 'Design',
-			useful: 'Usefulness',
-			speed: 'Speed',
-			weight: 'Weight'
+			battery: 'Size',
+			design: 'Structure',
+			useful: 'Operators',
+			speed: 'Cycle',
+			weight: 'Cognitive weight'
 		};
 
 		if (statisticSwitch) {
@@ -323,10 +323,10 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.noa,
-								second: 2,
-								third:  3,
-								forth:  0.67,
+								first:  0.1,
+								second: 0.3,
+								third:  0.2,
+								forth:  0.514,
 							},
 							meta: { color: 'blue' }
 						}
@@ -334,20 +334,58 @@ export default class Upload extends React.Component {
 
 					captions = {
 						// columns
-						first:  'Size',
-						second: 'Structure',
-						third:  'Cycle',
-						forth:  'Cognitive weight',
+						first:  'NOA',
+						second: 'NOAC',
+						third:  'CNC',
+						forth:  'Density',
 					};
 				}
 					break;
 				case 'Structure': {
 					html = <Statistics title={'Structure'} attributes={this.state.countList} noa={this.state.noa}/>;
+					data = [
+						{
+							data: {
+								first:  0.1,
+								second: 0.3,
+								third:  0.2,
+							},
+							meta: { color: 'blue' }
+						}
+					];
+					captions = {
+						// columns
+						first:  'Seperability',
+						second: 'Sequentiality',
+						third:  'Diameter',
+					};
 				}
 					break;
 
 				case 'Operator': {
 					html = <Statistics title={'Operator'} attributes={this.state.countList} noa={this.state.noa}/>;
+					data = [
+						{
+							data: {
+								first:  0.1,
+								second: 0.3,
+								third:  0.2,
+								forth:  0.514,
+								fifth:  0.514,
+								sixth:  0.514,
+							},
+							meta: { color: 'blue' }
+						}
+					];
+					captions = {
+						// columns
+						first:  'Nesting depth',
+						second: 'Average degree of connectors',
+						third:  'Maximum degree of connectors',
+						forth:  'Binary decissions',
+						fifth:  'CFC',
+						sixth:  'Concurrency',
+					};
 				}
 					break;
 
@@ -572,9 +610,11 @@ export default class Upload extends React.Component {
 											<hr/>
 										</h3>
 										<RadarChart
+											className={"testChart"}
 											captions={captions}
 											data={data}
-											size={450}
+											dots={true}
+											size={300}
 										/>
 									</div>
 								</div>
