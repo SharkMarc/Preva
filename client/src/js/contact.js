@@ -44,8 +44,8 @@ export default class Contact extends React.Component {
 
 	render() {
 		return (
-			<section id={"contactForm"} className="mt-5">
-				<h1 className="text-center">Get in touch</h1>
+			<section id="contactForm">
+				<h2 className="text-center">Get in touch</h2>
 				<hr/>
 				<div>
 					<form role="form" onSubmit={this.handleContact} action="http://localhost:6318/controller/contact.php"
@@ -68,7 +68,7 @@ export default class Contact extends React.Component {
 								onChange={({ target }) => this.handleChange(target, "text")} name="text" value={this.state.contact.text}
 								placeholder="Was möchtest du uns mitteilen?"/>
 							<div className="col-11 px-0 mx-auto text-center">
-								<button className="" type="submit" onSubmit={() => this.props.handlePage("homepage")}>Absenden</button>
+								<button className="preva-btn" type="submit" onSubmit={() => this.props.handlePage("homepage")}>Absenden</button>
 							</div>
 						</div>
 					</form>

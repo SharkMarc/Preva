@@ -25,8 +25,16 @@ $blue: #0045C6;
 #errorMessage {
   color: black;
 
+  p {
+    color: #000;
+  }
+
+  b {
+    color: #e31d1d
+  }
+
   img {
-    background: #e31d1d !important
+    background: #fff !important
   }
 }
 
@@ -148,8 +156,16 @@ a.hover-upload {
 }
 
 #successBox {
+  b {
+    color: #b7d8b7
+  }
+
+  p {
+    color: #000;
+  }
+
   img {
-    background: #b7d8b7 !important
+    background: #fff !important;
   }
 }
 
@@ -861,7 +877,8 @@ a.hover-upload {
   top: 10%;
   width: 451px !important;
   right: 10%;
-  background-color: #b7d8b7 !important;
+  background-color: #fff !important;
+  border: 3px solid #b7d8b7 !important;
 }
 
 .error-box-style {
@@ -870,7 +887,8 @@ a.hover-upload {
   top: 10%;
   right: 10%;
   width: 451px !important;;
-  background-color: #e31d1d !important;
+  border: 3px solid #e31d1d !important;
+  background-color: #fff !important;
 }
 
 .point-animation {
@@ -1023,25 +1041,6 @@ input, textarea {
       outline: 0;
     }
   }
-
-  button {
-
-    padding: 12px 8px;
-    width: 100%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    border: 1px solid #000;
-    border-radius: 12px;
-    background-color: #fff;
-
-    &:hover, &:focus {
-      color: white !important;
-      border-color: white;
-      background-color: #3030d2c9;
-    }
-  }
 }
 
 #wip {
@@ -1097,7 +1096,7 @@ h2, h3, h5 {
 }
 
 h2 {
-  padding-top: 3em;
+  padding-top: 3rem;
 }
 
 #formUpload {

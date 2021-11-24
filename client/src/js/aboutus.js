@@ -45,6 +45,7 @@ export default class Register extends React.Component {
 
 	render() {
 		const aboutus = this.state.aboutus;
+		window.scrollTo({top:0,left: 0, behavior: 'smooth'})
 
 		const aboutusArray =
 			aboutus.map(function(aboutus) {

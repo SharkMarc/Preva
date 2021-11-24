@@ -14,6 +14,7 @@ export default class Product extends React.Component {
 	}
 
 	render() {
+		window.scrollTo({top:0,left: 0, behavior: 'smooth'})
 
 		const YoutubeEmbed = ({ embedId }) => (
 			<div className="d-flex video-responsive col-12 justify-content-center">
