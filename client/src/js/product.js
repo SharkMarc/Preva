@@ -16,16 +16,16 @@ export default class Product extends React.Component {
 	render() {
 
 		const YoutubeEmbed = ({ embedId }) => (
-			<div className="video-responsive">
+			<div className="d-flex video-responsive col-12 justify-content-center">
 				<iframe
+					src={`https://www.youtube.com/embed/${embedId}`}
 					width="853"
 					height="480"
-					src={`https://www.youtube.com/embed/${embedId}`}
 					frameBorder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen
 					title="Embedded youtube"
-					className="video"
+					className="video yt-video"
 				/>
 			</div>
 		);
@@ -33,12 +33,12 @@ export default class Product extends React.Component {
 			<div>
 				<div id="home" className="justify-content-center">
 					<div className="full-height-bg-height full-height-bg col-12 youtube-video">
-						<h1>The new state of the art<br/> business process model metric suite</h1><br/>
+						<h1>The new <br/> state of the art</h1><br/>
 						<p>Check out the features</p>
 						<YoutubeEmbed embedId="suE3J0agZr8" />
 					</div>
 				</div>
-				<section id='product'>
+				<section className="col-12" id='product'>
 					<h2 className="text-center">What value preva provides</h2>
 					<p className="text-center font-weight-bold">Preva creates a value for all processes around the world</p>
 					<div className="section-two">

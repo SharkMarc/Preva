@@ -56,16 +56,16 @@ export default class Register extends React.Component {
 									<img src={aboutus.img} className="teamimg my-auto"/>
 								</div>
 
-								<div className="point-header d-flex col-9"><span className={'my-auto point-header-text'}>Name:</span></div>
+								<div className="point-header d-flex col-9"><span className={'my-auto point-header-text'}>Name</span></div>
 								<span className="col-2 border-right-side">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 								<div className="point-text pb-3 col-12">{aboutus.name}</div>
 
-								<div className="point-header d-flex col-9"><span className={'my-auto point-header-text'}>Position:</span></div>
+								<div className="point-header d-flex col-9"><span className={'my-auto point-header-text'}>Position</span></div>
 								<span className="col-2 border-right-side">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 								<div className="point-text pb-3 col-12">{aboutus.position}</div>
 
 								<div className="point-header d-flex col-9">
-									<span className={'my-auto point-header-text'}>About me:</span>
+									<span className={'my-auto point-header-text'}>About me</span>
 								</div>
 								<span className="col-2 border-right-side">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 

@@ -379,7 +379,7 @@ class App extends React.Component {
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}
 				{/*}*/}
-				<div className="mb-5 ">
+				<div className="mb-5">
 					{html}
 				</div>
 				{page === 'impressum' || page === 'dataPolicy' || page === 'Contact' ? underConstruction : null}
