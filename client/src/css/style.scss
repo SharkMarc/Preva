@@ -515,6 +515,27 @@ a.hover-upload {
 //  }
 //
 //}
+#productPage {
+  #metrickz, #trend {
+    border-bottom: 1px solid $blue;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 15px;
+
+    &.active {
+      border-bottom: unset;
+      color: white;
+      background: $blue;
+      border-left: 1px solid $blue;
+      border-right: 1px solid $blue;
+      border-top: 1px solid $blue;
+    }
+
+    &:not(.active) {
+      cursor: pointer;
+    }
+  }
+}
 
 #product {
   padding: 15px;
@@ -676,9 +697,7 @@ a.hover-upload {
       padding: 50px 16px !important;
     }
   }
-
 }
-
 
 #navbarBackdrop.showing {
   position: fixed;

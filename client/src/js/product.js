@@ -39,7 +39,7 @@ export default class Product extends React.Component {
 						<YoutubeEmbed embedId="suE3J0agZr8" />
 					</div>
 				</div>
-				<section className="col-12" id='product'>
+				<section id='product'>
 					<h2 className="text-center">What value preva provides</h2>
 					<p className="text-center font-weight-bold">Preva creates a value for all processes around the world</p>
 					<div className="section-two">

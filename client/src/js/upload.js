@@ -15,7 +15,7 @@ import ConventionGuide from '../assets/conventionGuide.png';
 import NumberOne from '../assets/1.png';
 
 import RadarChart from 'react-svg-radar-chart';
-import 'react-svg-radar-chart/build/css/index.css'
+import 'react-svg-radar-chart/build/css/index.css';
 
 export default class Upload extends React.Component {
 	constructor(props) {
@@ -54,6 +54,22 @@ export default class Upload extends React.Component {
 		this.getDiameter = this.getDiameter.bind(this);
 		this.handleSeperabilities = this.handleSeperabilities.bind(this);
 		this.handleInsideElements = this.handleInsideElements.bind(this);
+		this.handleTabs = this.handleTabs.bind(this);
+	}
+
+	handleTabs(id) {
+		if (id === 'trend') {
+			document.getElementById(id).classList.add('active');
+			document.getElementById('metrickz').classList.remove('active');
+			document.querySelector('.show-metrickz').classList.add('d-none');
+			document.querySelector('.show-trend').classList.remove('d-none');
+		} else {
+			document.getElementById(id).classList.add('active');
+			document.getElementById('trend').classList.remove('active');
+			document.querySelector('.show-metrickz').classList.remove('d-none');
+			document.querySelector('.show-trend').classList.add('d-none');
+
+		}
 	}
 
 //	SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE
@@ -282,10 +298,10 @@ export default class Upload extends React.Component {
 			{
 				data: {
 					battery: 0.7,
-					design: .8,
-					useful: 0.9,
-					speed: 0.67,
-					weight: 0.8
+					design:  .8,
+					useful:  0.9,
+					speed:   0.67,
+					weight:  0.8
 				},
 				meta: { color: 'blue' }
 			}
@@ -305,10 +321,10 @@ export default class Upload extends React.Component {
 		let captions = {
 			// columns
 			battery: 'Size',
-			design: 'Structure',
-			useful: 'Operators',
-			speed: 'Cycle',
-			weight: 'Cognitive weight'
+			design:  'Structure',
+			useful:  'Operators',
+			speed:   'Cycle',
+			weight:  'Cognitive weight'
 		};
 
 		if (statisticSwitch) {
@@ -405,7 +421,6 @@ export default class Upload extends React.Component {
 		let array = ['All', 'Size', 'Structure', 'Operator', 'Cycle', 'Cognitive'];
 		let statisticPage = this.props.statisticPage;
 
-
 		if (statisticSwitch) {
 			switch (statisticSwitch) {
 				case 'Size': {
@@ -415,13 +430,10 @@ export default class Upload extends React.Component {
 			}
 		}
 
-
-
 //		TODO: forschleife gib jeweils den state vom aktuellem statistics dann, jeden werd
 
-
 		return (
-			<div className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
+			<section id="productPage" className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
 				{!statisticPage ?
 					<div>
 						<div id="home" className="justify-content-center">
@@ -565,94 +577,159 @@ export default class Upload extends React.Component {
 						</div>
 					</div>
 					:
-					<div className="pt-4">
-						<div className="container">
-							<div className="row">
-								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-									<div className="card no-border-top border-shadow-statistic">
-										<div className="table min-height-statistic mb-0 flex-wrap">
-											<div id="Categories" className="flex-wrap col-12">
-												<h5 className="my-auto col-6 p-0">Category
-													<hr className="w-100"/>
-												</h5>
-												<h5 className="my-auto col-6 p-0 text-center">Status
-													<hr className="w-100"/>
-												</h5>
-											</div>
+					<section className="flex-wrap">
+						<div className="col-12 flex-wrap">
+							<h2 id="metrickz" className="col-6 text-center  metrickz active" onClick={() => this.handleTabs('metrickz')}>
+								Metrics
+							</h2>
+							<h2 id="trend" className="col-6 text-center  trend" onClick={() => this.handleTabs('trend')}>
+								Trend
+							</h2>
+						</div>
+						<div className="flex-wrap show-metrickz">
+							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+								<div className="card no-border-top border-shadow-statistic">
+									<div className="table min-height-statistic mb-0 flex-wrap">
+										<div id="Categories" className="flex-wrap col-12">
+											<h5 className="my-auto col-6 p-0">Category
+												<hr className="w-100"/>
+											</h5>
+											<h5 className="my-auto col-6 p-0 text-center">Status
+												<hr className="w-100"/>
+											</h5>
+										</div>
 
-											<div className="col-12 p-0">
-												{/*<hr className="category-hr"/>*/}
-												{array.map((value, i) => {
-													return <StatisticTable
-														bpmndiList={this.state.bpmndiList}
-														id={array[i]}
-														key={i}
-														selectedStatistic={selectedStatistic}
-														handleSwitch={() => this.handleSwitch(array[i], array[i])}
-														name={array[i]}
-														status={i}
-													/>;
-												})}
-											</div>
+										<div className="col-12 p-0">
+											{/*<hr className="category-hr"/>*/}
+											{array.map((value, i) => {
+												return <StatisticTable
+													bpmndiList={this.state.bpmndiList}
+													id={array[i]}
+													key={i}
+													selectedStatistic={selectedStatistic}
+													handleSwitch={() => this.handleSwitch(array[i], array[i])}
+													name={array[i]}
+													status={i}
+												/>;
+											})}
 										</div>
 									</div>
 								</div>
-								<div className="col-lg-6 col-xl-4 col-md-12 p-1">
-									<div className="card border-shadow-statistic">
-										<div>{html}</div>
+							</div>
+							<div className="col-lg-6 col-xl-4 col-md-12 p-1">
+								<div className="card border-shadow-statistic">
+									<div>{html}</div>
+								</div>
+							</div>
+							<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
+
+								<div className="card border-shadow-statistic min-height-statistic w-100">
+									<h3>
+										<b>Trend</b>
+										<hr/>
+									</h3>
+									<RadarChart
+										className={'testChart'}
+										captions={captions}
+										data={data}
+										dots={true}
+										size={300}
+									/>
+								</div>
+							</div>
+							<div className="pt-3 mb-5 col-12 analyse-buttons">
+								<div className="btn col-md-12 col-lg-2 ml-auto">
+									<button
+										className="d-flex justify-content-center preva-btn w-100"
+										onClick={() => this.props.handleStartPage()}>
+										<img src={BackIcon} className="icon-text mr-1 my-auto"/>
+										<div>
+											back
+										</div>
+									</button>
+								</div>
+
+								{/*<div className="btn">*/}
+								{/*	<button className="btn border-shadow-statistic button-border hover-upload"*/}
+								{/*		onClick={() => this.getData()}> get data*/}
+								{/*	</button>*/}
+								{/*</div>*/}
+								{/*<button onClick={() => this.handleSeperabilities()}>testen</button>*/}
+								{/* CREATE PDF */}
+								<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
+									method="post">
+									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
+									<button
+										className="d-flex justify-content-center preva-btn"
+										type="submit">
+										<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
+										<div>Create Pdf</div>
+									</button>
+								</form>
+							</div>
+						</div>
+						<div className="flex-wrap show-trend d-none">
+							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+								<div className="card no-border-top border-shadow-statistic">
+									<div className="table min-height-statistic mb-0 flex-wrap">
+										<div id="Categories" className="flex-wrap col-12">
+											<h5 className="my-auto col-6 p-0">test
+												<hr className="w-100"/>
+											</h5>
+											<h5 className="my-auto col-6 p-0 text-center">test
+												<hr className="w-100"/>
+											</h5>
+										</div>
+
+										<div className="col-12 p-0">
+											{/*<hr className="category-hr"/>*/}
+											test
+										</div>
 									</div>
 								</div>
-								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
+							</div>
+							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+								<div className="card no-border-top border-shadow-statistic">
+									<div className="table min-height-statistic mb-0 flex-wrap">
+										<div id="Categories" className="flex-wrap col-12">
+											<h5 className="my-auto col-6 p-0">test
+												<hr className="w-100"/>
+											</h5>
+											<h5 className="my-auto col-6 p-0 text-center">test
+												<hr className="w-100"/>
+											</h5>
+										</div>
 
-									<div className="card border-shadow-statistic min-height-statistic w-100">
-										<h3>
-											<b>Trend</b>
-											<hr/>
-										</h3>
-										<RadarChart
-											className={"testChart"}
-											captions={captions}
-											data={data}
-											dots={true}
-											size={300}
-										/>
+										<div className="col-12 p-0">
+											{/*<hr className="category-hr"/>*/}
+											test
+										</div>
 									</div>
 								</div>
-								<div className="pt-3 mb-5 col-12 analyse-buttons">
-									<div className="btn col-md-12 col-lg-2 ml-auto">
-										<button
-											className="d-flex justify-content-center  btn border-shadow-statistic button-border hover-upload w-100"
-											onClick={() => this.props.handleStartPage()}>
-											<img src={BackIcon} className="icon-text mr-1 my-auto"/>
-											<div>
-												back
-											</div>
-										</button>
-									</div>
+							</div>
+							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+								<div className="card no-border-top border-shadow-statistic">
+									<div className="table min-height-statistic mb-0 flex-wrap">
+										<div id="Categories" className="flex-wrap col-12">
+											<h5 className="my-auto col-6 p-0">test
+												<hr className="w-100"/>
+											</h5>
+											<h5 className="my-auto col-6 p-0 text-center">test
+												<hr className="w-100"/>
+											</h5>
+										</div>
 
-									{/*<div className="btn">*/}
-									{/*	<button className="btn border-shadow-statistic button-border hover-upload"*/}
-									{/*		onClick={() => this.getData()}> get data*/}
-									{/*	</button>*/}
-									{/*</div>*/}
-									{/*<button onClick={() => this.handleSeperabilities()}>testen</button>*/}
-									{/* CREATE PDF */}
-									<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
-										method="post">
-										<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
-										<button
-											className="d-flex justify-content-center btn w-100 border-shadow-statistic button-border hover-upload"
-											type="submit">
-											<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
-											<div>Create Pdf</div>
-										</button>
-									</form>
+										<div className="col-12 p-0">
+											{/*<hr className="category-hr"/>*/}
+											test
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</section>
 				}
-			</div>
+			</section>
 		);
 	}
 
