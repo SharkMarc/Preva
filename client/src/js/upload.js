@@ -7,12 +7,10 @@ import UploadIcon from '../assets/upload.png';
 import DownloadIcon from '../assets/download.png';
 import BackIcon from '../assets/back.png';
 import PDFIcon from '../assets/pdf.png';
-import Speedometa from '../assets/speedometer.png';
 import Cloudupload from '../assets/cloudupload.png';
 import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
-import NumberOne from '../assets/1.png';
 
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css';
@@ -37,7 +35,6 @@ export default class Upload extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.getData = this.getData.bind(this);
-//		this.chart = this.chart.bind(this);
 		this.click = this.click.bind(this);
 		this.showUploadButton = this.showUploadButton.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
@@ -214,7 +211,6 @@ export default class Upload extends React.Component {
 
 			fileName.innerHTML = filename;
 			let saveName = filename.slice(0, filename.length - 5);
-
 			this.setState({ dataName: saveName });
 		} else {
 			uploadButton.classList.add('d-none');
@@ -298,7 +294,7 @@ export default class Upload extends React.Component {
 			{
 				data: {
 					battery: 0.7,
-					design:  .8,
+					design:  0.8,
 					useful:  0.9,
 					speed:   0.67,
 					weight:  0.8
@@ -660,7 +656,7 @@ export default class Upload extends React.Component {
 									method="post">
 									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 									<button
-										className="d-flex justify-content-center preva-btn"
+										className="d-flex justify-content-center preva-btn w-100"
 										type="submit">
 										<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
 										<div>Create Pdf</div>

@@ -38,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //	echo "\n";
 //	echo "\n";
 
-	$start=microtime(true);
-
 
 // get relevant data from bpmn model
 	$laodfile = simplexml_load_string($content, "SimpleXMLElement", 0, "bpmn2", true);
@@ -50,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$list2       = (new \MarcsBlog\ElementCounter)->countChildElements($laodfile);
 	$bpmndiList2 = (new \MarcsBlog\ElementCounter)->countChildElements($bpmndi);
 
+//	$start=microtime(true);
 //	echo round((microtime(true)-$start)*1000);
 //	echo " ms: \n";
 //	echo "\n";
@@ -62,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //	$everything = [];
 //	file_put_contents(__DIR__."/../uploadList.json", $everything);
 	$bpmndiList = json_encode($bpmndiList);
-
 	$list        = json_encode($list);
 	$list2       = json_encode($list2);
 	$bpmndiList2 = json_encode($bpmndiList2);
@@ -132,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$bpmndiList      = file_get_contents(__DIR__."/../bpmndiList.json");
 	$list            = file_get_contents(__DIR__."/../list.json");
 //	$list2            = file_get_contents(__DIR__."/../list2.json");
-//
+
 	$getContent = json_decode($getContent);
 	$bpmndiList = json_decode($bpmndiList);
 	$list       = json_decode($list);
