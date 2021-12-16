@@ -2,7 +2,6 @@ import React from 'react';
 import Expand from '../../assets/expand.png';
 import Green from '../../assets/green.png';
 import Orange from '../../assets/orange.png';
-import linksHat from '../../assets/links_hat.png';
 //import Red from '../../assets/red.png';
 import Red from '../../assets/red.png';
 

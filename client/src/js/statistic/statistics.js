@@ -1,5 +1,4 @@
 import React from 'react';
-import linksHat from '../../assets/links_hat.png';
 
 export default class Statistics extends React.Component {
 

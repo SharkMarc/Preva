@@ -2,18 +2,10 @@
 
 namespace MarcsBlog\Service;
 
-use ArrayObject;
-use MarcsBlog\Node\ExclusiveGatewayNode;
-use MarcsBlog\Node\SequenceFlowNode;
-use MarcsBlog\Node\StartEventNode;
-use SimpleXMLElement;
-
 class NodeConnections extends NodeProvider
 {
-
 	public function handleStartEvent($taskWays, $outgoingList, $startEvent)
 	{
-
 //		prepare startEvent
 		foreach ($startEvent as $element) {
 			$outgoingName                       = $element->outgoing;
@@ -24,28 +16,6 @@ class NodeConnections extends NodeProvider
 		}
 
 		return [$taskWays, $outgoingList];
-	}
-
-// check if it is really the sequence flow from -> to
-	function checkValidSequenceFlow($exclusiveGateways, $targetRef, $outgoingName, $sourceRef): array
-	{
-		$checkGateWay            = [];
-		$checkGateWay["isValid"] = false;
-
-		foreach ($exclusiveGateways as $exclusiveGateway) {
-
-			if ($exclusiveGateway->id === $targetRef) {
-				foreach ($outgoingName as $element) {
-					if ($exclusiveGateway->incoming->id === $element) {
-						$checkGateWay["targetExclusiveGateway"] = $exclusiveGateway;
-						$checkGateWay["isValid"]                = true;
-						break;
-					}
-				}
-			}
-		}
-
-		return $checkGateWay;
 	}
 
 	function checkEndEvent($endEvent, $targetRef): array
@@ -64,7 +34,6 @@ class NodeConnections extends NodeProvider
 
 	public function searchTargetRef($target, $exclusiveGateways, $parallelGateways, $task, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent, $request)
 	{
-
 		$type        = "";
 		$nodeKey     = "";
 		$spezialType = "";
@@ -255,12 +224,6 @@ class NodeConnections extends NodeProvider
 		return $node;
 	}
 
-	public function addMeToYourList($list, $element)
-	{
-
-		return $element;
-	}
-
 	public function hasOutgoing($node)
 	{
 
@@ -278,9 +241,6 @@ class NodeConnections extends NodeProvider
 		foreach ($sequenceFlows as $sequenceFlow) {
 			foreach ($sequenceFlow as $key => $value) {
 				if ($key === $outgoingList) {
-
-//					var_dump($outgoingList);
-
 					return $value;
 				}
 			}
@@ -303,7 +263,6 @@ class NodeConnections extends NodeProvider
 	public function buildTree($node, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask,
 	                          $serviceTask, $userTask, $parallelGateways, $subProcess, $endEvent)
 	{
-
 //		ich rufe mich selbst auf unter der bedingung when astgabel for each do while ansonsten linear
 
 		$insideOfExclusive = false;
@@ -321,7 +280,7 @@ class NodeConnections extends NodeProvider
 				if ($node->type === "exclusiveGateway") {
 					if (count($countedIncomings) > 1) {
 						for ($i = 0; $i < $incomings; $i++) {
-							if ($i>0) {
+							if ($i > 0) {
 								$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $node->outgoing[$i]);
 								$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
 								$findRefTargetId    = $this->handleFindRefTarget($sequenceFlow);
@@ -346,7 +305,6 @@ class NodeConnections extends NodeProvider
 					}
 					if (count($countedOutogings) > 1) {
 						for ($i = 1; $i < $countedOutogings; $i++) {
-							$outgoings[$i];
 							$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $outgoings[$i]);
 							$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
 
@@ -370,7 +328,6 @@ class NodeConnections extends NodeProvider
 					}
 				} elseif ($node->type === "parallelGateway") {
 					for ($i = 0; $i < $countedOutogings; $i++) {
-						$outgoings[$i];
 						$sequenceFlow       = $this->findSequenceFlow($sequenceFlows, $outgoings[$i]);
 						$node->outgoing[$i] = [$sequenceFlow->id => $sequenceFlow];
 
@@ -409,22 +366,9 @@ class NodeConnections extends NodeProvider
 						$this->buildTree($nextNode, $startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $parallelGateways, $subProcess, $endEvent);
 					}
 				}
-				if ($nextType === "parallelGateway") {
-//					var_dump("check ob in liste dann mach hier weiter");
-//					var_dump("ich bin das parallelgateway mit den mehreren incomings");
-//					var_dump($nextNode);
-//					$countedIncomings = count($node->incoming);
-//					var_dump(count($countedIncomings));
-//					var_dump(count($nextNode->incoming));
-
-					for ($i = 0; $i < $nextNode->incoming; $i++) {
-
-					}
-				}
 			}
 			$hasOutgoing = false;
 		}
-//		var_dump("hier", $node);
 	}
 
 	public

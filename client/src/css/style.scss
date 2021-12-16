@@ -190,14 +190,6 @@ a.hover-upload {
   }
 }
 
-.background-image-homepage {
-  background-image: url("../assets/nelf.jpg ");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-}
-
 .card {
   border-radius: 8px;
   padding: 16px !important;
@@ -230,22 +222,6 @@ a.hover-upload {
   .container {
     max-width: 100%;
   }
-}
-
-.background-image-blog {
-  background-image: url("../assets/hyrule.jpg");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.background-image-nav {
-  background-image: url("../assets/links_hat.png");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .image-preva {
@@ -516,7 +492,7 @@ a.hover-upload {
 //
 //}
 #productPage {
-  #metrickz, #trend {
+  #metrickz, #trend, #processModel {
     border-bottom: 1px solid $blue;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -852,6 +828,10 @@ a.hover-upload {
 }
 
 #Categories {
+  .margin-top-h5 {
+    margin-top: 0.5rem;
+  }
+
   hr {
     margin: 1px !important;
   }

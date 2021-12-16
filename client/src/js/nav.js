@@ -1,5 +1,4 @@
 import React from "react";
-import linksHat from '../assets/links_hat.png';
 import PrevaIcon from '../assets/preva_icon.png';
 import PrevaGif from '../assets/preva.gif'
 

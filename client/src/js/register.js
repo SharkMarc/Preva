@@ -1,7 +1,5 @@
 import React from "react";
 
-import linksHat from "../assets/links_hat.png";
-
 export default class Register extends React.Component {
 	constructor(props) {
 		super(props);

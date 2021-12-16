@@ -37,8 +37,6 @@ class NodeProvider implements Nodes
 
 		for ($i = 0; $i < count($noa); $i++) {
 			if ($noa[$i] === $nodeType) {
-//				var_dump("ich returne");
-//				var_dump($noa[$i]);
 				return $noa[$i];
 			}
 		}

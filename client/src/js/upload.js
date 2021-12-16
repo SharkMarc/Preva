@@ -11,9 +11,17 @@ import Cloudupload from '../assets/cloudupload.png';
 import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
+import {ProcessModel, Trends} from './dashboard/dashboard-points';
+import {SuccessBox, ErrorBox} from './boxes';
+import XMLParser from 'react-xml-parser';
+import ReactBpmn from 'react-bpmn';
+import 'bpmn-js/dist/assets/diagram-js.css';
+import Modeler from 'bpmn-js/lib/Modeler';
+//import diagram2 from "../assets/diagram2.xml";
 
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css';
+import WIP from '../assets/MarthaMitHelm.png';
 
 export default class Upload extends React.Component {
 	constructor(props) {
@@ -55,17 +63,26 @@ export default class Upload extends React.Component {
 	}
 
 	handleTabs(id) {
+		document.getElementById(id).classList.add('active');
+
 		if (id === 'trend') {
-			document.getElementById(id).classList.add('active');
 			document.getElementById('metrickz').classList.remove('active');
+			document.getElementById('processModel').classList.remove('active');
 			document.querySelector('.show-metrickz').classList.add('d-none');
+			document.querySelector('.show-processModel').classList.add('d-none');
 			document.querySelector('.show-trend').classList.remove('d-none');
-		} else {
-			document.getElementById(id).classList.add('active');
+		} else if (id === 'metrickz') {
 			document.getElementById('trend').classList.remove('active');
+			document.getElementById('processModel').classList.remove('active');
 			document.querySelector('.show-metrickz').classList.remove('d-none');
 			document.querySelector('.show-trend').classList.add('d-none');
-
+			document.querySelector('.show-processModel').classList.add('d-none');
+		} else {
+			document.getElementById('trend').classList.remove('active');
+			document.getElementById('metrickz').classList.remove('active');
+			document.querySelector('.show-metrickz').classList.add('d-none');
+			document.querySelector('.show-trend').classList.add('d-none');
+			document.querySelector('.show-processModel').classList.remove('d-none');
 		}
 	}
 
@@ -90,14 +107,8 @@ export default class Upload extends React.Component {
 		let summary = this.state.objectSummary;
 		let array1 = [];
 		let sumupUntilArray = 0;
-		console.log(summary);
-		console.log(summary[0]);
-		console.log(summary['outgoing']);
 		summary.map((name, i) => console.log(name));
 		for (let i = 0; i < summary.length; i++) {
-			console.log(summary[i]);
-			console.log(summary[i]['outgoing']);
-
 			if (summary[i]['outgoing']) {
 				sumupUntilArray = this.handleInsideElements(summary[i]['outgoing']);
 			}
@@ -220,9 +231,7 @@ export default class Upload extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-//		this.chart();
-	}
+	componentDidMount() { }
 
 	click() {
 		let file = document.getElementById('userfile');
@@ -290,29 +299,16 @@ export default class Upload extends React.Component {
 		let dnone = {
 			display: 'none',
 		};
-		let data = [
-			{
-				data: {
-					battery: 0.7,
-					design:  0.8,
-					useful:  0.9,
-					speed:   0.67,
-					weight:  0.8
-				},
-				meta: { color: 'blue' }
-			}
-//			,
-//			{
-//				data: {
-//					battery: 0.6,
-//					design: .85,
-//					useful: 0.5,
-//					speed: 0.6,
-//					weight: 0.7
-//				},
-//				meta: { color: 'red' }
-//			}
-		];
+		let data = [{
+			data: {
+				battery: 0.7,
+				design:  0.8,
+				useful:  0.9,
+				speed:   0.67,
+				weight:  0.8
+			},
+			meta: { color: 'blue' }
+		}];
 
 		let captions = {
 			// columns
@@ -425,7 +421,20 @@ export default class Upload extends React.Component {
 					break;
 			}
 		}
-
+//		const processModel =
+//			<div className="flex-wrap show-processModel w-100 d-none">
+//				<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+//					<div className="card no-border-top border-shadow-statistic">
+//						{/*<div id="testDiagram"></div>*/}
+//						{/*<ReactBpmn*/}
+//						{/*	url={diagram2}*/}
+//						{/*	//										onShown={ onShown }*/}
+//						{/*	//										onLoading={ onLoading }*/}
+//						{/*	//										onError={ onError }*/}
+//						{/*/>*/}
+//					</div>
+//				</div>
+//			</div>;
 //		TODO: forschleife gib jeweils den state vom aktuellem statistics dann, jeden werd
 
 		return (
@@ -565,7 +574,7 @@ export default class Upload extends React.Component {
 									<div className=" p-4 border-rounded row">
 										<h4 id="test1" className="col-12 text-center animate-flicker1 animation-style"/>
 										<div className="col-12 pt-0 mt-0 text-center saving animation-style-points">
-											<span> .</span><span>.</span><span>. </span></div>
+											<span style={{color:"#CF33CF"}}> .</span><span style={{color:"#0045C6"}}>.</span><span  style={{color:"#10D2C4"}}>. </span></div>
 									</div>
 								</div>
 								{/*	 Converting Model Analyzing Model Prepare Analysis*/}
@@ -575,22 +584,29 @@ export default class Upload extends React.Component {
 					:
 					<section className="flex-wrap">
 						<div className="col-12 flex-wrap">
-							<h2 id="metrickz" className="col-6 text-center  metrickz active" onClick={() => this.handleTabs('metrickz')}>
+							<h2 id="processModel" className="col-4 text-center" onClick={() => this.handleTabs('processModel')}>
+								Processmodel
+							</h2>
+							<h2 id="metrickz" className="col-4 text-center metrickz active" onClick={() => this.handleTabs('metrickz')}>
 								Metrics
 							</h2>
-							<h2 id="trend" className="col-6 text-center  trend" onClick={() => this.handleTabs('trend')}>
+							<h2 id="trend" className="col-4 text-center trend" onClick={() => this.handleTabs('trend')}>
 								Trend
 							</h2>
+
 						</div>
-						<div className="flex-wrap show-metrickz">
+
+						<ProcessModel/>
+						<div className="flex-wrap show-metrickz w-100">
 							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
 								<div className="card no-border-top border-shadow-statistic">
 									<div className="table min-height-statistic mb-0 flex-wrap">
 										<div id="Categories" className="flex-wrap col-12">
-											<h5 className="my-auto col-6 p-0">Category
+											<h5 className="mb-auto margin-top-h5 col-6 p-0">
+												Category
 												<hr className="w-100"/>
 											</h5>
-											<h5 className="my-auto col-6 p-0 text-center">Status
+											<h5 className="mb-auto margin-top-h5 col-6 p-0 text-center">Status
 												<hr className="w-100"/>
 											</h5>
 										</div>
@@ -664,65 +680,9 @@ export default class Upload extends React.Component {
 								</form>
 							</div>
 						</div>
-						<div className="flex-wrap show-trend d-none">
-							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-								<div className="card no-border-top border-shadow-statistic">
-									<div className="table min-height-statistic mb-0 flex-wrap">
-										<div id="Categories" className="flex-wrap col-12">
-											<h5 className="my-auto col-6 p-0">test
-												<hr className="w-100"/>
-											</h5>
-											<h5 className="my-auto col-6 p-0 text-center">test
-												<hr className="w-100"/>
-											</h5>
-										</div>
 
-										<div className="col-12 p-0">
-											{/*<hr className="category-hr"/>*/}
-											test
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-								<div className="card no-border-top border-shadow-statistic">
-									<div className="table min-height-statistic mb-0 flex-wrap">
-										<div id="Categories" className="flex-wrap col-12">
-											<h5 className="my-auto col-6 p-0">test
-												<hr className="w-100"/>
-											</h5>
-											<h5 className="my-auto col-6 p-0 text-center">test
-												<hr className="w-100"/>
-											</h5>
-										</div>
+						<Trends/>
 
-										<div className="col-12 p-0">
-											{/*<hr className="category-hr"/>*/}
-											test
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-								<div className="card no-border-top border-shadow-statistic">
-									<div className="table min-height-statistic mb-0 flex-wrap">
-										<div id="Categories" className="flex-wrap col-12">
-											<h5 className="my-auto col-6 p-0">test
-												<hr className="w-100"/>
-											</h5>
-											<h5 className="my-auto col-6 p-0 text-center">test
-												<hr className="w-100"/>
-											</h5>
-										</div>
-
-										<div className="col-12 p-0">
-											{/*<hr className="category-hr"/>*/}
-											test
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</section>
 				}
 			</section>
@@ -730,31 +690,4 @@ export default class Upload extends React.Component {
 	}
 
 }
-const SuccessBox = ({ dnone, PrevaIcon }) => (
-	<div className="card p-3 success-box-style" id="successBox" style={dnone}>
-		<div className="row">
-			<div className="col-3 text-center my-auto">
-				<img src={PrevaIcon} className="icon"/>
-			</div>
-			<div className="col-9 pr-0">
-				<b>Success!</b>
-				<p>Process model <b id="successBoxItem"/> uploaded successfully!</p>
-			</div>
-		</div>
-	</div>
-);
 
-const ErrorBox = ({ dnone, PrevaIcon }) => (
-	<div className="card p-3 error-box-style" id="errorMessage" style={dnone}>
-		<div className="row">
-			<div className="col-3 text-center my-auto">
-				<img src={PrevaIcon} className="icon"/>
-			</div>
-			<div className="col-9 pr-0">
-				<b>Error!</b>
-				<p className="mb-0">Invalid process model format.</p>
-				<p>Data<b>.bpmn</b> only!</p>
-			</div>
-		</div>
-	</div>
-);
