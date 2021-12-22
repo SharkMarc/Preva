@@ -131,6 +131,7 @@ class App extends React.Component {
 			}).then(data => data.json());
 		};
 		reader.readAsDataURL(file);
+//
 	}
 
 	registerAjax(data) {

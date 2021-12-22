@@ -5,7 +5,7 @@ services:
     links:
       - php
     volumes:
-      - ./server/marcsblog:/var/www/html
+      - ./server:/var/www/html
       - ./_info/docker/server/nginx-default.conf:/etc/nginx/conf.d/default.conf
       - ./_info/docker/bashrc:/root/.bashrc
     ports:
@@ -15,10 +15,10 @@ services:
         ipv4_address: 192.168.50.2
   php:
     build:
-      context: ./_info/docker/php
+      context: ./server/_info/docker/php
     volumes:
-      - ./server/marcsblog:/var/www/html
-      - ./_info/docker/bashrc:/root/.bashrc
+      - ./server:/var/www/html
+      - ./server/_info/docker/bashrc:/root/.bashrc
     networks:
       local_net:
         ipv4_address: 192.168.50.3

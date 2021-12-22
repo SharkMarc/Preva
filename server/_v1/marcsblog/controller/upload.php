@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //	var_dump($sequenceFlows);
 //	var_dump($endEvent);
 
-// --- Find Connections ---
+	// --- Find Connections ---
 	$taskConnection = (new  \MarcsBlog\Service\NodeConnections)->outGoingTo(
 		$startEvent, $taskNode, $sequenceFlows, $exclusiveGateways, $inclusiveGateways, $parallelGateways, $subProcess, $businessRuleTask, $callActivity, $manualTask, $receiveTask, $sendTask, $scriptTask, $serviceTask, $userTask, $endEvent
 	);

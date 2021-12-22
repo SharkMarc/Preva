@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+    php:
+        build:
+            context: ./
+            dockerfile: ./_info/docker/php/Dockerfile
+        volumes:
+            - ./:/var/www/html
+            - ./_info/docker/bashrc:/root/.bashrc
+        environment:
+            COMPOSER_ALLOW_SUPERUSER: 1

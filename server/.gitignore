@@ -1,0 +1,5 @@
+.idea
+vendor2
+/.phpunit.result.cache
+/fixtures/
+/saves/
