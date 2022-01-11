@@ -60,5 +60,5 @@ module.exports = {
 	// Instead of: import MyComponent from './my-component.jsx';
 	resolve: {
 		extensions: [".js", ".jsx"],
-	},
+	}
 };

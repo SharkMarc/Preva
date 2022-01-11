@@ -117,21 +117,24 @@ class App extends React.Component {
 	}
 
 	uploadAjax(file, type) {
-		var reader = new FileReader();
-		reader.onload = function(f) {
-			const content = f.target.result;
-			const data = {
-				content: content,
-			};
-			fetch(Route.upload, {
-				method:  'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body:    JSON.stringify(data),
-				cache:   'no-cache'
-			}).then(data => data.json());
-		};
-		reader.readAsDataURL(file);
-//
+		return new Promise(function(resolve, reject) {
+			var reader = new FileReader();
+			reader.onload = resolve;
+			reader.readAsDataURL(file);
+		})
+			.then(function(f){
+				const content = f.target.result;
+				const data = {
+					content: content,
+				};
+				return fetch(Route.upload, {
+					method:  'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body:    JSON.stringify(data),
+					cache:   'no-cache'
+				}).then(data => data.json())
+					.catch(e => console.error(e));
+			});
 	}
 
 	registerAjax(data) {

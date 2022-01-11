@@ -15,7 +15,7 @@ services:
         ipv4_address: 192.168.50.2
   php:
     build:
-      context: ./server/_info/docker/php
+      context: ./_info/docker/php
     volumes:
       - ./server:/var/www/html
       - ./server/_info/docker/bashrc:/root/.bashrc
@@ -33,7 +33,7 @@ services:
       - ./client:/srv/app
       - /srv/app/node_modules
     ports:
-      - "7000:8881"
+      - "7000:7000"
     networks:
       local_net:
         ipv4_address: 192.168.50.100

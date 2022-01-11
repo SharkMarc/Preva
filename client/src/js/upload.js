@@ -13,6 +13,7 @@ import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
 import {ProcessModel, Trends} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
+import BpmnJS from 'bpmn-js';
 import XMLParser from 'react-xml-parser';
 import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
@@ -231,7 +232,16 @@ export default class Upload extends React.Component {
 		}
 	}
 
-	componentDidMount() { }
+	componentDidMount() {
+		const viewer = new BpmnJS({ container: document.getElementById('bpmn') });
+		fetch('http://localhost:6318/fixtures/CNC.bpmn')
+			.then(r => r.text())
+			.then(xml => viewer.importXML(xml))
+			.then(() => {
+				console.log('fuck off');
+				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
+			});
+	}
 
 	click() {
 		let file = document.getElementById('userfile');
@@ -252,8 +262,9 @@ export default class Upload extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		const file = document.getElementById('userfile').files[0];
-		this.props.uploadAjax(file);
-		this.getData();
+		this.props.uploadAjax(file)
+			.then(() => this.getData())
+			.catch(e => console.error(e));
 	};
 
 	handleData(e) {
@@ -439,6 +450,8 @@ export default class Upload extends React.Component {
 
 		return (
 			<section id="productPage" className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
+				<div id="bpmn" style={{width: "100%", height:500, backgroundColor:"white"}}/>
+
 				{!statisticPage ?
 					<div>
 						<div id="home" className="justify-content-center">
