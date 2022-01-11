@@ -254,6 +254,7 @@ export default class Upload extends React.Component {
 		} else {
 			modalId.style.display = 'none';
 		}
+
 		window.setTimeout(
 			() => this.props.handleStatisticPage(), 9000
 		);
