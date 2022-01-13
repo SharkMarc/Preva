@@ -1,22 +1,12 @@
 import React from 'react';
 
 export const ProcessModel = (props) => (
-	<div className="flex-wrap show-processModel w-100 d-none">
-		<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-			<div className="card no-border-top border-shadow-statistic">
-				{/*<div id="testDiagram"></div>*/}
-				{/*<ReactBpmn*/}
-				{/*	url={diagram2}*/}
-				{/*	//										onShown={ onShown }*/}
-				{/*	//										onLoading={ onLoading }*/}
-				{/*	//										onError={ onError }*/}
-				{/*/>*/}
-			</div>
-		</div>
+	<div className="show-processModel d-none w-100">
+		<section id="bpmn" style={{ width: '100%', height: 500, backgroundColor: 'white' }}/>
 	</div>
 );
 
-export const Trends = ()=>(<div className="flex-wrap show-trend w-100 d-none">
+export const Trends = () => (<div className="flex-wrap show-trend w-100 d-none">
 	<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
 		<div className="card no-border-top border-shadow-statistic">
 			<div className="table min-height-statistic mb-0 flex-wrap">
