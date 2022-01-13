@@ -232,14 +232,16 @@ export default class Upload extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		const viewer = new BpmnJS({ container: document.getElementById('bpmn') });
+	componentDidUpdate() {
+		const viewer = new BpmnJS({ container: document.getElementById('bpmn'),
+			keyboard: {
+				bindTo: document
+			} });
 		fetch('http://localhost:6318/fixtures/CNC.bpmn')
 			.then(r => r.text())
 			.then(xml => viewer.importXML(xml))
 			.then(() => {
-				console.log('fuck off');
-				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
+//				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
 			});
 	}
 
@@ -290,7 +292,7 @@ export default class Upload extends React.Component {
 				bpmndiList:    data['bpmndiList'],
 				objectSummary: data['objectSummary'],
 				noaList:       data['noa'],
-				noa:           data['noa']
+				noa:           data['noa'],
 			}))
 		;
 	}
@@ -313,33 +315,33 @@ export default class Upload extends React.Component {
 		};
 		let data = [{
 			data: {
-				battery: 0.7,
-				design:  0.8,
-				useful:  0.9,
-				speed:   0.67,
-				weight:  0.8
+				size: this.state.allLists.noa/10,
+				Structure:  0.8,
+				Operators:  0.9,
+				Cycle:   this.state.allLists.cyclicity,
+				CognitiveWeight:  this.state.allLists.cognitiveWeight/10
 			},
 			meta: { color: 'blue' }
 		}];
 
 		let captions = {
 			// columns
-			battery: 'Size',
-			design:  'Structure',
-			useful:  'Operators',
-			speed:   'Cycle',
-			weight:  'Cognitive weight'
+			size: 'Size',
+			Structure:  'Structure',
+			Operators:  'Operators',
+			Cycle:   'Cycle',
+			CognitiveWeight:  'Cognitive weight'
 		};
 
 		if (statisticSwitch) {
 			switch (statisticSwitch) {
 				case 'All': {
-					html = <Statistics title={'All'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'All'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 				}
 					break;
 
 				case 'Size': {
-					html = <Statistics title={'Size'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'Size'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
@@ -362,7 +364,7 @@ export default class Upload extends React.Component {
 				}
 					break;
 				case 'Structure': {
-					html = <Statistics title={'Structure'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'Structure'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
@@ -383,7 +385,7 @@ export default class Upload extends React.Component {
 					break;
 
 				case 'Operator': {
-					html = <Statistics title={'Operator'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'Operator'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
@@ -410,12 +412,50 @@ export default class Upload extends React.Component {
 					break;
 
 				case 'Cycle': {
-					html = <Statistics title={'Cycle'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'Cycle'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
+					data = [
+						{
+							data: {
+								first:  0.1,
+								second: 0.3,
+								third:  0.2,
+								forth:  0.514,
+							},
+							meta: { color: 'blue' }
+						}
+					];
+
+					captions = {
+						// columns
+						first:  'NOA',
+						second: 'NOAC',
+						third:  'CNC',
+						forth:  'Density',
+					};
 				}
 					break;
 
 				case 'Cognitive': {
-					html = <Statistics title={'Cognitive'} attributes={this.state.countList} noa={this.state.noa}/>;
+					html = <Statistics title={'Cognitive'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
+					data = [
+						{
+							data: {
+								first:  0.1,
+								second: 0.3,
+								third:  0.2,
+								forth:  0.514,
+							},
+							meta: { color: 'blue' }
+						}
+					];
+
+					captions = {
+						// columns
+						first:  'NOA',
+						second: 'NOAC',
+						third:  'CNC',
+						forth:  'Density',
+					};
 				}
 					break;
 				default:
@@ -451,8 +491,6 @@ export default class Upload extends React.Component {
 
 		return (
 			<section id="productPage" className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
-				<div id="bpmn" style={{width: "100%", height:500, backgroundColor:"white"}}/>
-
 				{!statisticPage ?
 					<div>
 						<div id="home" className="justify-content-center">
