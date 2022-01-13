@@ -1,5 +1,6 @@
 import React from 'react';
-import lightbulb from '../assets/lightbulb-regular.png';
+import Easytouse from '../assets/Easytouse.png';
+import ClarityofThought from '../assets/ClarityofThought.png';
 import BurgerNav from '../assets/burger-nav.png';
 
 export default class Homepage extends React.Component {
@@ -20,15 +21,14 @@ export default class Homepage extends React.Component {
 						<div className="motivation-left flex-wrap">
 							<div className="col-6">
 								<h3 className="">
-									Create value
+									Clarity of Thought
 									<hr/>
 								</h3>
 								<div className="">
-									Preva is a business process management (BPM) <br/>
-									software that allows you to evaluate business process models.
+									Preva provides enough knowledge for you so you can clearly understand and explain circumstances.
 								</div>
 							</div>
-							<img src={BurgerNav} className="colournew"/>
+							<img src={ClarityofThought} className="colournew"/>
 						</div>
 
 						<div className="motivation-right flex-wrap">
@@ -36,12 +36,11 @@ export default class Homepage extends React.Component {
 
 							<div className="col-6 text-right">
 								<h3 className="">
-									EAT SOCKS
+									Competence
 									<hr/>
 								</h3>
 								<div className="">
-									Preva is a business process management (BPM) <br/>
-									software that allows you to evaluate business process models.
+									Preva is your partner to quantify and demonstrate facts, that enable and enhance the efficiency or performance of your business process models
 								</div>
 							</div>
 						</div>
@@ -49,15 +48,14 @@ export default class Homepage extends React.Component {
 						<div className="motivation-left flex-wrap">
 							<div className="col-6">
 								<h3 className="">
-									Publicity Available
+									Easy to use
 									<hr className="publicity-hr"/>
 								</h3>
-								<div className="">
-									Preva is a business process management (BPM) <br/>
-									software that allows you to evaluate business process models.
+								<div>
+									Preva is as simple as it gets. No room for incomprehensible information!
 								</div>
 							</div>
-							<img src={BurgerNav} className="colournew"/>
+							<img src={Easytouse} className="colournew"/>
 						</div>
 
 					</div>

@@ -26,6 +26,7 @@
     "@react-pdf/renderer": "^1.6.12",
     "axios": "^0.24.0",
     "bpmn-js": "^8.8.3",
+    "bpmn-js-properties-panel": "^0.46.0",
     "chart.js": "^2.9.3",
     "primereact": "^5.0.0-rc.1",
     "raw-loader": "^4.0.2",

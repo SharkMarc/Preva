@@ -3,7 +3,7 @@
 require dirname(__DIR__)."/vendor/autoload.php";
 
 $mpdf     = new \Mpdf\Mpdf();
-$content  = file_get_contents(__DIR__."/../test4.xml");
+$content  = file_get_contents(__DIR__."/../test.xml");
 $laodfile = simplexml_load_string($content, "SimpleXMLElement", 0, "bpmn2", true);
 $list     = [];
 

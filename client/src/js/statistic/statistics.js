@@ -4,12 +4,8 @@ export default class Statistics extends React.Component {
 
 	render() {
 		const allLists = this.props.allLists;
-		const text = this.props.text;
 		const title = this.props.title;
 		const attributes = this.props.attributes;
-		const noaAmount = allLists["noa"] ? allLists["noa"] : '';
-//		onClick={() => this.handlePage('product', true)}
-		const handlePage = this.props.handlePage;
 		return (
 
 			<div className="min-height-statistic col-12">
@@ -22,24 +18,24 @@ export default class Statistics extends React.Component {
 				{title === 'All' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Size:<br/>
-							<div className="amount">{allLists["noa"] ? allLists["noa"] : '0.00'}</div>
+							<div className="amount">{allLists['noa'] ? allLists['noa'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Structure:<br/>
-							<div className="amount">{allLists["noac"]}</div>
+							<div className="amount">{allLists['noac'].toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Operators:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{(attributes['sequenceFlow'] / allLists['noac']).toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">
 							Cycle:<br/>
-							<div className="amount">{allLists["cyclicity"].toFixed(2)}</div>
+							<div className="amount">{allLists['cyclicity'].toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Cognitive weight:<br/>
-							<div className="amount">{allLists["cognitiveWeight"].toFixed(2)}</div>
+							<div className="amount">{allLists['cognitiveWeight'].toFixed(2)}</div>
 							<hr/>
 						</div>
 					</div>
@@ -48,22 +44,20 @@ export default class Statistics extends React.Component {
 				{title === 'Size' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Number of ativities (NOA):<br/>
-							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<div className="amount">{allLists['noa'] ? allLists['noa'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Number of activities control-flow elements (NOAC):<br/>
-							<div className="amount">{allLists["noac"]}</div>
+							<div className="amount">{allLists['noac'] ? allLists['noac'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Coefficient of Network Complexity (CNC):<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{(attributes['sequenceFlow'] / allLists['noac']).toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">
 							Density:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] /
-								(allLists["noac"] + attributes['startEvent'] + attributes['endEvent'])
-								* (allLists["noac"] + attributes['startEvent'] + attributes['endEvent'] - 1)).toFixed(2)}</div>
+							<div className="amount">{(allLists['density']).toFixed(2)}</div>
 							<hr/>
 						</div>
 					</div>
@@ -72,15 +66,15 @@ export default class Statistics extends React.Component {
 				{title === 'Structure' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Seperability:<br/>
-							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<div className="amount">{allLists['separability'] ? allLists['separability'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Sequentiality:<br/>
-							<div className="amount">{allLists["noac"]}</div>
+							<div className="amount">{allLists['sequentiality'] ? allLists['sequentiality'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Diameter:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{allLists['diameter'] ? allLists['diameter'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 					</div>
@@ -89,40 +83,28 @@ export default class Statistics extends React.Component {
 				{title === 'Operator' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Maximum nesting depth:<br/>
-							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<div className="amount">{allLists['maxNestingDepth'] ? allLists['maxNestingDepth'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Average degree of connectors:<br/>
-							<div className="amount">{allLists["noac"]}</div>
+							<div
+								className="amount">{allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Maximum degree of Connectors:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{allLists['maxDegreeOfConnectors'].toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Binary decissions:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{allLists['binaryDecisions'].toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Control flow complexity (CFC):<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
+							<div className="amount">{allLists['controlFlowComplexity'].toFixed(2)}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Concurrency:<br/>
-							<div className="amount">{(attributes['sequenceFlow'] / allLists["noac"]).toFixed(2)}</div>
-							<hr/>
-						</div>
-					</div>
-					: null}
-
-				{title === 'Cycle' ?
-					<div className="statistics flex-wrap">
-						<div className="text col-12">Cyclicity:<br/>
-							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
-							<hr/>
-						</div>
-						<div className="text col-12">Cyclomatic Number:<br/>
-							<div className="amount">{allLists["noac"]}</div>
+							<div className="amount">{allLists['concurrency'].toFixed(2)}</div>
 							<hr/>
 						</div>
 					</div>
@@ -131,7 +113,7 @@ export default class Statistics extends React.Component {
 				{title === 'Cognitive' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Cognitive weigth:<br/>
-							<div className="amount">{noaAmount ? noaAmount : '0.00'}</div>
+							<div className="amount">{allLists['cognitiveWeight'] ? allLists['cognitiveWeight'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 					</div>

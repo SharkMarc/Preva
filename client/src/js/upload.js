@@ -11,9 +11,12 @@ import Cloudupload from '../assets/cloudupload.png';
 import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
+import BpmnNavigatedVeiefer from 'bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import {ProcessModel, Trends} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
+
+import propertiesPanelModule from "bpmn-js-properties-panel";
 import XMLParser from 'react-xml-parser';
 import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
@@ -40,6 +43,7 @@ export default class Upload extends React.Component {
 			statisticSwitch:   'All',
 			selectedStatistic: 'All',
 			dataName:          '',
+			doitonce:          false,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -48,19 +52,30 @@ export default class Upload extends React.Component {
 		this.showUploadButton = this.showUploadButton.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
 		this.handleSwitch = this.handleSwitch.bind(this);
-		this.mixedChart = this.mixedChart.bind(this);
-		this.handleStatisticArray = this.handleStatisticArray.bind(this);
 		this.handleData = this.handleData.bind(this);
-		this.getNOA = this.getNOA.bind(this);
-		this.getNOAC = this.getNOAC.bind(this);
-		this.getCNC = this.getCNC.bind(this);
-		this.getDensity = this.getDensity.bind(this);
-		this.getSeparability = this.getSeparability.bind(this);
-		this.getSequentiality = this.getSequentiality.bind(this);
-		this.getDiameter = this.getDiameter.bind(this);
-		this.handleSeperabilities = this.handleSeperabilities.bind(this);
-		this.handleInsideElements = this.handleInsideElements.bind(this);
 		this.handleTabs = this.handleTabs.bind(this);
+		this.handleBPMNView = this.handleBPMNView.bind(this);
+	}
+
+	handleBPMNView(){
+		const viewer = new BpmnJS({
+			container: document.getElementById('bpmn'),
+			width: '100%',
+			height: '100%',
+			minHeight:'100%',
+			minWidth:'100%',
+			keyboard:  {
+				bindTo: document
+			},
+		});
+//		fetch('http://localhost:6318/test.xml')
+		fetch(Route.getBPMN)
+			.then(r => r.text())
+			.then(xml => viewer.importXML(xml))
+			.then(() => {
+				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
+				this.setState({ doitonce: true });
+			});
 	}
 
 	handleTabs(id) {
@@ -84,75 +99,12 @@ export default class Upload extends React.Component {
 			document.querySelector('.show-metrickz').classList.add('d-none');
 			document.querySelector('.show-trend').classList.add('d-none');
 			document.querySelector('.show-processModel').classList.remove('d-none');
+			this.handleBPMNView();
 		}
-	}
-
-//	SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE --- SIZE
-	getNOA() {
-//		manualTask, businessRuleTask, callActivity, manualTask, receiveTask, scriptTask, sendTask, serviceTask, task, subProcess, userTask
-//		anzahl der exclusiveGateways
-		return;
-	}
-
-	handleInsideElements(outgoingArray) {
-		return console.log('outgoingArray', outgoingArray);
-
-		for (let i = 0; i < outgoingArray.length; i++) {
-//			if(outgoingArray['['type']==='exclusiveGateway'){
-//
-//			}
-		}
-	}
-
-	handleSeperabilities() {
-		let summary = this.state.objectSummary;
-		let array1 = [];
-		let sumupUntilArray = 0;
-		summary.map((name, i) => console.log(name));
-		for (let i = 0; i < summary.length; i++) {
-			if (summary[i]['outgoing']) {
-				sumupUntilArray = this.handleInsideElements(summary[i]['outgoing']);
-			}
-		}
-	}
-
-	getNOAC() {
-//		anzahl der exclusiveGateways+xor's
-		return this.state.countList['exclusiveGateways'];
-	}
-
-	getCNC() {
-//		anzahl der sequenceflows / getNOAC
-		return this.getNOAC() / this.state.countList['sequenceFlow'];
-	}
-
-	getDensity() {
-//		anzahl der sequenceflows / exclusiveGateways * (exclusiveGateways - xor's)
-		return this.state.countList['sequenceFlow'] / this.state.countList['exclusiveGateways'] * (this.state.countList['exclusiveGateways'] - 12);
-	}
-
-//	STRUCTURE --- STRUCTURE --- STRUCTURE --- STRUCTURE
-	getSeparability() {
-//		dunno :(
-	}
-
-	getSequentiality() {
-//		anzahl der exclusiveGateways IN DEN XORS / alle nodes
-//	    bzw bin mir nicht sicher
-	}
-
-	getDiameter() {
-//		der längste weg von einem start zum ende
-	}
-
-	handleStatisticArray() {
 	}
 
 	handleSwitch(changeStatistic, id) {
 		this.setState({ statisticSwitch: changeStatistic, selectedStatistic: id });
-	}
-
-	mixedChart() {
 	}
 
 	showUploadButton() {
@@ -233,16 +185,7 @@ export default class Upload extends React.Component {
 	}
 
 	componentDidUpdate() {
-		const viewer = new BpmnJS({ container: document.getElementById('bpmn'),
-			keyboard: {
-				bindTo: document
-			} });
-		fetch('http://localhost:6318/fixtures/CNC.bpmn')
-			.then(r => r.text())
-			.then(xml => viewer.importXML(xml))
-			.then(() => {
-//				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
-			});
+
 	}
 
 	click() {
@@ -315,22 +258,20 @@ export default class Upload extends React.Component {
 		};
 		let data = [{
 			data: {
-				size: this.state.allLists.noa/10,
-				Structure:  0.8,
-				Operators:  0.9,
-				Cycle:   this.state.allLists.cyclicity,
-				CognitiveWeight:  this.state.allLists.cognitiveWeight/10
+				size:            this.state.allLists.noa / 10,
+				Structure:       0.8,
+				Operators:       0.9,
+				CognitiveWeight: this.state.allLists.cognitiveWeight / 10
 			},
 			meta: { color: 'blue' }
 		}];
 
 		let captions = {
 			// columns
-			size: 'Size',
-			Structure:  'Structure',
-			Operators:  'Operators',
-			Cycle:   'Cycle',
-			CognitiveWeight:  'Cognitive weight'
+			size:            'Size',
+			Structure:       'Structure',
+			Operators:       'Operators',
+			CognitiveWeight: 'Cognitive weight'
 		};
 
 		if (statisticSwitch) {
@@ -345,17 +286,16 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  0.1,
-								second: 0.3,
-								third:  0.2,
-								forth:  0.514,
+								first:  this.state.allLists.noa / 100,
+								second: this.state.allLists.noac / 100,
+								third:  0.1 / 100,
+								forth:  this.state.allLists.density / 100,
 							},
 							meta: { color: 'blue' }
 						}
 					];
 
 					captions = {
-						// columns
 						first:  'NOA',
 						second: 'NOAC',
 						third:  'CNC',
@@ -364,19 +304,19 @@ export default class Upload extends React.Component {
 				}
 					break;
 				case 'Structure': {
-					html = <Statistics title={'Structure'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
+					html =
+						<Statistics title={'Structure'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
-								first:  0.1,
-								second: 0.3,
-								third:  0.2,
+								first:  this.state.allLists.separability / 100,
+								second: this.state.allLists.sequentiality / 100,
+								third:  this.state.allLists.diameter / 100,
 							},
 							meta: { color: 'blue' }
 						}
 					];
 					captions = {
-						// columns
 						first:  'Seperability',
 						second: 'Sequentiality',
 						third:  'Diameter',
@@ -385,22 +325,22 @@ export default class Upload extends React.Component {
 					break;
 
 				case 'Operator': {
-					html = <Statistics title={'Operator'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
+					html =
+						<Statistics title={'Operator'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
-								first:  0.1,
-								second: 0.3,
-								third:  0.2,
-								forth:  0.514,
-								fifth:  0.514,
-								sixth:  0.514,
+								first:  this.state.allLists.maxNestingDepth / 10,
+								second: this.state.allLists.avgDegreeOfConnectors / 10,
+								third:  this.state.allLists.maxDegreeOfConnectors / 10,
+								forth:  this.state.allLists.binaryDecisions / 10,
+								fifth:  this.state.allLists.controlFlowComplexity / 10,
+								sixth:  this.state.allLists.concurrency / 10,
 							},
 							meta: { color: 'blue' }
 						}
 					];
 					captions = {
-						// columns
 						first:  'Nesting depth',
 						second: 'Average degree of connectors',
 						third:  'Maximum degree of connectors',
@@ -411,50 +351,20 @@ export default class Upload extends React.Component {
 				}
 					break;
 
-				case 'Cycle': {
-					html = <Statistics title={'Cycle'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
-					data = [
-						{
-							data: {
-								first:  0.1,
-								second: 0.3,
-								third:  0.2,
-								forth:  0.514,
-							},
-							meta: { color: 'blue' }
-						}
-					];
-
-					captions = {
-						// columns
-						first:  'NOA',
-						second: 'NOAC',
-						third:  'CNC',
-						forth:  'Density',
-					};
-				}
-					break;
-
 				case 'Cognitive': {
-					html = <Statistics title={'Cognitive'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
+					html =
+						<Statistics title={'Cognitive'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
 					data = [
 						{
 							data: {
-								first:  0.1,
-								second: 0.3,
-								third:  0.2,
-								forth:  0.514,
+								first: this.state.allLists.cognitiveWeight / 100,
 							},
 							meta: { color: 'blue' }
 						}
 					];
 
 					captions = {
-						// columns
-						first:  'NOA',
-						second: 'NOAC',
-						third:  'CNC',
-						forth:  'Density',
+						first: 'cognitiveWeight',
 					};
 				}
 					break;
@@ -473,21 +383,6 @@ export default class Upload extends React.Component {
 					break;
 			}
 		}
-//		const processModel =
-//			<div className="flex-wrap show-processModel w-100 d-none">
-//				<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-//					<div className="card no-border-top border-shadow-statistic">
-//						{/*<div id="testDiagram"></div>*/}
-//						{/*<ReactBpmn*/}
-//						{/*	url={diagram2}*/}
-//						{/*	//										onShown={ onShown }*/}
-//						{/*	//										onLoading={ onLoading }*/}
-//						{/*	//										onError={ onError }*/}
-//						{/*/>*/}
-//					</div>
-//				</div>
-//			</div>;
-//		TODO: forschleife gib jeweils den state vom aktuellem statistics dann, jeden werd
 
 		return (
 			<section id="productPage" className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
@@ -626,7 +521,8 @@ export default class Upload extends React.Component {
 									<div className=" p-4 border-rounded row">
 										<h4 id="test1" className="col-12 text-center animate-flicker1 animation-style"/>
 										<div className="col-12 pt-0 mt-0 text-center saving animation-style-points">
-											<span style={{color:"#CF33CF"}}> .</span><span style={{color:"#0045C6"}}>.</span><span  style={{color:"#10D2C4"}}>. </span></div>
+											<span style={{ color: '#cf33cf' }}> .</span><span style={{ color: '#0045c6' }}>.</span><span
+											style={{ color: '#10d2c4' }}>. </span></div>
 									</div>
 								</div>
 								{/*	 Converting Model Analyzing Model Prepare Analysis*/}
