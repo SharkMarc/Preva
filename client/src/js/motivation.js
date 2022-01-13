@@ -1,5 +1,5 @@
 import React from 'react';
-import Easytouse from '../assets/Easytouse.png';
+import Easytouse from '../assets/ClarityofThought.png';
 import ClarityofThought from '../assets/ClarityofThought.png';
 import BurgerNav from '../assets/burger-nav.png';
 
