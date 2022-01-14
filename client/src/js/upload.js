@@ -15,14 +15,11 @@ import BpmnNavigatedVeiefer from 'bpmn-js/dist/bpmn-navigated-viewer.development
 import {ProcessModel, Trends} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
-
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import XMLParser from 'react-xml-parser';
 import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import Modeler from 'bpmn-js/lib/Modeler';
-//import diagram2 from "../assets/diagram2.xml";
-
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css';
 import WIP from '../assets/MarthaMitHelm.png';
@@ -220,7 +217,6 @@ export default class Upload extends React.Component {
 	};
 
 	getData() {
-//		Route.upload for the server
 		fetch(Route.upload, {
 			method:  'GET',
 			headers: {
@@ -419,9 +415,7 @@ export default class Upload extends React.Component {
 												<p>Here u can find a checklist to ensure your Processmodel is set up properly</p>
 												<div className="d-flex">
 													<a className="preva-btn"
-														//														href={DownloadPDF}
 														href={'/ConventionGuidline_Preva_v1.pdf'}
-
 														download>
 														<img src={DownloadIcon} className="icon-text"/>
 														&nbsp;Download
@@ -443,7 +437,6 @@ export default class Upload extends React.Component {
 											<img src={Cloudupload} className="cloud-upload"/>
 										</div>
 										<div className=" col-lg-6 col-md-12 my-auto">
-											{/*<img src={NumberOne} className="cloud-upload"/>*/}
 											<div className="outline-number-content-2">
 												<h3>Upload</h3>
 												<hr id="uploadTitle"/>
@@ -513,7 +506,6 @@ export default class Upload extends React.Component {
 						<SuccessBox PrevaIcon={PrevaIcon} dnone={dnone}/>
 
 						{/* Error-box */}
-						{/*TODO: delete input field if error */}
 						<ErrorBox PrevaIcon={PrevaIcon} dnone={dnone}/>
 						<div className="overlay" id="loadingScreen" style={dnone}>
 							<div className="mx-auto rounded-button modal-style bg-preva-loadingscreen">
@@ -525,7 +517,6 @@ export default class Upload extends React.Component {
 											style={{ color: '#10d2c4' }}>. </span></div>
 									</div>
 								</div>
-								{/*	 Converting Model Analyzing Model Prepare Analysis*/}
 							</div>
 						</div>
 					</div>
@@ -616,7 +607,7 @@ export default class Upload extends React.Component {
 								{/*</div>*/}
 								{/*<button onClick={() => this.handleSeperabilities()}>testen</button>*/}
 								{/* CREATE PDF */}
-								<form className="btn col-md-12 col-lg-2 " action={'http://localhost:6318/controller/makepdf.php'}
+								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf}
 									method="post">
 									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 									<button
@@ -628,14 +619,10 @@ export default class Upload extends React.Component {
 								</form>
 							</div>
 						</div>
-
 						<Trends/>
-
 					</section>
 				}
 			</section>
 		);
 	}
-
 }
-

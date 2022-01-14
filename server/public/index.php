@@ -1,8 +1,9 @@
 <?php
-header("Contdent-Type: application/json");
-require dirname(__DIR__)."/vendor/autoload.php";
 
+header("Content-Type: application/json");
+require dirname(__DIR__)."/vendor/autoload.php";
 $taskConnection = [];
+
 try {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$entityBody = file_get_contents('php://input');
@@ -12,7 +13,6 @@ try {
 		$content    = base64_decode($content[1]);
 //		$name       = dirname(__DIR__)."/".time().".xml";
 		$name = dirname(__DIR__)."/test.xml";
-
 		file_put_contents($name, $content);
 
 		$newXMLparser = new \Preva\Io\XmlParser();

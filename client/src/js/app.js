@@ -129,7 +129,11 @@ class App extends React.Component {
 				};
 				return fetch(Route.upload, {
 					method:  'POST',
-					headers: { 'Content-Type': 'application/json' },
+					headers: {
+						'Content-Type': 'application/json',
+						"Access-Control-Allow-Origin": "*",
+						"Access-Control-Allow-Methods": "*"
+					},
 					body:    JSON.stringify(data),
 					cache:   'no-cache'
 				}).then(data => data.json())
