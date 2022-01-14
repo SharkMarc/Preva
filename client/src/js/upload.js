@@ -11,7 +11,6 @@ import Cloudupload from '../assets/cloudupload.png';
 import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
-import BpmnNavigatedVeiefer from 'bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import {ProcessModel, Trends} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
