@@ -22,20 +22,15 @@ export default class Statistics extends React.Component {
 							<hr/>
 						</div>
 						<div className="text col-12">Structure:<br/>
-							<div className="amount">{allLists['noac'].toFixed(2)}</div>
+							<div className="amount">{allLists['noac'] ? allLists['noac'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Operators:<br/>
 							<div className="amount">{(attributes['sequenceFlow'] / allLists['noac']).toFixed(2)}</div>
 							<hr/>
 						</div>
-						<div className="text col-12">
-							Cycle:<br/>
-							<div className="amount">{allLists['cyclicity'].toFixed(2)}</div>
-							<hr/>
-						</div>
 						<div className="text col-12">Cognitive weight:<br/>
-							<div className="amount">{allLists['cognitiveWeight'].toFixed(2)}</div>
+							<div className="amount">{allLists['cognitiveWeight'] ? allLists['cognitiveWeight'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 					</div>
@@ -57,7 +52,7 @@ export default class Statistics extends React.Component {
 						</div>
 						<div className="text col-12">
 							Density:<br/>
-							<div className="amount">{(allLists['density']).toFixed(2)}</div>
+							<div className="amount">{allLists['density'] ? allLists['density'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 					</div>
@@ -92,19 +87,21 @@ export default class Statistics extends React.Component {
 							<hr/>
 						</div>
 						<div className="text col-12">Maximum degree of Connectors:<br/>
-							<div className="amount">{allLists['maxDegreeOfConnectors'].toFixed(2)}</div>
+							<div
+								className="amount">{allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Binary decissions:<br/>
-							<div className="amount">{allLists['binaryDecisions'].toFixed(2)}</div>
+							<div className="amount">{allLists['binaryDecisions'] ? allLists['binaryDecisions'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Control flow complexity (CFC):<br/>
-							<div className="amount">{allLists['controlFlowComplexity'].toFixed(2)}</div>
+							<div
+								className="amount">{allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Concurrency:<br/>
-							<div className="amount">{allLists['concurrency'].toFixed(2)}</div>
+							<div className="amount">{allLists['concurrency'] ? allLists['concurrency'].toFixed(2) : '0.00'}</div>
 							<hr/>
 						</div>
 					</div>

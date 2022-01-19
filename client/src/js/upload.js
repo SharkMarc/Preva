@@ -14,7 +14,7 @@ import ConventionGuide from '../assets/conventionGuide.png';
 import {ProcessModel, Trends} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
-import propertiesPanelModule from "bpmn-js-properties-panel";
+import propertiesPanelModule from 'bpmn-js-properties-panel';
 import XMLParser from 'react-xml-parser';
 import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
@@ -53,25 +53,27 @@ export default class Upload extends React.Component {
 		this.handleBPMNView = this.handleBPMNView.bind(this);
 	}
 
-	handleBPMNView(){
-		const viewer = new BpmnJS({
-			container: document.getElementById('bpmn'),
-			width: '100%',
-			height: '100%',
-			minHeight:'100%',
-			minWidth:'100%',
-			keyboard:  {
-				bindTo: document
-			},
-		});
-//		fetch('http://localhost:6318/test.xml')
-		fetch(Route.getBPMN)
-			.then(r => r.text())
-			.then(xml => viewer.importXML(xml))
-			.then(() => {
-				document.getElementById('bpmn').querySelector('svg').viewBox = "0 0 500 500";
-				this.setState({ doitonce: true });
+	handleBPMNView() {
+		if (!this.state.doitonce) {
+			const viewer = new BpmnJS({
+				container: document.getElementById('bpmn'),
+				width:     '100%',
+				height:    '100%',
+				minHeight: '100%',
+				minWidth:  '100%',
+				keyboard:  {
+					bindTo: document
+				},
 			});
+//		fetch('http://localhost:6318/test.xml')
+			fetch(Route.getBPMN)
+				.then(r => r.text())
+				.then(xml => viewer.importXML(xml))
+				.then(() => {
+					document.getElementById('bpmn').querySelector('svg').viewBox = '0 0 500 500';
+					this.setState({ doitonce: true });
+				});
+		}
 	}
 
 	handleTabs(id) {
@@ -219,7 +221,8 @@ export default class Upload extends React.Component {
 		fetch(Route.upload, {
 			method:  'GET',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+//				'Access-Control-Allow-Origin': '*',
 			},
 			cache:   'no-cache'
 		})
@@ -367,7 +370,7 @@ export default class Upload extends React.Component {
 					console.log('Unknown Page Sorry for that :-/ :' + statisticSwitch);
 			}
 		}
-		let array = ['All', 'Size', 'Structure', 'Operator', 'Cycle', 'Cognitive'];
+		let array = ['All', 'Size', 'Structure', 'Operator', 'Cognitive'];
 		let statisticPage = this.props.statisticPage;
 
 		if (statisticSwitch) {
@@ -556,6 +559,8 @@ export default class Upload extends React.Component {
 													bpmndiList={this.state.bpmndiList}
 													id={array[i]}
 													key={i}
+													allLists={this.state.allLists}
+													attributes={this.state.countList}
 													selectedStatistic={selectedStatistic}
 													handleSwitch={() => this.handleSwitch(array[i], array[i])}
 													name={array[i]}
