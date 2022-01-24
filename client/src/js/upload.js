@@ -51,6 +51,16 @@ export default class Upload extends React.Component {
 		this.handleData = this.handleData.bind(this);
 		this.handleTabs = this.handleTabs.bind(this);
 		this.handleBPMNView = this.handleBPMNView.bind(this);
+		this.handleMPDF = this.handleMPDF.bind(this);
+	}
+
+	handleMPDF() {
+		fetch(Route.createPdf, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			cache:   'no-cache'
+		}).then();
 	}
 
 	handleBPMNView() {
@@ -607,12 +617,11 @@ export default class Upload extends React.Component {
 								</div>
 
 								{/* CREATE PDF */}
-								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf} method="post">
+								<form className="btn col-md-12 col-lg-2 " onSubmit={()=>this.handleMPDF()} action={Route.createPdf} method="POST">
 									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
-									<button
-										className="d-flex justify-content-center preva-btn w-100"
-										type="submit">
-										<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
+									<button type="submit"
+										className="d-flex justify-content-center preva-btn w-100">
+										<img src={PDFIcon}  className="icon-text mr-1 my-auto"/>
 										<div>Create Pdf</div>
 									</button>
 								</form>

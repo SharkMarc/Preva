@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: application/json");
 require dirname(__DIR__)."/vendor/autoload.php";
 require dirname(__DIR__)."/vendor/mpdf/mpdf/mpdf.php";
 
