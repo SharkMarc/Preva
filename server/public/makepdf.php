@@ -1,5 +1,4 @@
 <?php
-header("Content-Type: application/json");
 require dirname(__DIR__)."/vendor/autoload.php";
 require dirname(__DIR__)."/vendor/mpdf/mpdf/mpdf.php";
 
@@ -169,6 +168,6 @@ $mpdf->SetFooter('All rights reserved by Preva');
 $mpdf->WriteHTML($data);
 //} catch (MpdfException $e) {
 //}
-$mpdf->Output('EstimationResult_'.$_POST['dataName'].'_'.$date.'.pdf', 'D');
+return $mpdf->Output('EstimationResult_'.$_POST['dataName'].'_'.$date.'.pdf', 'D');
 
 //$mpdf->Output("reklamacja.pdf", "D");

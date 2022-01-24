@@ -17,6 +17,7 @@ export default class Trends extends React.Component {
 	}
 
 	componentDidMount() {
+		charts(FusionCharts);
 	}
 
 	render() {

@@ -608,7 +608,7 @@ export default class Upload extends React.Component {
 
 								{/* CREATE PDF */}
 								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf}
-									method="post">
+									method="GET">
 									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 									<button
 										className="d-flex justify-content-center preva-btn w-100"
