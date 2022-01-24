@@ -56,15 +56,15 @@ export default class Upload extends React.Component {
 	handleBPMNView() {
 		if (!this.state.doitonce) {
 			const viewer = new BpmnJS({
-				container: document.getElementById('bpmn'),
+				container:         document.getElementById('bpmn'),
 				additionalModules: [
 //					propertiesPanelModule
 				],
-				width:     '100%',
-				height:    '100%',
-				minHeight: '100%',
-				minWidth:  '100%',
-				keyboard:  {
+				width:             '100%',
+				height:            '100%',
+				minHeight:         '100%',
+				minWidth:          '100%',
+				keyboard:          {
 					bindTo: document
 				},
 			});
@@ -607,8 +607,7 @@ export default class Upload extends React.Component {
 								</div>
 
 								{/* CREATE PDF */}
-								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf}
-									method="GET">
+								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf} method="post">
 									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
 									<button
 										className="d-flex justify-content-center preva-btn w-100"
@@ -619,9 +618,7 @@ export default class Upload extends React.Component {
 								</form>
 							</div>
 						</div>
-						 <Trends
-							allLists={this.state.allLists}
-						/>
+						<Trends allLists={this.state.allLists}/>
 					</section>
 				}
 			</section>
