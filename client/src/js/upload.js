@@ -73,7 +73,7 @@ export default class Upload extends React.Component {
 				.then(r => r.text())
 				.then(xml => viewer.importXML(xml))
 				.then(() => {
-					document.getElementById('bpmn').querySelector('svg').viewBox = '0 0 500 500';
+//					document.getElementById('bpmn').querySelector('svg').viewBox = '0 0 500 500';
 					this.setState({ doitonce: true });
 				});
 		}
