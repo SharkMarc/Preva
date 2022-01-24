@@ -11,91 +11,55 @@ export default class StatisticTable extends React.Component {
 		};
 
 		this.handleColor = this.handleColor.bind(this);
+		this.handleColorCounter = this.handleColorCounter.bind(this);
 	}
 
-	handleColor(id, all, size, structure, operator, cognitive) {
-		console.log(id);
+	componentDidMount() {
+		if (this.props.allLists) {
+			document.getElementById("Size").click();
+			document.getElementById("Structure").click();
+			document.getElementById("Operator").click();
+			document.getElementById("Cognitive").click();
+			document.getElementById("All").click();
+		}
+	}
 
+	handleColorCounter(counter, param){
+		for (let i = 0; i < param.length; i++) {
+			if (!param[i]) {
+				counter++;
+			}
+
+			if (counter === param.length) {
+				this.setState({ color: 'red' });
+			} else if (counter) {
+				this.setState({ color: 'orange' });
+			} else {
+				this.setState({ color: 'green' });
+			}
+		}
+	}
+	handleColor(id, all, size, structure, operator, cognitive) {
 		let counter = 0;
 
 		if (id === 'All') {
-
-			for (let i = 0; i < all.length; i++) {
-				if (!all[i]) {
-					counter++;
-				}
-
-				if (counter === all.length) {
-					this.setState({ color: 'red' });
-				} else if (counter) {
-					this.setState({ color: 'orange' });
-				} else {
-					this.setState({ color: 'green' });
-				}
-			}
+			this.handleColorCounter(counter, all);
 		}
+
 		if (id === 'Size') {
-			for (let i = 0; i < size.length; i++) {
-				if (!size[i]) {
-					counter++;
-				}
-
-				if (counter === size.length) {
-					this.setState({ color: 'red' });
-				} else if (counter) {
-					this.setState({ color: 'orange' });
-				} else {
-					this.setState({ color: 'green' });
-				}
-			}
+			this.handleColorCounter(counter, size);
 		}
-		if (id === 'Structure') {
-			for (let i = 0; i < structure.length; i++) {
-				if (!structure[i]) {
-					counter++;
-				}
 
-				if (counter === structure.length) {
-					this.setState({ color: 'red' });
-				} else if (counter) {
-					this.setState({ color: 'orange' });
-				} else {
-					this.setState({ color: 'green' });
-				}
-			}
+		if (id === 'Structure') {
+			this.handleColorCounter(counter, structure);
 		}
 
 		if (id === 'Operator') {
-			for (let i = 0; i < operator.length; i++) {
-				if (!operator[i]) {
-					counter++;
-				}
-
-				if (counter === operator.length) {
-					this.setState({ color: 'red' });
-				} else if (counter) {
-					this.setState({ color: 'orange' });
-				} else {
-					this.setState({ color: 'green' });
-				}
-			}
+			this.handleColorCounter(counter, operator);
 		}
 
 		if (id === 'Cognitive') {
-			for (let i = 0; i < cognitive.length; i++) {
-				if (!cognitive[i]) {
-					counter++;
-				}
-
-				if (counter === cognitive.length) {
-					this.setState({ color: 'red' });
-				} else if (counter) {
-					this.setState({ color: 'orange' });
-				} else {
-					this.setState({ color: 'green' });
-				}
-
-			}
+			this.handleColorCounter(counter, cognitive);
 		}
 
 		this.props.handleSwitch();

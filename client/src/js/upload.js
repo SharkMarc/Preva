@@ -1,6 +1,7 @@
 import React from 'react';
 import Statistics from './statistic/statistics';
 import StatisticTable from './statistic/statistictable';
+import Trends from './dashboard/dashboard-points';
 import PrevaIcon from '../assets/preva_icon.png';
 import SearchIcon from '../assets/search_png.png';
 import UploadIcon from '../assets/upload.png';
@@ -11,7 +12,7 @@ import Cloudupload from '../assets/cloudupload.png';
 import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
-import {ProcessModel, Trends} from './dashboard/dashboard-points';
+import {ProcessModel} from './dashboard/dashboard-points';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
@@ -21,7 +22,6 @@ import 'bpmn-js/dist/assets/diagram-js.css';
 import Modeler from 'bpmn-js/lib/Modeler';
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css';
-import WIP from '../assets/MarthaMitHelm.png';
 
 export default class Upload extends React.Component {
 	constructor(props) {
@@ -57,6 +57,9 @@ export default class Upload extends React.Component {
 		if (!this.state.doitonce) {
 			const viewer = new BpmnJS({
 				container: document.getElementById('bpmn'),
+				additionalModules: [
+//					propertiesPanelModule
+				],
 				width:     '100%',
 				height:    '100%',
 				minHeight: '100%',
@@ -577,7 +580,6 @@ export default class Upload extends React.Component {
 								</div>
 							</div>
 							<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
-
 								<div className="card border-shadow-statistic min-height-statistic w-100">
 									<h3>
 										<b>Trend</b>
@@ -604,12 +606,6 @@ export default class Upload extends React.Component {
 									</button>
 								</div>
 
-								{/*<div className="btn">*/}
-								{/*	<button className="btn border-shadow-statistic button-border hover-upload"*/}
-								{/*		onClick={() => this.getData()}> get data*/}
-								{/*	</button>*/}
-								{/*</div>*/}
-								{/*<button onClick={() => this.handleSeperabilities()}>testen</button>*/}
 								{/* CREATE PDF */}
 								<form className="btn col-md-12 col-lg-2 " action={Route.createPdf}
 									method="post">
@@ -623,7 +619,9 @@ export default class Upload extends React.Component {
 								</form>
 							</div>
 						</div>
-						<Trends/>
+						 <Trends
+							allLists={this.state.allLists}
+						/>
 					</section>
 				}
 			</section>
