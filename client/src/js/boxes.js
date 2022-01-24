@@ -2,7 +2,7 @@ import React from 'react';
 
 export const SuccessBox = ({ dnone, PrevaIcon }) => (
 	<div className="card p-3 success-box-style" id="successBox" style={dnone}>
-		<div className="row">
+		<div className="row col-12">
 			<div className="col-3 text-center my-auto">
 				<img src={PrevaIcon} className="icon"/>
 			</div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import Statistics from './statistic/statistics';
 import StatisticTable from './statistic/statistictable';
-import Trends from './dashboard/dashboard-points';
 import PrevaIcon from '../assets/preva_icon.png';
 import SearchIcon from '../assets/search_png.png';
 import UploadIcon from '../assets/upload.png';
@@ -13,14 +12,16 @@ import DashboardImg from '../assets/dashboard.png';
 import Export from '../assets/export.png';
 import ConventionGuide from '../assets/conventionGuide.png';
 import {ProcessModel} from './dashboard/dashboard-points';
+import {Trends} from './dashboard/trends';
 import {SuccessBox, ErrorBox} from './boxes';
 import BpmnJS from 'bpmn-js';
+import RadarChart from 'react-svg-radar-chart';
+
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import XMLParser from 'react-xml-parser';
 import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import Modeler from 'bpmn-js/lib/Modeler';
-import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css';
 
 export default class Upload extends React.Component {
@@ -36,10 +37,11 @@ export default class Upload extends React.Component {
 			testVersion:       [],
 			allLists:          [],
 			seperability:      [],
+			processTab:        'metrickz',
 			statisticSwitch:   'All',
 			selectedStatistic: 'All',
 			dataName:          '',
-			doitonce:          false,
+			doitonce:          0,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -59,12 +61,13 @@ export default class Upload extends React.Component {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			method:  'POST',
 			cache:   'no-cache'
 		}).then();
 	}
 
 	handleBPMNView() {
-		if (!this.state.doitonce) {
+		if (this.state.doitonce < 2) {
 			const viewer = new BpmnJS({
 				container:         document.getElementById('bpmn'),
 				additionalModules: [
@@ -78,14 +81,11 @@ export default class Upload extends React.Component {
 					bindTo: document
 				},
 			});
-//		fetch('http://localhost:6318/test.xml')
+
 			fetch(Route.getBPMN)
 				.then(r => r.text())
 				.then(xml => viewer.importXML(xml))
-				.then(() => {
-//					document.getElementById('bpmn').querySelector('svg').viewBox = '0 0 500 500';
-					this.setState({ doitonce: true });
-				});
+				.then(() => this.handleTabs('processModel'));
 		}
 	}
 
@@ -95,22 +95,21 @@ export default class Upload extends React.Component {
 		if (id === 'trend') {
 			document.getElementById('metrickz').classList.remove('active');
 			document.getElementById('processModel').classList.remove('active');
-			document.querySelector('.show-metrickz').classList.add('d-none');
-			document.querySelector('.show-processModel').classList.add('d-none');
-			document.querySelector('.show-trend').classList.remove('d-none');
+
+			this.setState({ processTab: 'trend', doitonce: 0 });
 		} else if (id === 'metrickz') {
 			document.getElementById('trend').classList.remove('active');
 			document.getElementById('processModel').classList.remove('active');
-			document.querySelector('.show-metrickz').classList.remove('d-none');
-			document.querySelector('.show-trend').classList.add('d-none');
-			document.querySelector('.show-processModel').classList.add('d-none');
+
+			this.setState({ processTab: 'metrickz', doitonce: 0 });
 		} else {
 			document.getElementById('trend').classList.remove('active');
 			document.getElementById('metrickz').classList.remove('active');
-			document.querySelector('.show-metrickz').classList.add('d-none');
-			document.querySelector('.show-trend').classList.add('d-none');
-			document.querySelector('.show-processModel').classList.remove('d-none');
+			let doitonce = this.state.doitonce;
+			doitonce++;
 			this.handleBPMNView();
+
+			this.setState({ processTab: 'processModel', doitonce: doitonce });
 		}
 	}
 
@@ -195,10 +194,6 @@ export default class Upload extends React.Component {
 		}
 	}
 
-	componentDidUpdate() {
-
-	}
-
 	click() {
 		let file = document.getElementById('userfile');
 		file.click();
@@ -264,9 +259,8 @@ export default class Upload extends React.Component {
 		let statisticSwitch = this.state.statisticSwitch;
 		let html;
 		let selectedStatistic = this.state.selectedStatistic;
-		let dnone = {
-			display: 'none',
-		};
+		let dnone = { display: 'none' };
+
 		let data = [{
 			data: {
 				size:            this.state.allLists.noa / 10,
@@ -278,7 +272,6 @@ export default class Upload extends React.Component {
 		}];
 
 		let captions = {
-			// columns
 			size:            'Size',
 			Structure:       'Structure',
 			Operators:       'Operators',
@@ -314,6 +307,7 @@ export default class Upload extends React.Component {
 					};
 				}
 					break;
+
 				case 'Structure': {
 					html =
 						<Statistics title={'Structure'} allLists={this.state.allLists} attributes={this.state.countList} noa={this.state.noa}/>;
@@ -379,6 +373,7 @@ export default class Upload extends React.Component {
 					};
 				}
 					break;
+
 				default:
 					console.log('Unknown Page Sorry for that :-/ :' + statisticSwitch);
 			}
@@ -410,7 +405,6 @@ export default class Upload extends React.Component {
 							method="post"
 							id="formUpload"
 							onSubmit={(e) => this.handleSubmit(e)}>
-
 							<section>
 								<div className="introduction-container">
 									<h2>How to get started</h2>
@@ -522,6 +516,7 @@ export default class Upload extends React.Component {
 
 						{/* Error-box */}
 						<ErrorBox PrevaIcon={PrevaIcon} dnone={dnone}/>
+
 						<div className="overlay" id="loadingScreen" style={dnone}>
 							<div className="mx-auto rounded-button modal-style bg-preva-loadingscreen">
 								<div className="" role="document">
@@ -538,7 +533,7 @@ export default class Upload extends React.Component {
 					:
 					<section className="flex-wrap">
 						<div className="col-12 flex-wrap">
-							<h2 id="processModel" className="col-4 text-center" onClick={() => this.handleTabs('processModel')}>
+							<h2 id="processModel" className="col-4 text-center" onClick={() => this.handleBPMNView()}>
 								Processmodel
 							</h2>
 							<h2 id="metrickz" className="col-4 text-center metrickz active" onClick={() => this.handleTabs('metrickz')}>
@@ -547,87 +542,95 @@ export default class Upload extends React.Component {
 							<h2 id="trend" className="col-4 text-center trend" onClick={() => this.handleTabs('trend')}>
 								Trend
 							</h2>
-
 						</div>
 
-						<ProcessModel/>
-						<div className="flex-wrap show-metrickz w-100">
-							<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-								<div className="card no-border-top border-shadow-statistic">
-									<div className="table min-height-statistic mb-0 flex-wrap">
-										<div id="Categories" className="flex-wrap col-12">
-											<h5 className="mb-auto margin-top-h5 col-6 p-0">
-												Category
-												<hr className="w-100"/>
-											</h5>
-											<h5 className="mb-auto margin-top-h5 col-6 p-0 text-center">Status
-												<hr className="w-100"/>
-											</h5>
-										</div>
+						{/* <--- processModel ---> */}
+						{this.state.processTab === 'processModel' ? <ProcessModel/> : null}
 
-										<div className="col-12 p-0">
-											{/*<hr className="category-hr"/>*/}
-											{array.map((value, i) => {
-												return <StatisticTable
-													bpmndiList={this.state.bpmndiList}
-													id={array[i]}
-													key={i}
-													allLists={this.state.allLists}
-													attributes={this.state.countList}
-													selectedStatistic={selectedStatistic}
-													handleSwitch={() => this.handleSwitch(array[i], array[i])}
-													name={array[i]}
-													status={i}
-												/>;
-											})}
+						{/* <--- metrickz ---> */}
+						{this.state.processTab === 'metrickz' ?
+							<div className="flex-wrap show-metrickz w-100">
+								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
+									<div className="card no-border-top border-shadow-statistic">
+										<div className="table min-height-statistic mb-0 flex-wrap">
+											<div id="Categories" className="flex-wrap col-12">
+												<h5 className="mb-auto margin-top-h5 col-6 p-0">
+													Category
+													<hr className="w-100"/>
+												</h5>
+												<h5 className="mb-auto margin-top-h5 col-6 p-0 text-center">Status
+													<hr className="w-100"/>
+												</h5>
+											</div>
+
+											<div className="col-12 p-0">
+												{/*<hr className="category-hr"/>*/}
+												{array.map((value, i) => {
+													return <StatisticTable
+														bpmndiList={this.state.bpmndiList}
+														id={array[i]}
+														key={i}
+														allLists={this.state.allLists}
+														attributes={this.state.countList}
+														selectedStatistic={selectedStatistic}
+														handleSwitch={() => this.handleSwitch(array[i], array[i])}
+														name={array[i]}
+														status={i}
+													/>;
+												})}
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div className="col-lg-6 col-xl-4 col-md-12 p-1">
-								<div className="card border-shadow-statistic">
-									<div>{html}</div>
+								<div className="col-lg-6 col-xl-4 col-md-12 p-1">
+									<div className="card border-shadow-statistic">
+										<div>{html}</div>
+									</div>
 								</div>
-							</div>
-							<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
-								<div className="card border-shadow-statistic min-height-statistic w-100">
-									<h3>
-										<b>Trend</b>
-										<hr/>
-									</h3>
-									<RadarChart
-										className={'testChart'}
-										captions={captions}
-										data={data}
-										dots={true}
-										size={300}
-									/>
+								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
+									<div className="card border-shadow-statistic min-height-statistic w-100">
+										<h3>
+											<b>Trend</b>
+											<hr/>
+										</h3>
+										<RadarChart
+											className={'testChart'}
+											captions={captions}
+											data={data}
+											dots={true}
+											size={300}
+										/>
+									</div>
 								</div>
-							</div>
-							<div className="pt-3 mb-5 col-12 analyse-buttons">
-								<div className="btn col-md-12 col-lg-2 ml-auto">
-									<button
-										className="d-flex justify-content-center preva-btn w-100"
-										onClick={() => this.props.handleStartPage()}>
-										<img src={BackIcon} className="icon-text mr-1 my-auto"/>
-										<div>
-											back
-										</div>
-									</button>
-								</div>
+								<div className="pt-3 mb-5 col-12 analyse-buttons">
+									<div className="btn col-md-12 col-lg-2 ml-auto">
+										<button
+											className="d-flex justify-content-center preva-btn w-100"
+											onClick={() => this.props.handleStartPage()}>
+											<img src={BackIcon} className="icon-text mr-1 my-auto"/>
+											<div>
+												back
+											</div>
+										</button>
+									</div>
 
-								{/* CREATE PDF */}
-								<form className="btn col-md-12 col-lg-2 " onSubmit={()=>this.handleMPDF()} action={Route.createPdf} method="POST">
-									<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
-									<button type="submit"
-										className="d-flex justify-content-center preva-btn w-100">
-										<img src={PDFIcon}  className="icon-text mr-1 my-auto"/>
-										<div>Create Pdf</div>
-									</button>
-								</form>
+									{/* CREATE PDF */}
+									<form className="btn col-md-12 col-lg-2 " onSubmit={() => this.handleMPDF()} action={Route.createPdf}
+										method="POST">
+										<input type="text" name="dataName" className="d-none" defaultValue={this.state.dataName}/>
+										<button type="submit"
+											className="d-flex justify-content-center preva-btn w-100">
+											<img src={PDFIcon} className="icon-text mr-1 my-auto"/>
+											<div>Create Pdf</div>
+										</button>
+									</form>
+								</div>
 							</div>
-						</div>
-						<Trends allLists={this.state.allLists}/>
+							: null}
+
+						{/* <--- TREND ---> */}
+						{this.state.processTab === 'trend' ?
+							<Trends allLists={this.state.allLists}/> : null}
 					</section>
 				}
 			</section>
