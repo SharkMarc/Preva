@@ -17,7 +17,6 @@ export default class Trends extends React.Component {
 	}
 
 	componentDidMount() {
-		charts(FusionCharts);
 	}
 
 	render() {
@@ -37,7 +36,7 @@ export default class Trends extends React.Component {
 
 							<div className="col-12 p-0">
 								<GaugeChart id="gauge-chart1"
-									nrOfLevels={30}
+									nrOfLevels={15}
 									colors={["#fa595f", "#21cda4"]}
 									arcWidth={0.3}
 									percent={0.37}
