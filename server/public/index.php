@@ -42,6 +42,7 @@ try {
 			$cyclicity             = $metricsCalculator->cyclicity($process);
 			$cyclomaticNumber      = $metricsCalculator->cyclomaticNumber($process);
 			$cognitiveWeight       = $metricsCalculator->cognitiveWeight($process);
+			$sequenceFlow       = $metricsCalculator->sequenceFlow($process);
 		}
 
 		echo json_encode([
@@ -60,6 +61,7 @@ try {
 			"cyclicity"             => $cyclicity,
 			"cyclomaticNumber"      => $cyclomaticNumber,
 			"cognitiveWeight"       => $cognitiveWeight,
+			"sequenceFlow"       => $sequenceFlow,
 			"bpmndiList"            => [],
 			"list"                  => [],
 			"objectSummary"         => [],

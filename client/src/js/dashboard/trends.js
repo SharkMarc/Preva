@@ -6,7 +6,7 @@ import GaugeChart from 'react-gauge-chart';
 export const Trends = (props) => (
 	<div className={'flex-wrap show-trend w-100 '}>
 		<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-			<div className="card no-border-top border-shadow-statistic">
+			<div className="card no-border-top border-shadow-statistic h-100">
 				<div className="table min-height-statistic mb-0 flex-wrap">
 					<div className="flex-wrap col-12">
 						<h5 className="my-auto p-0">
@@ -18,7 +18,7 @@ export const Trends = (props) => (
 					<div className="col-12 p-0">
 						<GaugeChart id="gauge-chart3"
 							nrOfLevels={3}
-							text-color={'#000'}
+							needleColor={'#000'}
 							textColor={'#000'}
 							colors={['#fa595f', '#21cda4']}
 							arcWidth={0.3}
@@ -29,7 +29,7 @@ export const Trends = (props) => (
 			</div>
 		</div>
 		<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-			<div className="card no-border-top border-shadow-statistic">
+			<div className="card no-border-top border-shadow-statistic  h-100">
 				<div className="table min-height-statistic mb-0 flex-wrap">
 					<div className="flex-wrap col-12">
 						<h5 className="my-auto col-12 p-0">test
@@ -49,7 +49,7 @@ export const Trends = (props) => (
 			</div>
 		</div>
 		<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-			<div className="card no-border-top border-shadow-statistic">
+			<div className="card no-border-top border-shadow-statistic  h-100">
 				<div className="table min-height-statistic mb-0 flex-wrap">
 					<div className="flex-wrap col-12">
 						<h5 className="my-auto col-12 p-0">test3

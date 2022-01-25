@@ -9,6 +9,7 @@ use Preva\Element\IsConnector;
 use Preva\Element\IsDecision;
 use Preva\Element\ParallelGateway;
 use Preva\Element\Process;
+use Preva\Element\SequenceFlow;
 use Preva\Element\StartEvent;
 use Preva\Element\Task;
 use Preva\Path\Path;
@@ -49,6 +50,20 @@ class MetricsCalculator
 		}
 
 		return $tasks;
+	}
+
+	public function sequenceFlow(Process $process): int
+	{
+		$sequenceFlows = 0;
+		foreach ($process->getChildNodes() as $node) {
+			if ($node->getOutgoingEdges()) {
+				foreach ($node->getOutgoingEdges() as $sequence) {
+					$sequenceFlows++;
+				}
+			}
+		}
+
+		return $sequenceFlows;
 	}
 
 	public function numberOfActivitiesAndControlFlows(Process $process): int
@@ -255,7 +270,7 @@ class MetricsCalculator
 	public function avgDegreeOfConnectors(Process $process): float
 	{
 		$connector = 0;
-		$outgoing = 0;
+		$outgoing  = 0;
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof IsConnector) {
 				$connector++;
@@ -263,7 +278,7 @@ class MetricsCalculator
 			}
 		}
 
-		return $outgoing/$connector;
+		return $outgoing / $connector;
 	}
 
 	public function maxDegreeOfConnectors(Process $process): int
@@ -294,9 +309,9 @@ class MetricsCalculator
 
 	public function controlFlowComplexity(Process $process): int
 	{
-		$hasAnd = false;
+		$hasAnd    = false;
 		$sumXorOut = 0;
-		$orValue = 0;
+		$orValue   = 0;
 
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof ParallelGateway) {
@@ -304,7 +319,7 @@ class MetricsCalculator
 			} elseif ($node instanceof ExclusiveGateway) {
 				$sumXorOut += count($node->getOutgoingEdges());
 			} elseif ($node instanceof InclusiveGateway) {
-				$orValue += 2**count($node->getOutgoingEdges());
+				$orValue += 2 ** count($node->getOutgoingEdges());
 			}
 		}
 
@@ -344,7 +359,7 @@ class MetricsCalculator
 	public function cyclomaticNumber(Process $process): int
 	{
 		/** @var StartEvent[] $starts */
-		[,,$starts] = $this->findStartAndEndNodes($process);
+		[, , $starts] = $this->findStartAndEndNodes($process);
 		$this->buildPaths($process);
 
 		$paths = 0;
@@ -359,25 +374,25 @@ class MetricsCalculator
 
 	public function cognitiveWeight(Process $process): int
 	{
-		$hasXor = false;
+		$hasXor    = false;
 		$hasBigXor = false;
-		$hasAnd = false;
-		$hasOr = false;
-		$sum = 0;
+		$hasAnd    = false;
+		$hasOr     = false;
+		$sum       = 0;
 
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof ExclusiveGateway && count($node->getOutgoingEdges()) === 2 && !$hasXor) {
-				$sum += $node->cognitiveWeight;
+				$sum    += $node->cognitiveWeight;
 				$hasXor = true;
 			} elseif ($node instanceof ExclusiveGateway && count($node->getOutgoingEdges()) > 2 && !$hasBigXor) {
-				$sum += $node->bigCognitiveWeight;
+				$sum       += $node->bigCognitiveWeight;
 				$hasBigXor = false;
 			} elseif ($node instanceof ParallelGateway && !$hasAnd) {
 				$hasAnd = true;
-				$sum += $node->cognitiveWeight;
+				$sum    += $node->cognitiveWeight;
 			} elseif ($node instanceof InclusiveGateway && !$hasOr) {
 				$hasOr = true;
-				$sum += $node->cognitiveWeight;
+				$sum   += $node->cognitiveWeight;
 			}
 		}
 
@@ -389,7 +404,7 @@ class MetricsCalculator
 	 */
 	private function findStartAndEndNodes(Process $process): array
 	{
-		$starts        = [];
+		$starts       = [];
 		$possibleEnds = [];
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof StartEvent) {

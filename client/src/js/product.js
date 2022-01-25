@@ -41,7 +41,9 @@ export default class Product extends React.Component {
 				</div>
 				<section id='product'>
 					<h2 className="text-center">What value preva provides</h2>
-					<p className="text-center font-weight-bold">Preva creates a value for all processes around the world</p>
+					<p className="text-center font-weight-bold">
+						Preva uses 16 metrics and 4 categories to interpret business process models in different contexts
+					</p>
 					<div className="section-two">
 						<div className="carousel">
 							<div id="carousel-example-generic" className="carousel slide" data-bs-ride="carousel">

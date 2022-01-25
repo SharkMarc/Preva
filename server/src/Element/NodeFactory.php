@@ -4,13 +4,14 @@ namespace Preva\Element;
 class NodeFactory
 {
     private const TAG_TO_CLASS = [
-        'bpmn:process'          => Process::class,
-        'bpmn:startEvent'       => StartEvent::class,
-        'bpmn:endEvent'         => EndEvent::class,
-        'bpmn:task'             => Task::class,
-        'bpmn:exclusiveGateway' => ExclusiveGateway::class,
-        'bpmn:parallelGateway'  => ParallelGateway::class,
-        'bpmn:inclusiveGateway'  => InclusiveGateway::class,
+	    'bpmn:process'          => Process::class,
+	    'bpmn:startEvent'       => StartEvent::class,
+	    'bpmn:endEvent'         => EndEvent::class,
+	    'bpmn:task'             => Task::class,
+	    'bpmn:sequenceFlow'     => SequenceFlow::class,
+	    'bpmn:exclusiveGateway' => ExclusiveGateway::class,
+	    'bpmn:parallelGateway'  => ParallelGateway::class,
+	    'bpmn:inclusiveGateway' => InclusiveGateway::class,
     ];
 
     public function createNode(string $tagName, array $attributes = []): Node

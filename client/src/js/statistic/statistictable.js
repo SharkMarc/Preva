@@ -73,38 +73,57 @@ export default class StatisticTable extends React.Component {
 		const allLists = this.props.allLists;
 		const attributes = this.props.attributes;
 		const selectedStatistic = this.props.selectedStatistic;
+		let noa = Number(allLists['noa'] ? allLists['noa'] : 0).toFixed(2);
+		let noac = Number(allLists['noac'] ? allLists['noac'] : 0).toFixed(2);
+		let sequenceFlow = Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] : 0).toFixed(2);
+		let cognitiveWeight = Number(allLists['cognitiveWeight'] ? allLists['cognitiveWeight'] : 0).toFixed(2);
+		let density = Number(allLists['density'] ? allLists['density'] : 0).toFixed(2);
+		let separability = Number(allLists['separability'] ? allLists['separability'] : 0).toFixed(2);
+		let sequentiality = Number(allLists['sequentiality'] ? allLists['sequentiality'] : 0).toFixed(2);
+		let diameter = Number(allLists['diameter'] ? allLists['diameter'] : 0).toFixed(2);
+		let cnc = (sequenceFlow / noac).toFixed(2);
+		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
+		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
+		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
+		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
+		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
+		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
+
+		let allSize = ((Number(noa) + Number(noac) + Number(cnc) + Number(density)) / 4).toFixed(2);
+		let allStructure = ((Number(separability) + Number(diameter) + Number(sequentiality)) / 3).toFixed(2);
+		let allOperator = ((Number(maxDegreeOfConnectors) + Number(maxNestingDepth) + Number(avgDegreeOfConnectors) +
+			Number(binaryDecisions) + Number(concurrency) + Number(controlFlowComplexity)) / 6).toFixed(2);
 
 		let all = [
-			allLists['noa'],
-			allLists['noac'],
-			allLists['sequenceFlow'],
-			attributes['sequenceFlow'],
-			allLists['cognitiveWeight']
+			allSize,
+			allStructure,
+			allOperator,
+			cognitiveWeight
 		];
 
 		let size = [
-			allLists['noa'],
-			allLists['noac'],
-			attributes['sequenceFlow'],
-			allLists['density'],
+			noa,
+			noac,
+			cnc,
+			density,
 		];
 
 		let structure = [
-			allLists['separability'],
-			allLists['sequentiality'],
-			allLists['diameter'],
+			separability,
+			sequentiality,
+			diameter,
 		];
 
 		let operator = [
-			allLists['maxNestingDepth'],
-			allLists['avgDegreeOfConnectors'],
-			allLists['binaryDecisions'],
-			allLists['controlFlowComplexity'],
-			allLists['concurrency'],
+			maxNestingDepth,
+			avgDegreeOfConnectors,
+			binaryDecisions,
+			controlFlowComplexity,
+			concurrency,
 		];
 
 		let cognitive = [
-			allLists['cognitiveWeight'],
+			cognitiveWeight,
 		];
 
 //      onChange=(id)=> if Switch for liste if false return red else green
