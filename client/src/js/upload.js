@@ -428,7 +428,7 @@ export default class Upload extends React.Component {
 												<p>Read the convention guidlines to properly prepare your business process model</p>
 												<div className="d-flex">
 													<a className="preva-btn"
-														href={'/ConventionGuidline_Preva_v1.pdf'}
+														href={'/ConventionGuidline_Preva.pdf'}
 														download>
 														<img src={DownloadIcon} className="icon-text"/>
 														&nbsp;Download
