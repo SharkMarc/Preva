@@ -16,7 +16,7 @@ export default class Register extends React.Component {
 						              'helped to create the vision and shaped Preva \n' +
 						              'the way the world knows it today. His vision is \n' +
 						              'to improve processes based on facts and allow \n' +
-						              'everyone to participate',
+						              'everyone to participate.',
 					img:          FloIcon,
 				}, {
 					id:           2,

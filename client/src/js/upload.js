@@ -290,10 +290,10 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.allLists.noa / 100,
-								second: this.state.allLists.noac / 100,
+								first:  this.state.allLists.noa / 10,
+								second: this.state.allLists.noac / 10,
 								third:  0.1 / 100,
-								forth:  this.state.allLists.density / 100,
+								forth:  this.state.allLists.density / 10,
 							},
 							meta: { color: 'blue' }
 						}
@@ -314,17 +314,21 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.allLists.separability / 100,
-								second: this.state.allLists.sequentiality / 100,
-								third:  this.state.allLists.diameter / 100,
+								first:  this.state.allLists.cyclicity / 10,
+								second: this.state.allLists.cyclomaticNumber / 10,
+								third:  this.state.allLists.separability / 10,
+								fourth: this.state.allLists.sequentiality / 10,
+								fifth:  this.state.allLists.diameter / 10,
 							},
 							meta: { color: 'blue' }
 						}
 					];
 					captions = {
-						first:  'Seperability',
-						second: 'Sequentiality',
-						third:  'Diameter',
+						first:  'Cyclicity',
+						second: 'Cyclomatic Number',
+						third:  'Seperability',
+						fourth: 'Sequentiality',
+						fifth:  'Diameter',
 					};
 				}
 					break;
@@ -346,10 +350,10 @@ export default class Upload extends React.Component {
 						}
 					];
 					captions = {
-						first:  'Nesting depth',
-						second: 'Average degree of connectors',
-						third:  'Maximum degree of connectors',
-						forth:  'Binary decissions',
+						first:  'MND',
+						second: 'ADC',
+						third:  'MDCs',
+						forth:  'Binary decisions',
 						fifth:  'CFC',
 						sixth:  'Concurrency',
 					};
@@ -396,8 +400,8 @@ export default class Upload extends React.Component {
 					<div>
 						<div id="home" className="justify-content-center">
 							<div className="full-height-bg-height full-height-bg col-12">
-								<h1>Learn how to mesure<br/>business process models</h1><br/>
-								<p>Check out how to generate the best value out of your business process models and enable your business</p>
+								<h1>The BPMN<br/>METRIC SUITE</h1><br/>
+								<p>Generate unique insights by analyzing your business process models</p>
 								<div onClick={() => this.props.handlePage('product', true)} className="preva-btn">Learn more</div>
 							</div>
 						</div>
@@ -407,8 +411,8 @@ export default class Upload extends React.Component {
 							onSubmit={(e) => this.handleSubmit(e)}>
 							<section>
 								<div className="introduction-container">
-									<h2>How to get started</h2>
-									<p className="font-weight-bold">Use placeholder for better understanding</p>
+									<h2>GET STARTED</h2>
+									<p className="font-weight-bold">Learn how to generate business process model insights in four easy steps</p>
 								</div>
 
 								<div className="mx-auto text-left">
@@ -421,7 +425,7 @@ export default class Upload extends React.Component {
 												<hr id="guidance"/>
 												<input type="text" name="dataName" className="d-none"
 													defaultValue={this.state.dataName}/>
-												<p>Here u can find a checklist to ensure your Processmodel is set up properly</p>
+												<p>Read the convention guidlines to properly prepare your business process model</p>
 												<div className="d-flex">
 													<a className="preva-btn"
 														href={'/ConventionGuidline_Preva_v1.pdf'}
@@ -449,7 +453,7 @@ export default class Upload extends React.Component {
 											<div className="outline-number-content-2">
 												<h3>Upload</h3>
 												<hr id="uploadTitle"/>
-												<p>Click here to upload your Processmodel!</p>
+												<p>Click here to upload your process model</p>
 												<div className="ml-auto preva-btn"
 													onClick={() => this.click(status)}>
 													<img src={UploadIcon} className="icon-text"/>
@@ -482,8 +486,7 @@ export default class Upload extends React.Component {
 											<div className={'outline-number-content-3'}>
 												<h3>Dashboard</h3>
 												<hr id="dashboardImg"/>
-												<p>Get your process model analyzed and use the dashboard to check out the characteristics of your
-													model</p>
+												<p>Preva analyzes and visualizes relevant information about your business process model</p>
 												<div className="outline-number">3</div>
 											</div>
 										</div>
@@ -534,7 +537,7 @@ export default class Upload extends React.Component {
 					<section className="flex-wrap">
 						<div className="col-12 flex-wrap">
 							<h2 id="processModel" className="col-4 text-center" onClick={() => this.handleBPMNView()}>
-								Processmodel
+								Process model
 							</h2>
 							<h2 id="metrickz" className="col-4 text-center metrickz active" onClick={() => this.handleTabs('metrickz')}>
 								Metrics
@@ -602,7 +605,7 @@ export default class Upload extends React.Component {
 										/>
 									</div>
 								</div>
-								<div className="pt-3 mb-5 col-12 analyse-buttons">
+								<div className="mt-3 mb-5 col-12 analyse-buttons">
 									<div className="btn col-md-12 col-lg-2 ml-auto">
 										<button
 											className="d-flex justify-content-center preva-btn w-100"
