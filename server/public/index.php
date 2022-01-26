@@ -61,11 +61,11 @@ try {
 			"cyclicity"             => $cyclicity,
 			"cyclomaticNumber"      => $cyclomaticNumber,
 			"cognitiveWeight"       => $cognitiveWeight,
-			"sequenceFlow"       => $sequenceFlow,
+			"sequenceFlow"          => $sequenceFlow,
 			"bpmndiList"            => [],
 			"list"                  => [],
 			"objectSummary"         => [],
-		]);
+		], JSON_THROW_ON_ERROR);
 	}
 } catch (\Exception $catch) {
 	http_response_code(500);
