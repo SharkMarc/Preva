@@ -20,7 +20,7 @@ try {
 
 		$filehandler = new \Preva\Io\FileManager();
 		$filehandler->save($process, dirname(__DIR__)."/saves/"."test");
-		echo json_encode("alles gut");
+//		echo json_encode("alles gut");
 	} else {
 		$filehandler       = new \Preva\Io\FileManager();
 		$process           = $filehandler->load(dirname(__DIR__)."/saves/"."test");
