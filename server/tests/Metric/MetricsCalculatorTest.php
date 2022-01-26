@@ -264,8 +264,8 @@ class MetricsCalculatorTest extends TestCase
 
 		yield 'cnc' => [$cncProcess, $cncExpectedValues];
 
-		$cncProcess2        = (new XmlParser())->parse(__DIR__.'/../../fixtures/lasttest.bpmn');
-		$cncExpectedValues2 = [
+		$definitionName       = (new XmlParser())->parse(__DIR__.'/../../fixtures/lasttest.bpmn');
+		$definitionNameExpectedValues = [
 			'noa'                   => 2,
 			'noac'                  => 4,
 			'cnc'                   => 3/4,
@@ -281,9 +281,9 @@ class MetricsCalculatorTest extends TestCase
 			'concurrency'           => 0,
 			'cyclicity'             => 10 / 13,
 			'cyclomaticNumber'      => 1,
-			'cognitiveWeight'       => 13,
+			'cognitiveWeight'       => 0,
 		];
 
-		yield 'cnc2' => [$cncProcess2, $cncExpectedValues2];
+		yield 'definitionName' => [$definitionName, $definitionNameExpectedValues];
 	}
 }
