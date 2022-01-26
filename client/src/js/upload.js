@@ -535,7 +535,7 @@ export default class Upload extends React.Component {
 					</div>
 					:
 					<section className="flex-wrap">
-						<div className="col-12 flex-wrap">
+						<div id="uploadTabs" className="d-sm-none col-12 flex-wrap">
 							<h2 id="processModel" className="col-4 text-center" onClick={() => this.handleBPMNView()}>
 								Process model
 							</h2>

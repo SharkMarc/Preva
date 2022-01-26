@@ -452,6 +452,9 @@ a.hover-upload {
 }
 
 @media (max-width: 768px) {
+  #uploadTabs {
+    display: none;
+  }
   .yt-video {
     width: unset;
     height: 220px;
