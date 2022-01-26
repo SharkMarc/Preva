@@ -554,7 +554,7 @@ export default class Upload extends React.Component {
 						{this.state.processTab === 'metrickz' ?
 							<div className="flex-wrap show-metrickz w-100">
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1 min-height-statistic">
-									<div className="card no-border-top border-shadow-statistic">
+									<div className="card h-100 no-border-top border-shadow-statistic">
 										<div className="table min-height-statistic mb-0 flex-wrap">
 											<div id="Categories" className="flex-wrap col-12">
 												<h5 className="mb-auto margin-top-h5 col-6 p-0">
@@ -586,12 +586,12 @@ export default class Upload extends React.Component {
 									</div>
 								</div>
 								<div className="col-lg-6 col-xl-4 col-md-12 p-1">
-									<div className="card border-shadow-statistic">
+									<div className="card h-100 border-shadow-statistic">
 										<div>{html}</div>
 									</div>
 								</div>
 								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
-									<div className="card border-shadow-statistic min-height-statistic w-100">
+									<div className="card h-100 border-shadow-statistic min-height-statistic w-100">
 										<h3>
 											<b>Trend</b>
 											<hr/>
@@ -605,7 +605,7 @@ export default class Upload extends React.Component {
 										/>
 									</div>
 								</div>
-								<div className="mt-3 mb-5 col-12 analyse-buttons">
+								<div className="my-5 col-12 analyse-buttons">
 									<div className="btn col-md-12 col-lg-2 ml-auto">
 										<button
 											className="d-flex justify-content-center preva-btn w-100"
