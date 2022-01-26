@@ -206,7 +206,7 @@ class MetricsCalculatorTest extends TestCase
 			'density'               => 12 / 12 / 11,
 			'separability'          => 6 / 8,
 			'sequentiality'         => 7 / 12,
-			'diameter'              => 7,
+			'diameter'              => 14,
 			'maxNestingDepth'       => 2,
 			'avgDegreeOfConnectors' => 2,
 			'maxDegreeOfConnectors' => 2,
@@ -263,5 +263,27 @@ class MetricsCalculatorTest extends TestCase
 		];
 
 		yield 'cnc' => [$cncProcess, $cncExpectedValues];
+
+		$cncProcess2        = (new XmlParser())->parse(__DIR__.'/../../fixtures/lasttest.bpmn');
+		$cncExpectedValues2 = [
+			'noa'                   => 2,
+			'noac'                  => 4,
+			'cnc'                   => 3/4,
+			'density'               => 12 / 10 / (10-1),
+			'separability'          => 3 / 11,
+			'sequentiality'         => 3 / 12,
+			'diameter'              => 8,
+			'maxNestingDepth'       => 0,
+			'avgDegreeOfConnectors' => 6/3,
+			'maxDegreeOfConnectors' => 0,
+			'binaryDecisions'       => 0+1,
+			'controlFlowComplexity' => 0-1,
+			'concurrency'           => 0,
+			'cyclicity'             => 10 / 13,
+			'cyclomaticNumber'      => 1,
+			'cognitiveWeight'       => 13,
+		];
+
+		yield 'cnc2' => [$cncProcess2, $cncExpectedValues2];
 	}
 }

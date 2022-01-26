@@ -26,7 +26,7 @@ export default class StatisticTable extends React.Component {
 
 	handleColorCounter(counter, param){
 		for (let i = 0; i < param.length; i++) {
-			if (!param[i]) {
+			if (!Number(param[i])) {
 				counter++;
 			}
 

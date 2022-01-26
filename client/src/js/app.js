@@ -136,7 +136,8 @@ class App extends React.Component {
 					},
 					body:    JSON.stringify(data),
 					cache:   'no-cache'
-				}).then(data => data.json())
+				})
+//					.then(data => data.json())
 					.catch(e => console.error(e));
 			});
 	}

@@ -277,6 +277,9 @@ class MetricsCalculator
 				$outgoing += count($node->getOutgoingEdges());
 			}
 		}
+		if(!$outgoing){
+			return 0;
+		}
 
 		return $outgoing / $connector;
 	}

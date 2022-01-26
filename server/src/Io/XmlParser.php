@@ -5,19 +5,22 @@ use Preva\Element\Edge;
 use Preva\Element\FakeEdge;
 use Preva\Element\Node;
 use Preva\Element\NodeFactory;
+use Preva\Element\Prefix;
 use Preva\Element\Process;
 
 class XmlParser
 {
-	private const MAX_DEPTH              = 5;
-	private const ROOT_NODE_NAME         = 'bpmn:definitions';
-	private const ROOT_NODE_NAME_DEFAULT = 'definitions';
-	private const PROCESS_NODE_NAME      = 'bpmn:process';
-	private const EDGE_NAME              = 'bpmn:sequenceFlow';
-	private const INCOMING_NAME          = 'bpmn:incoming';
-	private const OUTGOING_NAME          = 'bpmn:outgoing';
-
-	private \XMLReader $xml;
+	private const MAX_DEPTH         = 5;
+	private const ROOT_NODE_NAME    = 'bpmn:definitions';
+	private const PROCESS_NODE_NAME = 'bpmn:process';
+	private const EDGE_NAME         = 'bpmn:sequenceFlow';
+	private const INCOMING_NAME     = 'bpmn:incoming';
+	private const OUTGOING_NAME     = 'bpmn:outgoing';
+	private const ROOT_NODE_NAME_DEFAULT    = 'definitions';
+	private const PROCESS_NODE_NAME_DEFAULT = 'process';
+	private const EDGE_NAME_DEFAULT         = 'sequenceFlow';
+	private const INCOMING_NAME_DEFAULT     = 'incoming';
+	private const OUTGOING_NAME_DEFAULT     = 'outgoing';
 
 	public function parse(string $filePath): Process
 	{
@@ -36,73 +39,145 @@ class XmlParser
 		try {
 			// skip xml-version line
 			$this->advanceNode();
+			$prefixHelper=new Prefix;
 
 			// check root node
-			if (($xml->name !== self::ROOT_NODE_NAME) && $xml->name !== self::ROOT_NODE_NAME_DEFAULT) {
-				throw new \InvalidArgumentException('could not find root node');
+			if ($xml->name !== self::ROOT_NODE_NAME) {
+				$prefixHelper->setPrefix(true);
 			}
 
-			$this->advanceNode();
-			// we are interested in bpmn:process, but there are others
-			while ($xml->name !== self::PROCESS_NODE_NAME) {
-				$this->advanceNode();
-			}
-			/** @var Process $process */
-			$process = $nodeFactory->createNode($xml->name, $this->extractAttributes());
-
-			// parse the rest of bpmn:process
-			$this->advanceNode();
-			$stack  = [$process];
-			$parent = $process;
-			$edges  = [];
-
-			while ($xml->name !== self::PROCESS_NODE_NAME && count($stack) < self::MAX_DEPTH) {
-				if ($xml->name === $parent->tagName) {
-					$parent->markAsClosed();
-					array_pop($stack);
-					$parent = end($stack);
-
-					$this->advanceNode();
-					continue;
-				}
-
-				if ($xml->name === self::EDGE_NAME) {
-					$e             = new Edge($this->extractAttributes());
-					$edges[$e->id] = $e;
-
-					$this->advanceNode();
-					continue;
-				}
-
-				if ($xml->name === self::INCOMING_NAME) {
-					$parent->addIncomingEdge(FakeEdge::withTarget($xml->readString(), $parent));
-
-					$this->advanceNode(); // closing tag
-					$this->advanceNode();
-					continue;
-				}
-
-				if ($xml->name === self::OUTGOING_NAME) {
-					$parent->addOutgoingEdge(FakeEdge::withSource($xml->readString(), $parent));
-
-					$this->advanceNode(); // closing tag
-					$this->advanceNode();
-					continue;
-				}
-
-				$node = $nodeFactory->createNode($xml->name, $this->extractAttributes());
-				$parent->addChildNode($node);
-
-				if ($xml->isEmptyElement) {
-					$node->markAsClosed();
-				} else {
-					$stack[] = $node;
-					$parent  = $node;
+			if ($prefixHelper->getPrefix()) {
+				if ($xml->name !== self::ROOT_NODE_NAME_DEFAULT) {
+					throw new \InvalidArgumentException('could not find root node definitions '. $xml->name);
 				}
 
 				$this->advanceNode();
-			}
+				// we are interested in bpmn:process, but there are others
+				while ($xml->name !== self::PROCESS_NODE_NAME_DEFAULT) {
+					$this->advanceNode();
+				}
 
+				/** @var Process $process */
+				$process = $nodeFactory->createNode($xml->name, $this->extractAttributes());
+
+				// parse the rest of bpmn:process
+				$this->advanceNode();
+				$stack  = [$process];
+				$parent = $process;
+				$edges  = [];
+
+				while ($xml->name !== self::PROCESS_NODE_NAME_DEFAULT && count($stack) < self::MAX_DEPTH) {
+					if ($xml->name === $parent->tagName) {
+						$parent->markAsClosed();
+						array_pop($stack);
+						$parent = end($stack);
+
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::EDGE_NAME_DEFAULT) {
+						$e             = new Edge($this->extractAttributes());
+						$edges[$e->id] = $e;
+
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::INCOMING_NAME_DEFAULT) {
+						$parent->addIncomingEdge(FakeEdge::withTarget($xml->readString(), $parent));
+
+						$this->advanceNode(); // closing tag
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::OUTGOING_NAME_DEFAULT) {
+						$parent->addOutgoingEdge(FakeEdge::withSource($xml->readString(), $parent));
+
+						$this->advanceNode(); // closing tag
+						$this->advanceNode();
+						continue;
+					}
+
+					$node = $nodeFactory->createNode($xml->name, $this->extractAttributes());
+					$parent->addChildNode($node);
+
+					if ($xml->isEmptyElement) {
+						$node->markAsClosed();
+					} else {
+						$stack[] = $node;
+						$parent  = $node;
+					}
+
+					$this->advanceNode();
+				}
+			} else {
+				if ($xml->name !== self::ROOT_NODE_NAME) {
+					throw new \InvalidArgumentException('could not find root node '.self::ROOT_NODE_NAME);
+				}
+
+				$this->advanceNode();
+				// we are interested in bpmn:process, but there are others
+				while ($xml->name !== self::PROCESS_NODE_NAME) {
+					$this->advanceNode();
+				}
+				/** @var Process $process */
+				$process = $nodeFactory->createNode($xml->name, $this->extractAttributes());
+
+				// parse the rest of bpmn:process
+				$this->advanceNode();
+				$stack  = [$process];
+				$parent = $process;
+				$edges  = [];
+
+				while ($xml->name !== self::PROCESS_NODE_NAME && count($stack) < self::MAX_DEPTH) {
+					if ($xml->name === $parent->tagName) {
+						$parent->markAsClosed();
+						array_pop($stack);
+						$parent = end($stack);
+
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::EDGE_NAME) {
+						$e             = new Edge($this->extractAttributes());
+						$edges[$e->id] = $e;
+
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::INCOMING_NAME) {
+						$parent->addIncomingEdge(FakeEdge::withTarget($xml->readString(), $parent));
+
+						$this->advanceNode(); // closing tag
+						$this->advanceNode();
+						continue;
+					}
+
+					if ($xml->name === self::OUTGOING_NAME) {
+						$parent->addOutgoingEdge(FakeEdge::withSource($xml->readString(), $parent));
+
+						$this->advanceNode(); // closing tag
+						$this->advanceNode();
+						continue;
+					}
+
+					$node = $nodeFactory->createNode($xml->name, $this->extractAttributes());
+					$parent->addChildNode($node);
+
+					if ($xml->isEmptyElement) {
+						$node->markAsClosed();
+					} else {
+						$stack[] = $node;
+						$parent  = $node;
+					}
+
+					$this->advanceNode();
+				}
+			}
 			if (count($stack) > 1) {
 				// anything besides process
 				throw new \LogicException(
