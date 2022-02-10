@@ -129,10 +129,11 @@ class MetricsCalculator
 					while (!$p->isValidEnd() && $p->loopDetectionVisit < 2) {
 						$p = $p->next;
 					}
+
 					if (!isset($visitedEnds[$p->edge->targetRef])) {
-						$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
-						$visitedEnds[$p->edge->targetRef] = true;
-					}
+							$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
+							$visitedEnds[$p->edge->targetRef] = true;
+						}
 				}
 				if ($incomingPathsAtEnd <= $countTotalPathsToEnd) {
 					$cut++;
@@ -277,7 +278,7 @@ class MetricsCalculator
 				$outgoing += count($node->getOutgoingEdges());
 			}
 		}
-		if(!$outgoing){
+		if (!$outgoing) {
 			return 0;
 		}
 
@@ -312,13 +313,13 @@ class MetricsCalculator
 
 	public function controlFlowComplexity(Process $process): int
 	{
-		$hasAnd    = false;
+		$hasAnd    = 0;
 		$sumXorOut = 0;
 		$orValue   = 0;
 
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof ParallelGateway) {
-				$hasAnd = true;
+				$hasAnd = 1;
 			} elseif ($node instanceof ExclusiveGateway) {
 				$sumXorOut += count($node->getOutgoingEdges());
 			} elseif ($node instanceof InclusiveGateway) {
@@ -326,7 +327,7 @@ class MetricsCalculator
 			}
 		}
 
-		return ($hasAnd ? 1 : 0) + $sumXorOut + $orValue - 1;
+		return $hasAnd + $sumXorOut + $orValue - 1;
 	}
 
 	public function concurrency(Process $process): int

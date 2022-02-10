@@ -214,7 +214,7 @@ class MetricsCalculatorTest extends TestCase
 			'controlFlowComplexity' => 3,
 			'concurrency'           => -1,
 			'cyclicity'             => 4 / 12,
-			'cyclomaticNumber'      => 8,
+			'cyclomaticNumber'      => 10,
 			'cognitiveWeight'       => 2,
 		];
 
@@ -274,16 +274,38 @@ class MetricsCalculatorTest extends TestCase
 			'sequentiality'         => 3 / 12,
 			'diameter'              => 8,
 			'maxNestingDepth'       => 0,
-			'avgDegreeOfConnectors' => 6/3,
+			'avgDegreeOfConnectors' => 0,
 			'maxDegreeOfConnectors' => 0,
 			'binaryDecisions'       => 0+1,
 			'controlFlowComplexity' => 0-1,
-			'concurrency'           => 0,
+			'concurrency'           => -1,
 			'cyclicity'             => 10 / 13,
 			'cyclomaticNumber'      => 1,
 			'cognitiveWeight'       => 0,
 		];
-
 		yield 'definitionName' => [$definitionName, $definitionNameExpectedValues];
+
+
+		$loopThreeProcess        = (new XmlParser())->parse(__DIR__.'/../../fixtures/loopThree.bpmn');
+		$loopThreeExpectedValues = [
+			'noa'                   => 5,
+			'noac'                  => 8,
+			'cnc'                   => 1,
+			'density'               => 12 / 12 / 11,
+			'separability'          => 6 / 8,
+			'sequentiality'         => 7 / 12,
+			'diameter'              => 8,
+			'maxNestingDepth'       => 1,
+			'avgDegreeOfConnectors' => 2,
+			'maxDegreeOfConnectors' => 2,
+			'binaryDecisions'       => 2,
+			'controlFlowComplexity' => 3,
+			'concurrency'           => -1,
+			'cyclicity'             => 4 / 12,
+			'cyclomaticNumber'      => 3,
+			'cognitiveWeight'       => 2,
+		];
+
+		yield 'testThree' => [$loopThreeProcess, $loopThreeExpectedValues];
 	}
 }

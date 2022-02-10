@@ -547,7 +547,7 @@ export default class Upload extends React.Component {
 						</div>
 
 						{/* <--- processModel ---> */}
-						{this.state.processTab === 'processModel' ? <ProcessModel/> : null}
+						{this.state.processTab === 'processModel' ? <ProcessModel dataName={this.state.dataName} /> : null}
 
 						{/* <--- metrickz ---> */}
 						{this.state.processTab === 'metrickz' ?
