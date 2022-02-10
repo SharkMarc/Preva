@@ -131,8 +131,10 @@ class App extends React.Component {
 					method:  'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						"Access-Control-Allow-Origin": "*",
-						"Access-Control-Allow-Methods": "*"
+//						"Access-Control-Allow-Origin": "*",
+//						"Access-Control-Allow-Methods": "*",
+//						"Access-Control-Allow-Headers": "*",
+//						"Access-Control-Allow-Credentials": "*",
 					},
 					body:    JSON.stringify(data),
 					cache:   'no-cache'
