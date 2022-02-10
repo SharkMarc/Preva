@@ -126,7 +126,17 @@ class App extends React.Component {
 				const content = f.target.result;
 				const data = {
 					content: content,
-				};
+				}
+//				let headers="";
+//				headers=['Content-Type': 'application/json',
+//					"Access-Control-Allow-Origin": "*",];
+
+				let checkDev=window.location.href;
+
+				console.log(window.location.href)
+//				if(checkDev==="http://localhost:7000/"){
+//
+//				}
 				return fetch(Route.upload, {
 					method:  'POST',
 					headers: {

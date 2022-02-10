@@ -1,6 +1,8 @@
 <?php
 //ini_set("display_errors", 0);
 header("Content-Type: application/json");
+header('"Access-Control-Allow-Origin": "*"');
+header('"Access-Control-Allow-Headers": "*"');
 require dirname(__DIR__)."/vendor/autoload.php";
 $taskConnection = [];
 
@@ -42,7 +44,7 @@ try {
 			$cyclicity             = $metricsCalculator->cyclicity($process);
 			$cyclomaticNumber      = $metricsCalculator->cyclomaticNumber($process);
 			$cognitiveWeight       = $metricsCalculator->cognitiveWeight($process);
-			$sequenceFlow       = $metricsCalculator->sequenceFlow($process);
+			$sequenceFlow          = $metricsCalculator->sequenceFlow($process);
 		}
 
 		echo json_encode([
