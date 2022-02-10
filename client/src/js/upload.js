@@ -230,10 +230,6 @@ export default class Upload extends React.Component {
 			method:  'GET',
 			headers: {
 				'Content-Type': 'application/json',
-//				"Access-Control-Allow-Origin": "*",
-//				"Access-Control-Allow-Methods": "*",
-//				"Access-Control-Allow-Headers": "*",
-//				"Access-Control-Allow-Credentials": "*",
 			},
 			cache:   'no-cache'
 		})
