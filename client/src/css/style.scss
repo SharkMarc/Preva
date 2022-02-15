@@ -22,7 +22,7 @@ $blue: #0045C6;
   color: white;
 }
 
-#errorMessage {
+#errorBox {
   color: black;
 
   p {
@@ -45,11 +45,6 @@ $blue: #0045C6;
 
 }
 
-.analyse-buttons {
-
-}
-
-
 .padingTitle {
   padding: .75rem;
 }
@@ -65,7 +60,7 @@ $blue: #0045C6;
   color: #000;
 }
 
-#uploadButton2:focus {
+#uploadButton:focus {
   outline: 0 !important;
 }
 
@@ -105,7 +100,6 @@ a.hover-upload {
   border-top: 2px solid rgba(0, 0, 0, .1);
 }
 
-
 .rounded-button {
   border-radius: 12px !important;
 }
@@ -142,13 +136,16 @@ a.hover-upload {
   .list-container {
     height: 400px;
   }
+
   .second-list-order-text {
     order: 1;
   }
+
   .second-list-order-image {
     order: 2
   }
-  #errorMessage, #successBox {
+
+  #errorBox, #successBox {
     right: 0;
     left: 0;
     width: 90% !important;
@@ -863,7 +860,7 @@ a.hover-upload {
 }
 
 //SUCCESS BOX
-.success-box-fade-out {
+.box-fade-out {
   transition: opacity 3s ease-in-out;
   opacity: 0;
 }

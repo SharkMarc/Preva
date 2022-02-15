@@ -284,7 +284,6 @@ class App extends React.Component {
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
-					handleStatisticPage={() => this.handleStatisticPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
 			}
 				break;
@@ -296,7 +295,6 @@ class App extends React.Component {
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
-					handleStatisticPage={() => this.handleStatisticPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
 			}
 				break;
@@ -308,7 +306,6 @@ class App extends React.Component {
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
-					handleStatisticPage={() => this.handleStatisticPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}/>;
 			}
 				break;
@@ -320,7 +317,6 @@ class App extends React.Component {
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
-					handleStatisticPage={() => this.handleStatisticPage()}
 				/>;
 			}
 				break;
@@ -331,7 +327,6 @@ class App extends React.Component {
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					handlePage={(p) => this.handlePage(p)}
-					handleStatisticPage={() => this.handleStatisticPage()}
 				/>;
 			}
 				break;
@@ -354,7 +349,6 @@ class App extends React.Component {
 					status={this.status}
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
-					handleStatisticPage={() => this.handleStatisticPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}
 				/>;
 			}
@@ -381,7 +375,7 @@ class App extends React.Component {
 		return (
 
 			<div className="h-100">
-				<div id="navbarBackdrop" onClick={() => this.handleSidebar()}></div>
+				<div id="navbarBackdrop" onClick={() => this.handleSidebar()}/>
 				{header}
 				{/*{page === "login" || page === "register" ?*/}
 				{/*	null : <div>{nav}</div>*/}

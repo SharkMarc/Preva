@@ -49,6 +49,10 @@ class MetricsCalculator
 			}
 		}
 
+		if (!$tasks) {
+			throw new \InvalidArgumentException("Number of ativities", 404);
+		}
+
 		return $tasks;
 	}
 
@@ -58,6 +62,10 @@ class MetricsCalculator
 		foreach ($process->getChildNodes() as $node) {
 			if ($node->getOutgoingEdges()) {
 				foreach ($node->getOutgoingEdges() as $sequence) {
+					if ($sequence->targetRef === $sequence->sourceRef) {
+//						source target same
+						throw new \LogicException("Sequence Flow source/target are the same", 404);
+					}
 					$sequenceFlows++;
 				}
 			}
@@ -68,6 +76,10 @@ class MetricsCalculator
 
 	public function numberOfActivitiesAndControlFlows(Process $process): int
 	{
+		if (!$this->countNodes($process)) {
+			throw new \LogicException("Number of activities control-flow elements");
+		}
+
 		return $this->countNodes($process);
 	}
 
@@ -131,9 +143,9 @@ class MetricsCalculator
 					}
 
 					if (!isset($visitedEnds[$p->edge->targetRef])) {
-							$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
-							$visitedEnds[$p->edge->targetRef] = true;
-						}
+						$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
+						$visitedEnds[$p->edge->targetRef] = true;
+					}
 				}
 				if ($incomingPathsAtEnd <= $countTotalPathsToEnd) {
 					$cut++;
@@ -385,12 +397,18 @@ class MetricsCalculator
 		$sum       = 0;
 
 		foreach ($process->getChildNodes() as $node) {
+			if ($node instanceof ExclusiveGateway && (count($node->getOutgoingEdges()) < 2)) {
+				throw new \LogicException("ExclusiveGateway");
+			}
+
 			if ($node instanceof ExclusiveGateway && count($node->getOutgoingEdges()) === 2 && !$hasXor) {
 				$sum    += $node->cognitiveWeight;
 				$hasXor = true;
 			} elseif ($node instanceof ExclusiveGateway && count($node->getOutgoingEdges()) > 2 && !$hasBigXor) {
 				$sum       += $node->bigCognitiveWeight;
 				$hasBigXor = false;
+			} elseif ($node instanceof ParallelGateway && (count($node->getOutgoingEdges()) < 2)) {
+				throw new \LogicException("Parallel Gateway");
 			} elseif ($node instanceof ParallelGateway && !$hasAnd) {
 				$hasAnd = true;
 				$sum    += $node->cognitiveWeight;
@@ -419,10 +437,23 @@ class MetricsCalculator
 		}
 
 		if (empty($starts)) {
-			throw new \LogicException('missing start event');
+			throw new \LogicException('Start Event');
 		}
+
+		foreach ($starts as $start) {
+			if (!$start->getOutgoingEdges()) {
+				throw new \LogicException('Start Event');
+			}
+		}
+
 		if (empty($possibleEnds)) {
-			throw new \LogicException('missing end event');
+			throw new \LogicException('End Event');
+		}
+
+		foreach ($possibleEnds as $end) {
+			if (!$end->getIncomingEdges()) {
+				throw new \LogicException('End Event');
+			}
 		}
 
 		return [$starts[0], $possibleEnds, $starts];

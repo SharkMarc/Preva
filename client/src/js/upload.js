@@ -34,7 +34,6 @@ export default class Upload extends React.Component {
 			noa:               [],
 			bpmnList:          [],
 			objectSummary:     [],
-			testVersion:       [],
 			allLists:          [],
 			seperability:      [],
 			processTab:        'metrickz',
@@ -42,6 +41,7 @@ export default class Upload extends React.Component {
 			selectedStatistic: 'All',
 			dataName:          '',
 			doitonce:          0,
+			errorMsg:          false,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -54,6 +54,51 @@ export default class Upload extends React.Component {
 		this.handleTabs = this.handleTabs.bind(this);
 		this.handleBPMNView = this.handleBPMNView.bind(this);
 		this.handleMPDF = this.handleMPDF.bind(this);
+		this.handleBoxes = this.handleBoxes.bind(this);
+	}
+
+	handleBoxes(type, message) {
+		let textId=	document.getElementById(type + 'Text');
+		let boxId=	document.getElementById(type + 'Box');
+		if (type === 'error') {
+			if (message) {
+				textId.innerHTML = '<b>Mandatory graphical elements are missing</b><p>Check for: <b>' + message + '</b></p>';
+			} else {
+				textId.innerHTML = '<b>Error!</b><p>Invalid process model format.</p><p>Data<b>.bpmn</b> only!</p>';
+			}
+
+			boxId.style.display = 'block';
+		}
+
+		console.log('in handleboxes', type, message);
+
+		window.setTimeout(function() {
+				boxId.classList.add('box-fade-out');
+			}
+			, 750);
+		window.setTimeout(function() {
+				boxId.classList.remove('box-fade-out');
+				boxId.style.display = 'none';
+			}
+			, 2300);
+	}
+
+	toggleModal(type, msg) {
+		let modalId = document.getElementById('loadingScreen');
+
+		if (type && modalId.style.display === 'none') {
+			modalId.style.display = 'block';
+		} else {
+			modalId.style.display = 'none';
+		}
+
+		if (type) {
+			window.setTimeout(
+				() => this.props.handleStatisticPage(), 9000
+			);
+		} else {
+			this.handleBoxes('error', msg);
+		}
 	}
 
 	handleMPDF() {
@@ -125,37 +170,29 @@ export default class Upload extends React.Component {
 		let fileValue = document.getElementById('userfile').value;
 
 		// get uploadButtonId
-		let uploadButton = document.getElementById('uploadButton2');
+		let uploadButton = document.getElementById('uploadButton');
 
 		// get fileName
 		let fileName = document.getElementById('fileName');
 
 		if (file.files.length !== 0) {
 			// filter the name "example.bpmn" from "C:\fakepath\example.bpmn"
-			var startIndex = (fileValue.indexOf('\\') >= 0 ? fileValue.lastIndexOf('\\') : fileValue.lastIndexOf('/'));
+			let startIndex = (fileValue.indexOf('\\') >= 0 ? fileValue.lastIndexOf('\\') : fileValue.lastIndexOf('/'));
 
 			//transform to string
-			var filename = fileValue.substring(startIndex);
-			var str = filename;
+			let filename = fileValue.substring(startIndex);
+			let str = filename;
 			// validation of bpmn
-			var patt = /.bpmn/g;
+			let patt = /.bpmn/g;
 
 			// if no .bpmn we stop here
 			if (!str.match(patt)) {
-				window.setTimeout(function() {
-						document.getElementById('errorMessage').classList.add('success-box-fade-out');
-					}
-					, 1500);
-				window.setTimeout(function() {
-						document.getElementById('errorMessage').classList.remove('success-box-fade-out');
-						document.getElementById('errorMessage').style.display = 'none';
-					}
-					, 4500);
+				this.handleBoxes('error');
 
 				uploadButton.classList.add('d-none');
 				fileName.innerHTML = '';
 
-				document.getElementById('errorMessage').style.display = 'block';
+				document.getElementById('errorBox').style.display = 'block';
 				document.getElementById('successBox').style.display = 'none';
 				return;
 			}
@@ -169,46 +206,27 @@ export default class Upload extends React.Component {
 			uploadButton.classList.remove('d-none');
 			fileName.innerHTML = filename;
 
-			window.setTimeout(function() {
-					document.getElementById('successBox').classList.add('success-box-fade-out');
-				}
-				, 1500);
-			window.setTimeout(function() {
-					document.getElementById('successBox').classList.remove('success-box-fade-out');
-					document.getElementById('successBox').style.display = 'none';
-				}
-				, 4500);
+			this.handleBoxes('success');
 
-			document.getElementById('errorMessage').style.display = 'none';
+			document.getElementById('errorBox').style.display = 'none';
 			document.getElementById('successBoxItem').innerHTML = filename;
 			document.getElementById('successBox').style.display = 'block';
 
 			fileName.innerHTML = filename;
 			let saveName = filename.slice(0, filename.length - 5);
+
 			this.setState({ dataName: saveName });
 		} else {
 			uploadButton.classList.add('d-none');
 			fileName.innerHTML = '';
 			document.getElementById('successBox').style.display = 'none';
-			document.getElementById('errorMessage').style.display = 'none';
+			document.getElementById('errorBox').style.display = 'none';
 		}
 	}
 
 	click() {
 		let file = document.getElementById('userfile');
 		file.click();
-	}
-
-	toggleModal(modalId) {
-		if (modalId.style.display === 'none') {
-			modalId.style.display = 'block';
-		} else {
-			modalId.style.display = 'none';
-		}
-
-		window.setTimeout(
-			() => this.props.handleStatisticPage(), 9000
-		);
 	}
 
 	handleSubmit(e) {
@@ -234,15 +252,25 @@ export default class Upload extends React.Component {
 			cache:   'no-cache'
 		})
 			.then(data => {return data.json();})
-			.then((data) => this.setState({
-				allLists:      data,
-				countList:     data['list'],
-				bpmndiList:    data['bpmndiList'],
-				objectSummary: data['objectSummary'],
-				noaList:       data['noa'],
-				noa:           data['noa'],
-			}))
-		;
+			.then(data => {
+				if (data.error) {
+					this.toggleModal(false, data.error);
+
+					this.setState({ errorMsg: data.error });
+					console.log('error', data.error);
+				} else {
+					this.toggleModal(true);
+					this.setState({
+						allLists:      data,
+						countList:     data['list'],
+						bpmndiList:    data['bpmndiList'],
+						objectSummary: data['objectSummary'],
+						noaList:       data['noa'],
+						noa:           data['noa'],
+					});
+				}
+			})
+			.catch((error) => console.log('test', error));
 	}
 
 	handleChange(e) {
@@ -462,8 +490,8 @@ export default class Upload extends React.Component {
 														type="file"/>
 												</div>
 												<div className="cursor-pointer py-2 ml-auto">
-													<button id="uploadButton2" type="submit"
-														onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
+													<button id="uploadButton" type="submit"
+														//														onClick={() => this.toggleModal(document.getElementById('loadingScreen'))}
 														className="submitButton d-none preva-btn"
 													>
 														<img src={SearchIcon} className="icon-text my-auto"/>
@@ -547,7 +575,7 @@ export default class Upload extends React.Component {
 						</div>
 
 						{/* <--- processModel ---> */}
-						{this.state.processTab === 'processModel' ? <ProcessModel dataName={this.state.dataName} /> : null}
+						{this.state.processTab === 'processModel' ? <ProcessModel dataName={this.state.dataName}/> : null}
 
 						{/* <--- metrickz ---> */}
 						{this.state.processTab === 'metrickz' ?
