@@ -1,6 +1,4 @@
 import React from 'react';
-import FusionCharts from 'fusioncharts';
-import charts from 'fusioncharts/fusioncharts.charts';
 import GaugeChart from 'react-gauge-chart';
 
 export const Trends = (props) => (
@@ -15,11 +13,12 @@ export const Trends = (props) => (
 						</h5>
 					</div>
 
+
 					<div className="col-12 p-0">
-						<GaugeChart id="gauge-chart3"
+						<GaugeChart id="gauge-chart3" className="gauge-chart"
 							nrOfLevels={3}
 							needleColor={'#000'}
-							textColor={'#000'}
+							textColor={'#0045C6'}
 							colors={['#fa595f', '#21cda4']}
 							arcWidth={0.3}
 							percent={0.37}

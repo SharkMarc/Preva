@@ -70,8 +70,6 @@ export default class Upload extends React.Component {
 			boxId.style.display = 'block';
 		}
 
-		console.log('in handleboxes', type, message);
-
 		window.setTimeout(function() {
 				boxId.classList.add('box-fade-out');
 			}
@@ -257,7 +255,6 @@ export default class Upload extends React.Component {
 					this.toggleModal(false, data.error);
 
 					this.setState({ errorMsg: data.error });
-					console.log('error', data.error);
 				} else {
 					this.toggleModal(true);
 					this.setState({
@@ -270,7 +267,7 @@ export default class Upload extends React.Component {
 					});
 				}
 			})
-			.catch((error) => console.log('test', error));
+			.catch((error) => console.log(error));
 	}
 
 	handleChange(e) {

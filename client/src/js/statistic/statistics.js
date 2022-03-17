@@ -34,6 +34,12 @@ export default class Statistics extends React.Component {
 			Number(allLists['noa']) + Number(allLists['noac']) +
 			Number(allLists['density']) + Number(attributes['sequenceFlow']) / Number(allLists['noac'])
 			: 0;
+
+		let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			return new bootstrap.Tooltip(tooltipTriggerEl)
+		})
+
 		return (
 
 			<div className="min-height-statistic col-12">
@@ -46,7 +52,9 @@ export default class Statistics extends React.Component {
 				{title === 'All' ?
 					<div className="statistics flex-wrap">
 						<div className="text col-12">Size:<br/>
-							<div className="amount">{'Ø ' + allSize}</div>
+							<div className="amount">
+								<span className="cursor-pointer" data-bs-toggle="tooltip" title="test">{'Ø ' + allSize}</span>
+							</div>
 							<hr/>
 						</div>
 						<div className="text col-12">Structure:<br/>

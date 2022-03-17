@@ -85,7 +85,6 @@ class App extends React.Component {
 		let searchBarText = target.value;
 
 		if (object.includes(searchBarText) && searchBarText.length > 2) {
-			console.log('ist dabei');
 
 			let res = object.replace(/test/g, searchBarText => (
 				<span style={{ color: 'red' }}>{searchBarText}</span>

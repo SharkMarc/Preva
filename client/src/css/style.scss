@@ -9,6 +9,15 @@ $blue: #0045C6;
   height: 50px;
 }
 
+.gauge-chart{
+  .text{
+    color: #0045C6;
+  }
+  .needle{
+    opacity: 0.25;
+  }
+}
+
 .header {
   position: sticky !important;
   border-bottom: 1px solid #000;
