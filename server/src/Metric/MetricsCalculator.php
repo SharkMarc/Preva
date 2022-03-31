@@ -141,7 +141,6 @@ class MetricsCalculator
 					while (!$p->isValidEnd() && $p->loopDetectionVisit < 2) {
 						$p = $p->next;
 					}
-
 					if (!isset($visitedEnds[$p->edge->targetRef])) {
 						$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
 						$visitedEnds[$p->edge->targetRef] = true;
@@ -208,6 +207,7 @@ class MetricsCalculator
 
 		// check path lengths
 		$longest   = null;
+//		alle sequentflows
 		$edgeCount = count($process->allEdges) + 1;
 		foreach ($start->getOutgoingEdges() as $outgoingEdge) {
 			foreach ($outgoingEdge->containingPaths as $path) {
@@ -217,7 +217,8 @@ class MetricsCalculator
 				$loopCounter = $edgeCount;
 				while (true) {
 					$this->diagnostics->diameterLoopCount++;
-					if (--$loopCounter < 0) {
+					--$loopCounter;
+					if ($loopCounter < 0) {
 						// this can no longer be a valid path - possible loop inside
 						continue 2;
 					}
@@ -230,10 +231,15 @@ class MetricsCalculator
 						throw new \LogicException('invalid path');
 					}
 
+					if ($p->loopDetectionVisit >= 2) {
+						break;
+					}
 					if ($p->loopDetectionVisit > 1) {
+//						throw new \LogicException('Loop path komplett broken !');
+//						break;
 						// this is a looping path, which will never end; do not consider for longest path
 						// continue foreach (containingPaths)
-						//continue 2;
+//						 continue 2;
 					}
 
 					$len++;
