@@ -279,7 +279,9 @@ class MetricsCalculator
 
 		foreach ($process->getChildNodes() as $node) {
 			if ($node instanceof IsDecision) {
-				$decisions++;
+				if (count($node->getOutgoingEdges()) > $decisions) {
+					$decisions = count($node->getOutgoingEdges());
+				}
 			}
 		}
 
@@ -373,8 +375,8 @@ class MetricsCalculator
 			}
 		}
 
-		$nodesWithoutStartAndEnd = $this->countNodes($process) - 1 - count($possibleEnds);
-
+//		$nodesWithoutStartAndEnd = $this->countNodes($process) - 1 - count($possibleEnds);
+		$nodesWithoutStartAndEnd = $this->countNodes($process);
 		return $insideLoops / $nodesWithoutStartAndEnd;
 	}
 

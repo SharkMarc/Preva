@@ -16,15 +16,15 @@ export default class StatisticTable extends React.Component {
 
 	componentDidMount() {
 		if (this.props.allLists) {
-			document.getElementById("Size").click();
-			document.getElementById("Structure").click();
-			document.getElementById("Operator").click();
-			document.getElementById("Cognitive").click();
-			document.getElementById("All").click();
+			document.getElementById('Size').click();
+			document.getElementById('Structure').click();
+			document.getElementById('Operator').click();
+			document.getElementById('Cognitive').click();
+			document.getElementById('All').click();
 		}
 	}
 
-	handleColorCounter(counter, param){
+	handleColorCounter(counter, param) {
 		for (let i = 0; i < param.length; i++) {
 			if (!Number(param[i])) {
 				counter++;
@@ -39,6 +39,7 @@ export default class StatisticTable extends React.Component {
 			}
 		}
 	}
+
 	handleColor(id, all, size, structure, operator, cognitive) {
 		let counter = 0;
 
@@ -81,14 +82,17 @@ export default class StatisticTable extends React.Component {
 		let separability = Number(allLists['separability'] ? allLists['separability'] : 0).toFixed(2);
 		let sequentiality = Number(allLists['sequentiality'] ? allLists['sequentiality'] : 0).toFixed(2);
 		let diameter = Number(allLists['diameter'] ? allLists['diameter'] : 0).toFixed(2);
-		let cnc = (sequenceFlow / noac).toFixed(2);
+		let cnc = (sequenceFlow - noac + 1).toFixed(2);
 		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
 		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
 		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
 		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
 		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
 		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
-
+//		längsten pfad diameter
+//		seperability
+//      maxNesting depth nur das exclusive mit den meisten entscheidungen (anzahl der entscheidungen)
+//		binaryDecisions
 		let allSize = ((Number(noa) + Number(noac) + Number(cnc) + Number(density)) / 4).toFixed(2);
 		let allStructure = ((Number(separability) + Number(diameter) + Number(sequentiality)) / 3).toFixed(2);
 		let allOperator = ((Number(maxDegreeOfConnectors) + Number(maxNestingDepth) + Number(avgDegreeOfConnectors) +
