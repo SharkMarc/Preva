@@ -246,6 +246,7 @@ export default class Upload extends React.Component {
 			method:  'GET',
 			headers: {
 				'Content-Type': 'application/json',
+				"Access-Control-Allow-Origin": "*",
 			},
 			cache:   'no-cache'
 		})
@@ -429,8 +430,7 @@ export default class Upload extends React.Component {
 								<div onClick={() => this.props.handlePage('product', true)} className="preva-btn">Learn more</div>
 							</div>
 						</div>
-						<form className="col-12" action={Route.upload} encType="multipart/form-data"
-							method="post"
+						<form className="col-12" action={Route.upload}  encType="multipart/form-data"
 							id="formUpload"
 							onSubmit={(e) => this.handleSubmit(e)}>
 							<section>
