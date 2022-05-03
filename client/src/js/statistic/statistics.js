@@ -21,7 +21,7 @@ export default class Statistics extends React.Component {
 			cyclicity = Number(0).toFixed(2);
 		}
 
-		let cyclomaticNumber = Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] - allLists['noac'] + 1 : 0).toFixed(2);
+		let cyclomaticNumber = Number(allLists['cyclomaticNumber'] ? allLists['cyclomaticNumber'] : 0).toFixed(2);
 		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
 		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
 		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);

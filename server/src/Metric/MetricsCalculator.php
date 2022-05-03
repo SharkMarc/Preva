@@ -93,6 +93,128 @@ class MetricsCalculator
 		return $this->coefficientOfNetworkComplexity($process) / ($this->numberOfActivitiesAndControlFlows($process) - 1);
 	}
 
+//	public function testMe(Process $process): float
+//	{
+//		$this->buildPaths($process);
+//
+//		/** @var StartEvent $start */
+//		[$start, $possibleEnds] = $this->findStartAndEndNodes($process);
+//
+//		$processList = [];
+//		$hasOrs      = false;
+//		foreach ($process->getChildNodes() as $node) {
+//			if ($node instanceof StartEvent) {
+//				$startEvent = $node->id;
+//			}
+//			if ($node instanceof EndEvent) {
+//				$endEvent = $node->id;
+//			}
+//
+//			$processList[$node->id] = [];
+//			$outgoings              = 0;
+//			$incomings              = 0;
+//
+//			if ($node instanceof ExclusiveGateway || $node instanceof ParallelGateway || $node instanceof InclusiveGateway) {
+//				$processList[$node->id]["checkMe"] = true;
+//				$hasOrs                            = true;
+//			} else {
+//				$processList[$node->id]["checkMe"] = false;
+//			}
+//
+//			foreach ($node->getOutgoingEdges() as $outgoing) {
+//				if ($outgoing->targetRef) {
+//					$processList[$node->id]["outgoing"][$outgoings] = [$outgoing->targetRef];
+//				}
+//
+//				$outgoings++;
+//			}
+//			$processList[$node->id]["amountOutgoing"] = $outgoings;
+//
+//			foreach ($node->getIncomingEdges() as $incoming) {
+//				if ($incoming->sourceRef) {
+//					$processList[$node->id]["incoming"][$incomings] = [$incoming->sourceRef];
+//				}
+//
+//				$incomings++;
+//			}
+//			$processList[$node->id]["amountIncomings"] = $incomings;
+//		}
+//
+//		$incrementOugoings = 0;
+//		function countUntilOutgoings(string $currentNode, array &$processList, int &$incrementOugoings): int
+//		{
+//			$incrementOugoings++;
+//			if ($processList[$currentNode]["checkMe"]) {
+//				return $incrementOugoings;
+//			}
+//
+//			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+//
+//			for ($o = 0; $o < $amountOutgoing; $o++) {
+//				$nextNode = $processList[$currentNode]["outgoing"][$o][0];
+//
+//				countUntilOutgoings($nextNode, $processList, $incrementOugoings);
+//			}
+//
+//			return $incrementOugoings;
+//		}
+//
+//		foreach ($processList[$startEvent]["outgoing"] as $startOut) {
+//			var_dump($processList[$startEvent]["amountOutgoing"], $hasOrs, "hier nicht null");
+//			if ($processList[$startEvent]["amountOutgoing"] === 1 && $hasOrs) {
+//				$nextNode = $startOut[0];
+//				countUntilOutgoings($nextNode, $processList, $incrementOugoings);
+//			}
+//		}
+//
+//		$incrementIncomings = 0;
+//		$lengthPath         = 0;
+//		function countUntilIncomings(string $currentNode, array &$processList, int &$incrementIncomings, int &$lengthPath): int
+//		{
+//			$incrementIncomings++;
+//			if ($processList[$currentNode]["checkMe"]) {
+//				if (!$lengthPath) {
+//					$lengthPath = $incrementIncomings;
+//				}
+//
+//				if ($lengthPath && $incrementIncomings > $lengthPath) {
+//					$lengthPath = $incrementIncomings;
+//				}
+//
+//				return $incrementIncomings;
+//			}
+//
+//			$amountIncoming = $processList[$currentNode]["amountIncomings"];
+//
+//			for ($i = 0; $i < $amountIncoming; $i++) {
+//				$nodeBefore = $processList[$currentNode]["incoming"][$i][0];
+//				countUntilIncomings($nodeBefore, $processList, $incrementIncomings, $lengthPath);
+//			}
+//
+//			return $incrementIncomings;
+//		}
+//
+//		if ($processList[$endEvent]["amountIncomings"] === 1 && $hasOrs) {
+//			foreach ($processList[$endEvent]["incoming"] as $endInc) {
+//				$nextNode = $endInc[0];
+//				countUntilIncomings($nextNode, $processList, $incrementIncomings, $lengthPath);
+//			}
+//		}
+//
+//		var_dump("increments", $incrementIncomings);
+//		var_dump("outs", $incrementOugoings);
+//		var_dump($incrementIncomings + $incrementOugoings);
+//		$noas = $this->countNodes($process) - 2;
+//
+//		$amounts = $incrementIncomings + $incrementOugoings;
+//		var_dump("ergevbnis", $amounts / $noas);
+//		if(!$hasOrs){
+//			var_dump("we return 1 ");
+//			return 1;
+//		}
+//		return $amounts / $noas;
+//	}
+
 	public function separability(Process $process): float
 	{
 		$this->buildPaths($process);
@@ -110,6 +232,15 @@ class MetricsCalculator
 			return 1;
 		}
 
+//		$sequenceFlows = 0;
+//		foreach ($process->getChildNodes() as $node) {
+//			if ($node->getOutgoingEdges()) {
+//				foreach ($node->getOutgoingEdges() as $sequence) {
+//					$sequenceFlows++;
+//				}
+//			}
+//		}
+//
 		$countPaths = function (array $edges) {
 			$p = 0;
 			foreach ($edges as $e) {
@@ -138,7 +269,7 @@ class MetricsCalculator
 				// advance path to end
 				foreach ($pathsToEnd as $path) {
 					$p = $path;
-					while (!$p->isValidEnd() && $p->loopDetectionVisit < 2) {
+					while ($p->isValid() && !$p->isValidEnd() && $p->loopDetectionVisit < 2) {
 						$p = $p->next;
 					}
 					if (!isset($visitedEnds[$p->edge->targetRef])) {
@@ -161,7 +292,7 @@ class MetricsCalculator
 				// advance path to start
 				foreach ($pathsToStart as $path) {
 					$p = $path;
-					while (!$p->isValidStart() && $p->loopDetectionVisit < 2) {
+					while ($p->isValid() && !$p->isValidStart() && $p->loopDetectionVisit < 2) {
 						$p = $p->prev;
 					}
 					if (!isset($visitedStarts[$p->edge->sourceRef])) {
@@ -177,8 +308,6 @@ class MetricsCalculator
 		}
 
 		$nodesWithoutEnds = $this->numberOfActivitiesAndControlFlows($process) - (1 + count($possibleEnds));
-
-//		print_r([$cut, $nodesWithoutEnds]);
 
 		return $cut / $nodesWithoutEnds;
 	}
@@ -448,14 +577,12 @@ class MetricsCalculator
 		[, , $starts] = $this->findStartAndEndNodes($process);
 		$this->buildPaths($process);
 
-		$paths = 0;
-		foreach ($starts as $start) {
-			foreach ($start->getOutgoingEdges() as $outgoingEdge) {
-				$paths += count($outgoingEdge->containingPaths);
-			}
-		}
+		$cyclomaticNumber = 0;
 
-		return $paths;
+		$nodes         = $this->countNodes($process);
+		$sequenceFlows = $this->countEdges($process);
+
+		return $nodes - $sequenceFlows + 1;
 	}
 
 	public function cognitiveWeight(Process $process): int
