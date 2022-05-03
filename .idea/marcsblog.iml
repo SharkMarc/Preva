@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/server/tests" isTestSource="true" packagePrefix="Preva\Test" />
       <excludeFolder url="file://$MODULE_DIR$/client/dist" />
       <excludeFolder url="file://$MODULE_DIR$/server/_v1/marcsblog" />
+      <excludeFolder url="file://$MODULE_DIR$/server/vendor/phpunit" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -183,6 +183,15 @@ class MetricsCalculator
 		return $cut / $nodesWithoutEnds;
 	}
 
+	public function getSequenceFlows($ichbinalleFlows, $id)
+	{
+		foreach ($ichbinalleFlows as $sequenceFlow) {
+			if ($sequenceFlow->id === $id) {
+				return $sequenceFlow->targetRef;
+			}
+		}
+	}
+
 	public function sequentiality(Process $process): float
 	{
 		$betweenNonConnectors = 0;
@@ -198,15 +207,13 @@ class MetricsCalculator
 
 	public function diameter(Process $process): int
 	{
-		// can't be longer than count(allEdges)+1
-
 		$runtimeStart = microtime(true);
 
 		[$start,] = $this->findStartAndEndNodes($process);
 		$this->buildPaths($process);
 
 		// check path lengths
-		$longest   = null;
+		$longest = null;
 //		alle sequentflows
 		$edgeCount = count($process->allEdges) + 1;
 		foreach ($start->getOutgoingEdges() as $outgoingEdge) {
@@ -235,8 +242,8 @@ class MetricsCalculator
 						break;
 					}
 					if ($p->loopDetectionVisit > 1) {
-//						throw new \LogicException('Loop path komplett broken !');
-//						break;
+						throw new \LogicException('Loop path komplett broken !');
+						break;
 						// this is a looping path, which will never end; do not consider for longest path
 						// continue foreach (containingPaths)
 //						 continue 2;
@@ -270,7 +277,7 @@ class MetricsCalculator
 
 		$this->diagnostics->diameterRuntime = microtime(true) - $runtimeStart;
 
-		return $longest->length + 1;
+		return $longest->path + 1;
 	}
 
 	public function maxNestingDepth(Process $process): int
@@ -365,19 +372,74 @@ class MetricsCalculator
 
 	public function cyclicity(Process $process): float
 	{
-		[, $possibleEnds] = $this->findStartAndEndNodes($process);
-		$this->buildPaths($process);
-
-		$insideLoops = 0;
+		$loops       = [];
+		$processList = [];
 		foreach ($process->getChildNodes() as $node) {
-			if ($node->insideLoop) {
-				$insideLoops++;
+			if ($node instanceof StartEvent) {
+				$startEvent = $node->id;
 			}
+			$processList[$node->id] = [];
+			$outgoings              = 0;
+
+			foreach ($node->getOutgoingEdges() as $outgoing) {
+				if ($outgoing->targetRef) {
+					$processList[$node->id]["outgoing"][$outgoings] = [$outgoing->targetRef];
+				}
+
+				$outgoings++;
+			}
+			$processList[$node->id]["amountOutgoing"] = $outgoings;
 		}
 
-//		$nodesWithoutStartAndEnd = $this->countNodes($process) - 1 - count($possibleEnds);
-		$nodesWithoutStartAndEnd = $this->countNodes($process);
-		return $insideLoops / $nodesWithoutStartAndEnd;
+		function callMyself(string $currentNode, array &$processList, array &$loops): array
+		{
+			if ($processList[$currentNode]["visited"]) {
+				$loops[$currentNode] = 1;
+
+				return [1, false];
+			}
+
+			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+			if (!$amountOutgoing) {
+				return [0, false];
+			}
+
+			$processList[$currentNode]["visited"]++;
+			$loopLength      = 0;
+			$incrementLength = 0;
+			$stop            = false;
+			for ($o = 0; $o < $amountOutgoing; $o++) {
+				$nextNode = $processList[$currentNode]["outgoing"][$o][0];
+
+				[$newLength, $stopCounter] = callMyself($nextNode, $processList, $loops);
+				if ($loopLength < $newLength) {
+					$stop            = $stopCounter;
+					$incrementLength = $stopCounter ? 0 : 1;
+					$loopLength      = $newLength;
+				}
+			}
+
+			$processList[$currentNode]["visited"]--;
+			if (!$loopLength) {
+				return [0, false];
+			}
+
+			if (isset($loops[$currentNode])) {
+				return [$loopLength + 1, true];
+			}
+
+			return [$loopLength + $incrementLength, $stop];
+		}
+
+		$longestLoop = 0;
+		foreach ($processList[$startEvent]["outgoing"] as $startOut) {
+			$nextNode = $startOut[0];
+			[$newLength,] = callMyself($nextNode, $processList, $loops);
+
+			$longestLoop = max($longestLoop, $newLength);
+		}
+
+		return $longestLoop - 1;
 	}
 
 	public function cyclomaticNumber(Process $process): int

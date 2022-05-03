@@ -33,8 +33,8 @@ try {
 			$noac                  = $metricsCalculator->numberOfActivitiesAndControlFlows($process);
 			$density               = $metricsCalculator->density($process);
 			$separability          = $metricsCalculator->separability($process);
-			$sequentiality         = $metricsCalculator->sequentiality($process);
 			$diameter              = $metricsCalculator->diameter($process);
+			$sequentiality         = $metricsCalculator->sequentiality($process);
 			$maxNestingDepth       = $metricsCalculator->maxNestingDepth($process);
 			$avgDegreeOfConnectors = $metricsCalculator->avgDegreeOfConnectors($process);
 			$maxDegreeOfConnectors = $metricsCalculator->maxDegreeOfConnectors($process);
@@ -46,7 +46,6 @@ try {
 			$cognitiveWeight       = $metricsCalculator->cognitiveWeight($process);
 			$sequenceFlow          = $metricsCalculator->sequenceFlow($process);
 		}
-
 		echo json_encode([
 			"noa"                   => $noa,
 			"noac"                  => $noac,
