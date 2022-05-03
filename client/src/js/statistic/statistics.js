@@ -16,8 +16,12 @@ export default class Statistics extends React.Component {
 		let sequentiality = Number(allLists['sequentiality'] ? allLists['sequentiality'] : 0).toFixed(2);
 		let diameter = Number(allLists['diameter'] ? allLists['diameter'] : 0).toFixed(2);
 		let cnc = (sequenceFlow / noac).toFixed(2);
-		let cyclicity =  Number(allLists['cyclicity'] ? allLists['cyclicity'] : 0).toFixed(2);
-		let cyclomaticNumber =  Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] - allLists['noac'] + 1 : 0).toFixed(2);
+		let cyclicity = Number(allLists['cyclicity'] ? allLists['cyclicity'] : 0).toFixed(2);
+		if (!cyclicity || cyclicity == -1) {
+			cyclicity = 0.00;
+		}
+
+		let cyclomaticNumber = Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] - allLists['noac'] + 1 : 0).toFixed(2);
 		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
 		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
 		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
@@ -35,10 +39,10 @@ export default class Statistics extends React.Component {
 			Number(allLists['density']) + Number(attributes['sequenceFlow']) / Number(allLists['noac'])
 			: 0;
 
-		let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-		let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-			return new bootstrap.Tooltip(tooltipTriggerEl)
-		})
+		let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+		let tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+			return new bootstrap.Tooltip(tooltipTriggerEl);
+		});
 
 		return (
 
