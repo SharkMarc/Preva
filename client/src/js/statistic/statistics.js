@@ -27,8 +27,13 @@ export default class Statistics extends React.Component {
 		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
 		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
 		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
+		if (!controlFlowComplexity || controlFlowComplexity == -1) {
+			controlFlowComplexity = Number(0).toFixed(2);
+		}
 		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
-
+		if (!concurrency || concurrency == -1) {
+			concurrency = Number(0).toFixed(2);
+		}
 		let allSize = ((Number(noa) + Number(noac) + Number(cnc) + Number(density)) / 4).toFixed(2);
 		let allStructure = ((Number(separability) + Number(diameter) + Number(sequentiality)) / 3).toFixed(2);
 		let allOperator = ((Number(maxDegreeOfConnectors) + Number(maxNestingDepth) + Number(avgDegreeOfConnectors) +
