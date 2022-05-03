@@ -18,7 +18,7 @@ export default class Statistics extends React.Component {
 		let cnc = (sequenceFlow / noac).toFixed(2);
 		let cyclicity = Number(allLists['cyclicity'] ? allLists['cyclicity'] : 0).toFixed(2);
 		if (!cyclicity || cyclicity == -1) {
-			cyclicity = 0.00;
+			cyclicity = Number(0).toFixed(2);
 		}
 
 		let cyclomaticNumber = Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] - allLists['noac'] + 1 : 0).toFixed(2);
