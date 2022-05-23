@@ -93,223 +93,193 @@ class MetricsCalculator
 		return $this->coefficientOfNetworkComplexity($process) / ($this->numberOfActivitiesAndControlFlows($process) - 1);
 	}
 
-//	public function testMe(Process $process): float
-//	{
-//		$this->buildPaths($process);
-//
-//		/** @var StartEvent $start */
-//		[$start, $possibleEnds] = $this->findStartAndEndNodes($process);
-//
-//		$processList = [];
-//		$hasOrs      = false;
-//		foreach ($process->getChildNodes() as $node) {
-//			if ($node instanceof StartEvent) {
-//				$startEvent = $node->id;
-//			}
-//			if ($node instanceof EndEvent) {
-//				$endEvent = $node->id;
-//			}
-//
-//			$processList[$node->id] = [];
-//			$outgoings              = 0;
-//			$incomings              = 0;
-//
-//			if ($node instanceof ExclusiveGateway || $node instanceof ParallelGateway || $node instanceof InclusiveGateway) {
-//				$processList[$node->id]["checkMe"] = true;
-//				$hasOrs                            = true;
-//			} else {
-//				$processList[$node->id]["checkMe"] = false;
-//			}
-//
-//			foreach ($node->getOutgoingEdges() as $outgoing) {
-//				if ($outgoing->targetRef) {
-//					$processList[$node->id]["outgoing"][$outgoings] = [$outgoing->targetRef];
-//				}
-//
-//				$outgoings++;
-//			}
-//			$processList[$node->id]["amountOutgoing"] = $outgoings;
-//
-//			foreach ($node->getIncomingEdges() as $incoming) {
-//				if ($incoming->sourceRef) {
-//					$processList[$node->id]["incoming"][$incomings] = [$incoming->sourceRef];
-//				}
-//
-//				$incomings++;
-//			}
-//			$processList[$node->id]["amountIncomings"] = $incomings;
-//		}
-//
-//		$incrementOugoings = 0;
-//		function countUntilOutgoings(string $currentNode, array &$processList, int &$incrementOugoings): int
-//		{
-//			$incrementOugoings++;
-//			if ($processList[$currentNode]["checkMe"]) {
-//				return $incrementOugoings;
-//			}
-//
-//			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
-//
-//			for ($o = 0; $o < $amountOutgoing; $o++) {
-//				$nextNode = $processList[$currentNode]["outgoing"][$o][0];
-//
-//				countUntilOutgoings($nextNode, $processList, $incrementOugoings);
-//			}
-//
-//			return $incrementOugoings;
-//		}
-//
-//		foreach ($processList[$startEvent]["outgoing"] as $startOut) {
-//			var_dump($processList[$startEvent]["amountOutgoing"], $hasOrs, "hier nicht null");
-//			if ($processList[$startEvent]["amountOutgoing"] === 1 && $hasOrs) {
-//				$nextNode = $startOut[0];
-//				countUntilOutgoings($nextNode, $processList, $incrementOugoings);
-//			}
-//		}
-//
-//		$incrementIncomings = 0;
-//		$lengthPath         = 0;
-//		function countUntilIncomings(string $currentNode, array &$processList, int &$incrementIncomings, int &$lengthPath): int
-//		{
-//			$incrementIncomings++;
-//			if ($processList[$currentNode]["checkMe"]) {
-//				if (!$lengthPath) {
-//					$lengthPath = $incrementIncomings;
-//				}
-//
-//				if ($lengthPath && $incrementIncomings > $lengthPath) {
-//					$lengthPath = $incrementIncomings;
-//				}
-//
-//				return $incrementIncomings;
-//			}
-//
-//			$amountIncoming = $processList[$currentNode]["amountIncomings"];
-//
-//			for ($i = 0; $i < $amountIncoming; $i++) {
-//				$nodeBefore = $processList[$currentNode]["incoming"][$i][0];
-//				countUntilIncomings($nodeBefore, $processList, $incrementIncomings, $lengthPath);
-//			}
-//
-//			return $incrementIncomings;
-//		}
-//
-//		if ($processList[$endEvent]["amountIncomings"] === 1 && $hasOrs) {
-//			foreach ($processList[$endEvent]["incoming"] as $endInc) {
-//				$nextNode = $endInc[0];
-//				countUntilIncomings($nextNode, $processList, $incrementIncomings, $lengthPath);
-//			}
-//		}
-//
-//		var_dump("increments", $incrementIncomings);
-//		var_dump("outs", $incrementOugoings);
-//		var_dump($incrementIncomings + $incrementOugoings);
-//		$noas = $this->countNodes($process) - 2;
-//
-//		$amounts = $incrementIncomings + $incrementOugoings;
-//		var_dump("ergevbnis", $amounts / $noas);
-//		if(!$hasOrs){
-//			var_dump("we return 1 ");
-//			return 1;
-//		}
-//		return $amounts / $noas;
-//	}
-
 	public function separability(Process $process): float
 	{
-		$this->buildPaths($process);
+		$loops          = [];
+		$endEventList   = [];
+		$endEventAmount = 0;
+		$processList    = [];
+		foreach ($process->getChildNodes() as $node) {
+			if ($node instanceof StartEvent) {
+				$startEvent = $node->id;
+			}
+			if ($node instanceof EndEvent) {
+				$endEvent = $node->id;
+				$endEventAmount++;
+				$endEventList[] = $node->id;
+			}
+			$processList[$node->id] = [];
+			$outgoings              = 0;
+			$incomings              = 0;
 
-		/** @var StartEvent $start */
-		[$start, $possibleEnds] = $this->findStartAndEndNodes($process);
+			foreach ($node->getOutgoingEdges() as $outgoing) {
+				if ($outgoing->targetRef) {
+					$processList[$node->id]["outgoing"][$outgoings] = [$outgoing->targetRef];
+				}
 
-		$startPaths = 0;
-		foreach ($start->getOutgoingEdges() as $outgoingEdge) {
-			$startPaths += count($outgoingEdge->containingPaths);
+				$outgoings++;
+			}
+			$processList[$node->id]["amountOutgoing"] = $outgoings;
+
+			foreach ($node->getIncomingEdges() as $incoming) {
+				if ($incoming->sourceRef) {
+					$processList[$node->id]["incoming"][$incomings] = [$incoming->sourceRef];
+				}
+
+				$incomings++;
+			}
+			$processList[$node->id]["amountIncoming"] = $incomings;
 		}
 
-		if ($startPaths === 1) {
-			// everything cuts if there is only one path
-			return 1;
-		}
-
-//		$sequenceFlows = 0;
-//		foreach ($process->getChildNodes() as $node) {
-//			if ($node->getOutgoingEdges()) {
-//				foreach ($node->getOutgoingEdges() as $sequence) {
-//					$sequenceFlows++;
-//				}
-//			}
-//		}
-//
-		$countPaths = function (array $edges) {
-			$p = 0;
-			foreach ($edges as $e) {
-				$p += count($e->containingPaths);
-			}
-
-			return $p;
-		};
-
-		$cut = 0;
-		foreach ($process->getChildNodes() as $childNode) {
-			if ($childNode instanceof StartEvent || $childNode instanceof EndEvent) {
-				continue;
-			}
-
-			// remove child
-			// check if incoming still connect to start
-			// check if outgoing still connect to end
-
-			$countTotalPathsToEnd = $countPaths($childNode->getOutgoingEdges());
-			foreach ($childNode->getOutgoingEdges() as $outgoingEdge) {
-				$pathsToEnd         = $outgoingEdge->containingPaths;
-				$incomingPathsAtEnd = 0;
-				$visitedEnds        = [];
-
-				// advance path to end
-				foreach ($pathsToEnd as $path) {
-					$p = $path;
-					while ($p->isValid() && !$p->isValidEnd() && $p->loopDetectionVisit < 2) {
-						$p = $p->next;
-					}
-					if (!isset($visitedEnds[$p->edge->targetRef])) {
-						$incomingPathsAtEnd               += $countPaths($p->edge->target->getIncomingEdges());
-						$visitedEnds[$p->edge->targetRef] = true;
-					}
-				}
-				if ($incomingPathsAtEnd <= $countTotalPathsToEnd) {
-					$cut++;
-					continue 2;
-				}
-			}
-
-			$countTotalPathsToStart = $countPaths($childNode->getIncomingEdges());
-			foreach ($childNode->getIncomingEdges() as $incomingEdge) {
-				$pathsToStart        = $incomingEdge->containingPaths;
-				$outgoingPathAtStart = 0;
-				$visitedStarts       = [];
-
-				// advance path to start
-				foreach ($pathsToStart as $path) {
-					$p = $path;
-					while ($p->isValid() && !$p->isValidStart() && $p->loopDetectionVisit < 2) {
-						$p = $p->prev;
-					}
-					if (!isset($visitedStarts[$p->edge->sourceRef])) {
-						$outgoingPathAtStart                += $countPaths($p->edge->source->getOutgoingEdges());
-						$visitedStarts[$p->edge->sourceRef] = true;
-					}
-				}
-				if ($outgoingPathAtStart <= $countTotalPathsToStart) {
-					$cut++;
-					continue 2;
-				}
+		function callMyselfUntilExclusive(string $currentNode, array &$processList, array &$getStartArray)
+		{
+			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+			if ($amountOutgoing === 1) {
+				$nextNode        = $processList[$currentNode]["outgoing"][0][0];
+				$getStartArray[] = $nextNode;
+				callMyselfUntilExclusive($nextNode, $processList, $getStartArray);
 			}
 		}
 
-		$nodesWithoutEnds = $this->numberOfActivitiesAndControlFlows($process) - (1 + count($possibleEnds));
+		function callMyselfUntilExclusiveEnd(string $currentNode, array &$processList, array &$getEndArray)
+		{
+			$amountIncoming = $processList[$currentNode]["amountIncoming"];
+			if ($amountIncoming === 1) {
+				$nextNode = $processList[$currentNode]["incoming"][0][0];
+				if ($processList[$nextNode]["amountOutgoing"] > 0) {
+					if ($processList[$nextNode]["amountIncoming"] > 0) {
+						$getEndArray[$nextNode] = $nextNode;
+						$getEndArray[$currentNode] = $nextNode;
+					}
+				}
+				callMyselfUntilExclusiveEnd($nextNode, $processList, $getEndArray);
+			}
 
-		return $cut / $nodesWithoutEnds;
+			if ($amountIncoming > 1) {
+				$getEndArray[$currentNode] = $currentNode;
+			}
+		}
+
+		$getArrays      = [];
+		$list           = [];
+		$getArrayAmount = 0;
+		function callMyself2(string $currentNode, array &$processList, array &$loops, array &$getArrays, array &$list, int &$getArrayAmount)
+		{
+			if ($processList[$currentNode]["visited"]) {
+				$loops[$currentNode]          = 1;
+				$getArrays[$getArrayAmount][] = $currentNode;
+
+				return [1, false];
+			}
+
+			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+			if (!$amountOutgoing) {
+				$getArrays[$getArrayAmount][] = $currentNode;
+
+				return [0, false];
+			}
+
+			$processList[$currentNode]["visited"]++;
+			$loopLength      = 0;
+			$incrementLength = 0;
+			$stop            = false;
+			for ($o = 0; $o < $amountOutgoing; $o++) {
+				$nextNode = $processList[$currentNode]["outgoing"][$o][0];
+				if ($amountOutgoing > 1) {
+					$getArrayAmount++;
+					$getArrays[$getArrayAmount][] = $currentNode;
+				} else {
+					$getArrays[$getArrayAmount][] = $currentNode;
+				}
+				[$newLength, $stopCounter] = callMyself2($nextNode, $processList, $loops, $getArrays, $list, $getArrayAmount);
+
+				if ($loopLength < $newLength) {
+					$stop            = $stopCounter;
+					$incrementLength = $stopCounter ? 0 : 1;
+					$loopLength      = $newLength;
+				}
+			}
+
+			$processList[$currentNode]["visited"]--;
+			if (!$loopLength) {
+
+				return [0, false];
+			}
+
+			if (isset($loops[$currentNode])) {
+
+				return [$loopLength + 1, true];
+			}
+
+			return [$loopLength + $incrementLength, $stop];
+		}
+
+		$longestLoop = 0;
+		foreach ($processList[$startEvent]["outgoing"] as $startOut) {
+			$nextNode = $startOut[0];
+			callMyself2($nextNode, $processList, $loops, $getArrays, $list, $getArrayAmount);
+		}
+
+		$getStartArray = [];
+		foreach ($processList[$startEvent]["outgoing"] as $startOut) {
+			$nextNode        = $startOut[0];
+			$getStartArray[] = $nextNode;
+			callMyselfUntilExclusive($nextNode, $processList, $getStartArray);
+		}
+
+		$getEndArray = [];
+		if ($processList[$endEvent]["amountIncoming"] < 2 && $endEventAmount < 2) {
+			foreach ($processList[$endEvent]["incoming"] as $EndIn) {
+				$nextNode      = $EndIn[0];
+				$getEndArray[] = $nextNode;
+				callMyselfUntilExclusiveEnd($nextNode, $processList, $getEndArray);
+			}
+		}
+
+		$finalList = [];
+		foreach ($getEndArray as $item => $value) {
+			$finalList[$value] = $item;
+		}
+
+		foreach ($getStartArray as $item => $value) {
+			$finalList[$value] = $item;
+		}
+
+		$testList = [];
+		for ($l = 0; $l < count($getArrays); $l++) {
+			if (is_array($getArrays[$l])) {
+				for ($k = 0; $k < count($getArrays[$l]); $k++) {
+					$testList[$getArrays[$l][$k]]++;
+				}
+			}
+		}
+
+		if (count($endEventList) > 1) {
+			foreach ($endEventList as $item => $value) {
+				$amount += $testList[$value];
+			}
+		} else {
+			$amount = $testList[$endEvent];
+		}
+
+		// workaround for behind exlcusive
+		foreach ($testList as $item => $value) {
+			if ($value === $amount) {
+				$finalList[$item] = $value;
+
+				if ($processList[$item]["amountOutgoing"] > 1 && $processList[$item]["amountIncoming"] === 1) {
+//					no start / end events
+					if ($processList[$processList[$item]["incoming"][0][0]]["amountIncoming"] !== 0 &&
+						$processList[$processList[$item]["incoming"][0][0]]["amountOutgoing"] !== 0) {
+						if (count($endEventList) === 1) {
+							callMyselfUntilExclusiveEnd($processList[$item]["incoming"][0][0], $processList, $finalList);
+						}
+					}
+				}
+			}
+		}
+
+		return count($finalList) - 1;
 	}
 
 	public function getSequenceFlows($ichbinalleFlows, $id)
