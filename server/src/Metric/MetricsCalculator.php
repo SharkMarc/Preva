@@ -148,7 +148,7 @@ class MetricsCalculator
 				$nextNode = $processList[$currentNode]["incoming"][0][0];
 				if ($processList[$nextNode]["amountOutgoing"] > 0) {
 					if ($processList[$nextNode]["amountIncoming"] > 0) {
-						$getEndArray[$nextNode] = $nextNode;
+						$getEndArray[$nextNode]    = $nextNode;
 						$getEndArray[$currentNode] = $nextNode;
 					}
 				}
