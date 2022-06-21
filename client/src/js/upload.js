@@ -113,34 +113,23 @@ export default class Upload extends React.Component {
 
 	handleBPMNView() {
 		if (this.state.doitonce < 2) {
-//			let viewer2 = new BpmnViewer();
-//			let idTest = document.getElementById('bpmn2');
-//			viewer2.attachTo(idTest);
-//			viewer2.importXML(xml, function(err) {
-//				if (err) {
-//					console.log("broken beim viewr");
-//				}
-
-//			})
-
-			const viewer2 = new BpmnViewer();
-
-//			viewer2.attachTo(document.getElementById("canvas"));
-			const viewer = new BpmnViewer({
-				container: document.getElementById('bpmn'),
-				keyboard:  {
+			let canvas = null;
+			const container = document.getElementById('canvas');
+			const modeler = new Modeler({
+				container,
+				keyboard:        {
 					bindTo: document
 				},
+				propertiesPanel: {
+					parent: container
+				}
 			});
-
 			fetch(Route.getBPMN)
 				.then(r => r.text())
-				.then(xml => viewer.importXML(xml).then(
-					viewer.get('bpmn').zoom('fit-viewport')))
-				//				.then((xml) => viewer2.importXML(xml))
-				//				.then((xml) => viewer.importXML(xml))
+				.then(xml => modeler.importXML(xml).then(() => {
+					canvas = modeler.get('canvas');
+				}))
 				.then(() => this.handleTabs('processModel'));
-
 		}
 	}
 

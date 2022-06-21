@@ -19,20 +19,12 @@ $blue: #0045C6;
   }
 }
 
-#bpmn {
-  overflow:scroll;
-
-  .bjs-container {
-    height: 2000px !important;
-    width: 2000px !important;
-
-    .djs-container {
-
-
-      .viewport {
-        transform: matrix(0.69886, 0, 0, 0.69886, -4.19318, -4.19318);
-      }
-    }
+#canvas {
+  .djs-palette{
+    display:none;
+  }
+  .djs-palette-entries {
+    display:none!important;
   }
 }
 
