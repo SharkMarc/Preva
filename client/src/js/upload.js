@@ -14,7 +14,8 @@ import ConventionGuide from '../assets/conventionGuide.png';
 import {ProcessModel} from './dashboard/dashboard-points';
 import {Trends} from './dashboard/trends';
 import {SuccessBox, ErrorBox} from './boxes';
-import BpmnJS from 'bpmn-js';
+import BpmnViewer from 'bpmn-js';
+import bpmnView from './bpmnView';
 import RadarChart from 'react-svg-radar-chart';
 
 import propertiesPanelModule from 'bpmn-js-properties-panel';
@@ -23,6 +24,7 @@ import ReactBpmn from 'react-bpmn';
 import 'bpmn-js/dist/assets/diagram-js.css';
 import Modeler from 'bpmn-js/lib/Modeler';
 import 'react-svg-radar-chart/build/css/index.css';
+import Viewer from 'bpmn-js';
 
 export default class Upload extends React.Component {
 	constructor(props) {
@@ -58,8 +60,8 @@ export default class Upload extends React.Component {
 	}
 
 	handleBoxes(type, message) {
-		let textId=	document.getElementById(type + 'Text');
-		let boxId=	document.getElementById(type + 'Box');
+		let textId = document.getElementById(type + 'Text');
+		let boxId = document.getElementById(type + 'Box');
 		if (type === 'error') {
 			if (message) {
 				textId.innerHTML = '<b>Mandatory graphical elements are missing</b><p>Check for: <b>' + message + '</b></p>';
@@ -111,24 +113,34 @@ export default class Upload extends React.Component {
 
 	handleBPMNView() {
 		if (this.state.doitonce < 2) {
-			const viewer = new BpmnJS({
-				container:         document.getElementById('bpmn'),
-				additionalModules: [
-//					propertiesPanelModule
-				],
-				width:             '100%',
-				height:            '100%',
-				minHeight:         '100%',
-				minWidth:          '100%',
-				keyboard:          {
+//			let viewer2 = new BpmnViewer();
+//			let idTest = document.getElementById('bpmn2');
+//			viewer2.attachTo(idTest);
+//			viewer2.importXML(xml, function(err) {
+//				if (err) {
+//					console.log("broken beim viewr");
+//				}
+
+//			})
+
+			const viewer2 = new BpmnViewer();
+
+//			viewer2.attachTo(document.getElementById("canvas"));
+			const viewer = new BpmnViewer({
+				container: document.getElementById('bpmn'),
+				keyboard:  {
 					bindTo: document
 				},
 			});
 
 			fetch(Route.getBPMN)
 				.then(r => r.text())
-				.then(xml => viewer.importXML(xml))
+				.then(xml => viewer.importXML(xml).then(
+					viewer.get('bpmn').zoom('fit-viewport')))
+				//				.then((xml) => viewer2.importXML(xml))
+				//				.then((xml) => viewer.importXML(xml))
 				.then(() => this.handleTabs('processModel'));
+
 		}
 	}
 
@@ -420,7 +432,9 @@ export default class Upload extends React.Component {
 
 		return (
 			<section id="productPage" className="col-12 p-t-0 px-0 mx-auto my-auto font-family-arial">
+
 				{!statisticPage ?
+
 					<div>
 						<div id="home" className="justify-content-center">
 							<div className="full-height-bg-height full-height-bg col-12">

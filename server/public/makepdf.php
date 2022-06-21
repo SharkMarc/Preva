@@ -22,6 +22,7 @@ try {
 		$density               = $metricsCalculator->density($process);
 		$separability          = $metricsCalculator->separability($process);
 		$sequentiality         = $metricsCalculator->sequentiality($process);
+		$sequenceFlow         = $metricsCalculator->sequenceFlow($process);
 		$diameter              = $metricsCalculator->diameter($process);
 		$maxNestingDepth       = $metricsCalculator->maxNestingDepth($process);
 		$avgDegreeOfConnectors = $metricsCalculator->avgDegreeOfConnectors($process);
@@ -97,7 +98,7 @@ try {
 	$sizeArray = [
 		["name" => "Number of ativities (NOA)", "number" => $noa],
 		["name" => "Number of activities control-flow elements (NOAC)", "number" => $noac],
-		["name" => "Coefficient of Network Complexity (CNC)", "number" => $noac],
+		["name" => "Coefficient of Network Complexity (CNC)", "number" => ($sequenceFlow / $noac)],
 		["name" => "Density", "number" => $density],
 	];
 
@@ -112,6 +113,8 @@ try {
 ';
 	}
 	$structureArray = [
+		["name" => "Ciclycity", "number" => $cyclicity],
+		["name" => "Cyclomatic Number", "number" => $cyclomaticNumber],
 		["name" => "Seperability", "number" => $separability],
 		["name" => "Sequentiality", "number" => $sequentiality],
 		["name" => "Diameter", "number" => $diameter],
@@ -132,7 +135,7 @@ try {
 		["name" => "Maximum degree of Connectors", "number" => $maxDegreeOfConnectors],
 		["name" => "Binary decissions", "number" => $binaryDecisions],
 		["name" => "Control flow complexity (CFC)", "number" => $controlFlowComplexity],
-		["name" => "Concurrency", "number" => $concurrency],
+		["name" => "Concurrency", "number" => $concurrency>0?$concurrency:0],
 	];
 
 	foreach ($operatorArray as $metric) {

@@ -9,12 +9,30 @@ $blue: #0045C6;
   height: 50px;
 }
 
-.gauge-chart{
-  .text{
+.gauge-chart {
+  .text {
     color: #0045C6;
   }
-  .needle{
+
+  .needle {
     opacity: 0.25;
+  }
+}
+
+#bpmn {
+  overflow:scroll;
+
+  .bjs-container {
+    height: 2000px !important;
+    width: 2000px !important;
+
+    .djs-container {
+
+
+      .viewport {
+        transform: matrix(0.69886, 0, 0, 0.69886, -4.19318, -4.19318);
+      }
+    }
   }
 }
 
