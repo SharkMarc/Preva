@@ -15,22 +15,23 @@ export default class Statistics extends React.Component {
 		let separability = Number(allLists['separability'] ? allLists['separability'] : 0).toFixed(2);
 		let sequentiality = Number(allLists['sequentiality'] ? allLists['sequentiality'] : 0).toFixed(2);
 		let diameter = Number(allLists['diameter'] ? allLists['diameter'] : 0).toFixed(2);
-		let cnc = (sequenceFlow / noac).toFixed(2);
+		let cnc = (sequenceFlow - noac + 1).toFixed(2);
+		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
+		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
+		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
+		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
+		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
+		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
+//		längsten pfad diameter
 		let cyclicity = Number(allLists['cyclicity'] ? allLists['cyclicity'] : 0).toFixed(2);
 		if (!cyclicity || cyclicity == -1) {
 			cyclicity = Number(0).toFixed(2);
 		}
 
 		let cyclomaticNumber = Number(allLists['cyclomaticNumber'] ? allLists['cyclomaticNumber'] : 0).toFixed(2);
-		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
-		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
-		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
-		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
-		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
 		if (!controlFlowComplexity || controlFlowComplexity == -1) {
 			controlFlowComplexity = Number(0).toFixed(2);
 		}
-		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
 		if (!concurrency || concurrency == -1) {
 			concurrency = Number(0).toFixed(2);
 		}

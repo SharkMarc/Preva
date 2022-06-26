@@ -30,20 +30,29 @@ export default class Upload extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			bpmn:              '',
-			bpmndiList:        [],
-			countList:         [],
-			noa:               [],
-			bpmnList:          [],
-			objectSummary:     [],
-			allLists:          [],
-			seperability:      [],
-			processTab:        'metrickz',
-			statisticSwitch:   'All',
-			selectedStatistic: 'All',
-			dataName:          '',
-			doitonce:          0,
-			errorMsg:          false,
+			bpmn:                  '',
+			bpmndiList:            [],
+			countList:             [],
+			noa:                   [],
+			bpmnList:              [],
+			objectSummary:         [],
+			allLists:              [],
+			seperability:          [],
+			processTab:            'metrickz',
+			statisticSwitch:       'All',
+			selectedStatistic:     'All',
+			dataName:              '',
+			doitonce:              0,
+			errorMsg:              false,
+			scale:                 0,
+			allSize:               0,
+			allStructure:          0,
+			allOperator:           0,
+			defaultScaleSize:      0,
+			defaultScaleStructure: 0,
+			defaultScaleOperator:  0,
+			cnc:                   0,
+			cognitiveWeight:       0,
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -57,6 +66,7 @@ export default class Upload extends React.Component {
 		this.handleBPMNView = this.handleBPMNView.bind(this);
 		this.handleMPDF = this.handleMPDF.bind(this);
 		this.handleBoxes = this.handleBoxes.bind(this);
+		this.handleScale = this.handleScale.bind(this);
 	}
 
 	handleBoxes(type, message) {
@@ -266,17 +276,135 @@ export default class Upload extends React.Component {
 						noaList:       data['noa'],
 						noa:           data['noa'],
 					});
+					if (this.state.allLists) {
+						this.handleScale();
+					}
 				}
 			})
 			.catch((error) => console.log(error));
 	}
 
+//	scale = höchste zahl von noa noac etc. ist scale
 	handleChange(e) {
 		const target = e.target;
 		const value = target.value;
 		const name = target.name;
 
 		this.setState({ [name]: value });
+	}
+
+	handleScale() {
+		let allLists = this.state.allLists;
+		let noa = Number(allLists['noa'] ? allLists['noa'] : 0).toFixed(2);
+		let noac = Number(allLists['noac'] ? allLists['noac'] : 0).toFixed(2);
+		let sequenceFlow = Number(allLists['sequenceFlow'] ? allLists['sequenceFlow'] : 0).toFixed(2);
+		let cognitiveWeight = Number(allLists['cognitiveWeight'] ? allLists['cognitiveWeight'] : 0).toFixed(2);
+		let density = Number(allLists['density'] ? allLists['density'] : 0).toFixed(2);
+		let separability = Number(allLists['separability'] ? allLists['separability'] : 0).toFixed(2);
+		let sequentiality = Number(allLists['sequentiality'] ? allLists['sequentiality'] : 0).toFixed(2);
+		let diameter = Number(allLists['diameter'] ? allLists['diameter'] : 0).toFixed(2);
+		let cnc = (sequenceFlow - noac + 1).toFixed(2);
+		let maxNestingDepth = Number(allLists['maxNestingDepth'] ? allLists['maxNestingDepth'] : 0).toFixed(2);
+		let avgDegreeOfConnectors = Number(allLists['avgDegreeOfConnectors'] ? allLists['avgDegreeOfConnectors'] : 0).toFixed(2);
+		let maxDegreeOfConnectors = Number(allLists['maxDegreeOfConnectors'] ? allLists['maxDegreeOfConnectors'] : 0).toFixed(2);
+		let binaryDecisions = Number(allLists['binaryDecisions'] ? allLists['binaryDecisions'] : 0).toFixed(2);
+		let controlFlowComplexity = Number(allLists['controlFlowComplexity'] ? allLists['controlFlowComplexity'] : 0).toFixed(2);
+		let concurrency = Number(allLists['concurrency'] ? allLists['concurrency'] : 0).toFixed(2);
+		let allSize = ((Number(noa) + Number(noac) + Number(cnc) + Number(density)) / 4).toFixed(2);
+		let cyclicity = Number(allLists['cyclicity'] ? allLists['cyclicity'] : 0).toFixed(2);
+		let allStructure = ((Number(separability) + Number(diameter) + Number(sequentiality)) / 3).toFixed(2);
+		let cyclomaticNumber = Number(allLists['cyclomaticNumber'] ? allLists['cyclomaticNumber'] : 0).toFixed(2);
+		let allOperator = ((Number(maxDegreeOfConnectors) + Number(maxNestingDepth) + Number(avgDegreeOfConnectors) +
+			Number(binaryDecisions) + Number(concurrency) + Number(controlFlowComplexity)) / 6).toFixed(2);
+
+		let defaultScale = 0;
+
+		allSize = Number(allSize);
+		allStructure = Number(allStructure);
+		allOperator = Number(allOperator);
+		cognitiveWeight = Number(cognitiveWeight);
+
+		if (allSize > allStructure && allSize > allOperator && allSize > cognitiveWeight) {
+			defaultScale = allSize;
+		} else if (allStructure > allSize && allStructure > allOperator && allStructure > cognitiveWeight) {
+			defaultScale = allStructure;
+		} else if (allOperator > allSize && allOperator > allStructure && allOperator > cognitiveWeight) {
+			defaultScale = allOperator;
+		} else {
+			defaultScale = cognitiveWeight;
+		}
+
+		let defaultScaleSize = 0;
+		noa = Number(noa);
+		noac = Number(noac);
+		cnc = Number(cnc);
+		density = Number(density);
+
+		if (noa > noac && noa > cnc && noa > density) {
+			defaultScaleSize = noa;
+		} else if (noac > noa && noac > cnc && noac > density) {
+			defaultScaleSize = noac;
+		} else if (cnc > noac && cnc > noa && cnc > density) {
+			defaultScaleSize = cnc;
+		} else {
+			defaultScaleSize = density;
+		}
+
+		let defaultScaleStructure = 0;
+		cyclicity = Number(cyclicity);
+		cyclomaticNumber = Number(cyclomaticNumber);
+		separability = Number(separability);
+		sequentiality = Number(sequentiality);
+		diameter = Number(diameter);
+
+		if (cyclicity > cyclomaticNumber && cyclicity > separability && cyclicity > sequentiality && cyclicity > diameter) {
+			defaultScaleStructure = cyclicity;
+		} else if (cyclomaticNumber > cyclicity && cyclomaticNumber > separability && cyclomaticNumber > sequentiality && cyclomaticNumber > diameter) {
+			defaultScaleStructure = cyclomaticNumber;
+		} else if (separability > cyclomaticNumber && separability > cyclicity && separability > sequentiality && separability > diameter) {
+			defaultScaleStructure = separability;
+		} else if (diameter > cyclomaticNumber && diameter > separability && diameter > sequentiality && diameter > cyclicity) {
+			defaultScaleStructure = diameter;
+		} else {
+			defaultScaleStructure = sequentiality;
+		}
+
+		let defaultScaleOperator = 0;
+		maxNestingDepth = Number(maxNestingDepth);
+		avgDegreeOfConnectors = Number(avgDegreeOfConnectors);
+		maxDegreeOfConnectors = Number(maxDegreeOfConnectors);
+		binaryDecisions = Number(binaryDecisions);
+		concurrency = Number(concurrency);
+		controlFlowComplexity = Number(controlFlowComplexity);
+
+		if (maxNestingDepth && maxNestingDepth > avgDegreeOfConnectors && maxNestingDepth > maxDegreeOfConnectors && maxNestingDepth > binaryDecisions && maxNestingDepth > controlFlowComplexity && maxNestingDepth > concurrency) {
+			defaultScaleOperator = maxNestingDepth;
+		} else if (avgDegreeOfConnectors && avgDegreeOfConnectors > maxNestingDepth && avgDegreeOfConnectors > maxDegreeOfConnectors && avgDegreeOfConnectors > binaryDecisions && avgDegreeOfConnectors > controlFlowComplexity && avgDegreeOfConnectors > concurrency) {
+			defaultScaleOperator = avgDegreeOfConnectors;
+		} else if (maxDegreeOfConnectors && maxDegreeOfConnectors > avgDegreeOfConnectors && maxDegreeOfConnectors > maxNestingDepth && maxDegreeOfConnectors > binaryDecisions && maxDegreeOfConnectors > controlFlowComplexity && maxDegreeOfConnectors > concurrency) {
+			defaultScaleOperator = maxDegreeOfConnectors;
+		} else if (binaryDecisions && binaryDecisions > avgDegreeOfConnectors && binaryDecisions > maxDegreeOfConnectors && binaryDecisions > maxNestingDepth && binaryDecisions > controlFlowComplexity && binaryDecisions > concurrency) {
+			defaultScaleOperator = binaryDecisions;
+		} else if (concurrency && concurrency > avgDegreeOfConnectors && concurrency > maxDegreeOfConnectors && concurrency > binaryDecisions && concurrency > controlFlowComplexity && concurrency > maxNestingDepth) {
+			defaultScaleOperator = concurrency;
+		} else if (controlFlowComplexity && controlFlowComplexity > avgDegreeOfConnectors && controlFlowComplexity > maxDegreeOfConnectors && controlFlowComplexity > binaryDecisions && controlFlowComplexity > maxNestingDepth && controlFlowComplexity > concurrency) {
+			defaultScaleOperator = controlFlowComplexity;
+		}
+
+		let defaultScaleCognitive = 0;
+
+//		defaultScale=1
+
+		this.setState({
+			scale:                 defaultScale,
+			allSize:               allSize,
+			allStructure:          allStructure,
+			allOperator:           allOperator,
+			defaultScaleSize:      defaultScaleSize,
+			cnc:                   cnc,
+			defaultScaleStructure: defaultScaleStructure,
+			defaultScaleOperator:  defaultScaleOperator
+		});
 	}
 
 	render() {
@@ -288,12 +416,13 @@ export default class Upload extends React.Component {
 
 		let data = [{
 			data: {
-				size:            this.state.allLists.noa / 10,
-				Structure:       0.8,
-				Operators:       0.9,
-				CognitiveWeight: this.state.allLists.cognitiveWeight / 10
+				size:            this.state.allSize / this.state.scale,
+				Structure:       this.state.allStructure / this.state.scale,
+				Operators:       this.state.allOperator / this.state.scale,
+				CognitiveWeight: this.state.allLists.cognitiveWeight / this.state.scale,
 			},
-			meta: { color: 'blue' }
+
+			meta: { fill: 'none', color: 'blue' }
 		}];
 
 		let captions = {
@@ -315,12 +444,12 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.allLists.noa / 10,
-								second: this.state.allLists.noac / 10,
-								third:  0.1 / 100,
-								forth:  this.state.allLists.density / 10,
+								first:  this.state.allLists.noa / this.state.defaultScaleSize,
+								second: this.state.allLists.noac / this.state.defaultScaleSize,
+								third:  this.state.cnc / this.state.defaultScaleSize,
+								forth:  this.state.allLists.density / this.state.defaultScaleSize,
 							},
-							meta: { color: 'blue' }
+							meta: { fill: 'none', color: 'blue' }
 						}
 					];
 
@@ -339,13 +468,13 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.allLists.cyclicity / 10,
-								second: this.state.allLists.cyclomaticNumber / 10,
-								third:  this.state.allLists.separability / 10,
-								fourth: this.state.allLists.sequentiality / 10,
-								fifth:  this.state.allLists.diameter / 10,
+								first:  this.state.allLists.cyclicity / this.state.defaultScaleStructure,
+								second: this.state.allLists.cyclomaticNumber / this.state.defaultScaleStructure,
+								third:  this.state.allLists.separability / this.state.defaultScaleStructure,
+								fourth: this.state.allLists.sequentiality / this.state.defaultScaleStructure,
+								fifth:  this.state.allLists.diameter / this.state.defaultScaleStructure,
 							},
-							meta: { color: 'blue' }
+							meta: { fill: 'none', color: 'blue' }
 						}
 					];
 					captions = {
@@ -364,14 +493,14 @@ export default class Upload extends React.Component {
 					data = [
 						{
 							data: {
-								first:  this.state.allLists.maxNestingDepth / 10,
-								second: this.state.allLists.avgDegreeOfConnectors / 10,
-								third:  this.state.allLists.maxDegreeOfConnectors / 10,
-								forth:  this.state.allLists.binaryDecisions / 10,
-								fifth:  this.state.allLists.controlFlowComplexity / 10,
-								sixth:  this.state.allLists.concurrency / 10,
+								first:  this.state.allLists.maxNestingDepth / this.state.defaultScaleOperator,
+								second: this.state.allLists.avgDegreeOfConnectors / this.state.defaultScaleOperator,
+								third:  this.state.allLists.maxDegreeOfConnectors / this.state.defaultScaleOperator,
+								forth:  this.state.allLists.binaryDecisions / this.state.defaultScaleOperator,
+								fifth:  this.state.allLists.controlFlowComplexity / this.state.defaultScaleOperator,
+								sixth:  this.state.allLists.concurrency / this.state.defaultScaleOperator,
 							},
-							meta: { color: 'blue' }
+							meta: { fill: 'none', color: 'blue' }
 						}
 					];
 					captions = {
@@ -393,7 +522,7 @@ export default class Upload extends React.Component {
 							data: {
 								first: this.state.allLists.cognitiveWeight / 100,
 							},
-							meta: { color: 'blue' }
+							meta: { fill: 'none', color: 'blue' }
 						}
 					];
 
@@ -620,7 +749,7 @@ export default class Upload extends React.Component {
 								<div className="col-lg-6 col-xl-4 col-md-12 d-flex p-1">
 									<div className="card h-100 border-shadow-statistic min-height-statistic w-100">
 										<h3>
-											<b>Trend</b>
+											<b>Radar Chart</b>
 											<hr/>
 										</h3>
 										<RadarChart

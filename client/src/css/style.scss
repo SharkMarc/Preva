@@ -20,11 +20,14 @@ $blue: #0045C6;
 }
 
 #canvas {
-  .djs-palette{
-    display:none;
+  border: 1px solid;
+
+  .djs-palette {
+    display: none;
   }
+
   .djs-palette-entries {
-    display:none!important;
+    display: none !important;
   }
 }
 
@@ -39,6 +42,10 @@ $blue: #0045C6;
 .bg-preva {
   background-color: #3030d2c9 !important;
   color: white;
+}
+
+.black {
+  color: #000 !important;
 }
 
 #errorBox {
@@ -837,6 +844,10 @@ a.hover-upload {
   tbody tr:hover {
     background-color: #7d7dd7c7 !important;
     color: white;
+  }
+
+  .scale {
+    fill: #fff;
   }
 
   hr {

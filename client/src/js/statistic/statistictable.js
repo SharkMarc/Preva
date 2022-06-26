@@ -8,6 +8,7 @@ export default class StatisticTable extends React.Component {
 		super(props);
 		this.state = {
 			color: '',
+			text:  '',
 		};
 
 		this.handleColor = this.handleColor.bind(this);
@@ -32,10 +33,20 @@ export default class StatisticTable extends React.Component {
 
 			if (counter === param.length) {
 				this.setState({ color: 'red' });
+				this.setState({ text: 'Metrics not calculated' });
 			} else if (counter) {
 				this.setState({ color: 'orange' });
+				this.setState({ text: 'Metrics partly calculated' });
 			} else {
 				this.setState({ color: 'green' });
+				this.setState({ text: 'Metrics calculated' });
+			}
+
+			let toolTipExists = document.querySelectorAll('.tooltip.fade');
+			if (toolTipExists) {
+				for (let i = 0; i < toolTipExists.length; i++) {
+					toolTipExists[i].classList.remove('show');
+				}
 			}
 		}
 	}
@@ -93,6 +104,12 @@ export default class StatisticTable extends React.Component {
 //		seperability
 //      maxNesting depth nur das exclusive mit den meisten entscheidungen (anzahl der entscheidungen)
 //		binaryDecisions
+		if (!controlFlowComplexity || controlFlowComplexity == -1) {
+			controlFlowComplexity = Number(0).toFixed(2);
+		}
+		if (!concurrency || concurrency == -1) {
+			concurrency = Number(0).toFixed(2);
+		}
 		let allSize = ((Number(noa) + Number(noac) + Number(cnc) + Number(density)) / 4).toFixed(2);
 		let allStructure = ((Number(separability) + Number(diameter) + Number(sequentiality)) / 3).toFixed(2);
 		let allOperator = ((Number(maxDegreeOfConnectors) + Number(maxNestingDepth) + Number(avgDegreeOfConnectors) +
@@ -139,9 +156,13 @@ export default class StatisticTable extends React.Component {
 				<div className="col-6 my-auto">
 					{name}
 				</div>
-				<div className="col-6 my-auto text-center">
-					<img src={this.state.color === 'red' ? Red : this.state.color === 'green' ? Green : Orange} className={'traffic-light'}/>
-				</div>
+				{this.state.text ?
+					<div className="col-6 my-auto text-center cursor-pointer" data-bs-toggle={'tooltip'}
+						title={this.state.text}>
+						<img src={this.state.color === 'red' ? Red : this.state.color === 'green' ? Green : Orange} className={'traffic-light'}/>
+					</div>
+					: null
+				}
 			</div>
 		);
 	}
