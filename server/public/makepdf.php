@@ -162,20 +162,10 @@ try {
 	</tr>';
 	}
 	$data .= '</table></div>';
-//var_dump($data);
-//
 // <-- FOOTER -->
 	$mpdf->SetFooter('All rights reserved by Preva');
-//$pfad = __DIR__.'../vendor/mpdf/';
-//var_dump($data);
-//$mpdf->WriteHTML(' ', \Mpdf\HTMLParserMode::HTML_BODY, true, false);
-//$mpdf->WriteHTML($data, HTMLParserMode::HTML_BODY);
-//$mpdf->WriteHTML($data, HTMLParserMode::HTML_BODY, true, false);
 
-//try {
 	$mpdf->WriteHTML($data);
-//} catch (MpdfException $e) {
-//}
 	return $mpdf->Output('EstimationResult_'.$_POST['dataName'].'_'.$date.'.pdf', 'D');
 //$mpdf->Output("reklamacja.pdf", "D");
 } catch (\Exception $catch) {

@@ -204,13 +204,13 @@ class App extends React.Component {
 				<div className="d-flex nav-height my-auto col-12 text-center pl-0">
 					<div className="col-lg-3"/>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
-						onClick={() => this.handlePage('impressum')}>Impressum
+						onClick={() => this.handlePage('impressum')}>Legal information
 					</div>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
-						onClick={() => this.handlePage('dataPolicy')}>Datenschutz
+						onClick={() => this.handlePage('dataPolicy')}>Data privacy
 					</div>
 					<div className="col-md-4 col-lg-2 mt-auto mb-auto cursor-pointer hover-header"
-						onClick={() => this.handlePage('contact')}>Kontakt
+						onClick={() => this.handlePage('contact')}>Contact us
 					</div>
 					<div className="col-lg-3"/>
 				</div>

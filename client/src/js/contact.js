@@ -14,10 +14,10 @@ export default class Contact extends React.Component {
 				text:      '',
 			}
 		};
-		this.handleContact = this.handleContact.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSuccess = this.handleSuccess.bind(this);
 		this.handleBoxes = this.handleBoxes.bind(this);
+		this.handleSubmit  = this.handleSubmit.bind(this);
 	}
 
 	handleBoxes(type, message) {
@@ -50,8 +50,7 @@ export default class Contact extends React.Component {
 		this.setState({ contact: contact });
 	}
 
-	handleContact(e) {
-		e.preventDefault();
+	handleSubmit(e) {
 		const data = {
 			contact: this.state.contact,
 		};
@@ -62,7 +61,7 @@ export default class Contact extends React.Component {
 		})
 			.then(r => {return r.json();})
 			.then((data) => this.setState({ contact: data.contact }))
-			.then((data) => this.handleSuccess())
+//			.then((data) => this.handleSuccess())
 			.then(function(r) {
 			})
 			.then(contact => this.setState({ contact: contact }));
@@ -121,7 +120,7 @@ export default class Contact extends React.Component {
 									placeholder="Please contact me."/>
 							</div>
 							<div className="col-12 mt-5 px-0 mx-auto text-center">
-								<button className="preva-btn" type="submit">Absenden</button>
+								<button className="preva-btn" type="submit">Send message</button>
 							</div>
 						</div>
 					</form>
