@@ -2,6 +2,49 @@ $purple: #CF33CF;
 $teal: #10D2C4;
 $blue: #0045C6;
 
+form {
+  .input-field {
+    margin-top: 15px;
+    position: relative;
+  }
+
+  .input-field > label {
+    color: #000;
+    cursor: text;
+    flex-grow: 0;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    left: 0;
+    letter-spacing: normal;
+    line-height: 1.71;
+    margin-top: 20px;
+    text-align: left;
+    top: 0;
+    transition: all .2s ease-in-out;
+    will-change: top, font-size, line-height, font-weight, font-style, color;
+  }
+
+  input {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid #cdcdd0;
+    border-radius: 10px;
+    color: #000;
+    display: block;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.71;
+    padding: 12px 16px;
+    text-align: left;
+    width: 100%;
+  }
+}
+
 .nav-height {
   position: fixed;
   background: #000;
@@ -855,7 +898,8 @@ a.hover-upload {
     border-top: 4px solid $purple;
     margin: 1px 192px 0.5rem -10px;
   }
-  .show-trend hr{
+
+  .show-trend hr {
     margin: 1px;
   }
 }

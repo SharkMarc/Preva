@@ -9,7 +9,6 @@ $issue     = htmlspecialchars($_POST['issue']);
 $everything = '<h3>Email</h3>'.'<div>'.'Your name is '.$firstname.' '.'and surname is '.$surname.'</div>'.
     '<div>'.'Your issue is '.$issue.' '.'and ur mail is '.$email.'</div>'.
     '<div>'.'Your want me to tell that:'.$text.'</div>';
-echo $everything;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $everything = trim(file_get_contents("php://input"));
     file_put_contents(__DIR__."/../contact.json", $everything);
