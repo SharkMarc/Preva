@@ -1,4 +1,6 @@
 import React from 'react';
+import PrevaIcon from '../assets/preva_icon.png';
+import {SuccessBox} from './boxes';
 
 export default class Contact extends React.Component {
 	constructor(props) {
@@ -14,28 +16,42 @@ export default class Contact extends React.Component {
 		};
 		this.handleContact = this.handleContact.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleSuccess = this.handleSuccess.bind(this);
+		this.handleBoxes = this.handleBoxes.bind(this);
+	}
+
+	handleBoxes(type, message) {
+		let boxId = document.getElementById(type + 'Box');
+
+		window.setTimeout(function() {
+				boxId.classList.add('box-fade-out');
+			}
+			, 750);
+		window.setTimeout(function() {
+				boxId.classList.remove('box-fade-out');
+				boxId.style.display = 'none';
+			}
+			, 2300);
+	}
+
+	handleSuccess(){
+		this.handleBoxes('success');
+
+		document.getElementById('successBoxItem').innerHTML = "Success! Message has been sent!";
+		document.getElementById('successBox').style.display = 'block';
 	}
 
 	handleChange(e, name) {
 		let contact = this.state.contact;
 		const value = e.value;
-		if(!contact["firstname"]){
-			contact["firstname"]=document.getElementById("firstname").value;
-		}else if (!contact["surname"]){
-			contact["surname"]=document.getElementById("surname").value;
-		}else if (!contact["email"]){
-			contact["email"]=document.getElementById("email").value;
-		}else if (!contact["issue"]){
-			contact["issue"]=document.getElementById("issue").value;
-		}else if (!contact["text"]){
-			contact["text"]=document.getElementById("text").value;
-		}
+
 		contact[name] = value;
 
 		this.setState({ contact: contact });
 	}
 
-	handleContact() {
+	handleContact(e) {
+		e.preventDefault();
 		const data = {
 			contact: this.state.contact,
 		};
@@ -46,19 +62,22 @@ export default class Contact extends React.Component {
 		})
 			.then(r => {return r.json();})
 			.then((data) => this.setState({ contact: data.contact }))
+			.then((data) => this.handleSuccess())
 			.then(function(r) {
 			})
 			.then(contact => this.setState({ contact: contact }));
 	}
 
 	render() {
+		let dnone = { display: 'none' };
+
 		return (
 			<section id="contactForm">
 				<h2 className="text-center">Get in touch</h2>
 				<hr/>
 				<div>
-					<form role="form" onSubmit={this.handleContact} action={""}
-						encType="multipart/form-data" method="post">
+					<SuccessBox PrevaIcon={PrevaIcon} dnone={dnone}/>
+					<form role="form" onSubmit={(e) => this.handleSubmit(e)} action={Route.contact} encType="multipart/form-data" method="post">
 						<div className="col-12 row">
 							<div className={'input-field col-12 col-sm-6'}>
 								<label htmlFor={'firstname'}>Firstname:</label>
@@ -102,7 +121,7 @@ export default class Contact extends React.Component {
 									placeholder="Please contact me."/>
 							</div>
 							<div className="col-12 mt-5 px-0 mx-auto text-center">
-								<button className="preva-btn" type="submit" onSubmit={() => this.props.handlePage('upload')}>Absenden</button>
+								<button className="preva-btn" type="submit">Absenden</button>
 							</div>
 						</div>
 					</form>

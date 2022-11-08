@@ -21,7 +21,10 @@
     "php": ">=7.4",
     "ext-json": "*",
     "ext-xmlreader": "*",
-    "mpdf/mpdf": "^6.1"
+    "mpdf/mpdf": "^6.1",
+    "phpmailer/phpmailer": "^6.6",
+    "symfony/dotenv": "^5.4",
+    "symfony/mailer": "^5.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
