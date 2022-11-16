@@ -46,6 +46,7 @@ class App extends React.Component {
 		this.handleBackToUpload = this.handleBackToUpload.bind(this);
 		this.handleStatisticPage = this.handleStatisticPage.bind(this);
 		this.handleSidebar = this.handleSidebar.bind(this);
+		this.contactAjax = this.contactAjax.bind(this);
 	}
 
 	handleSidebar(fixed) {
@@ -152,6 +153,24 @@ class App extends React.Component {
 			.catch(
 				err => console.error('Caught error: ', err)
 			);
+	}
+
+	contactAjax(data) {
+		fetch(Route.contact, {
+			method:  'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body:    JSON.stringify(data),
+			cache:   'no-cache'
+		}).then(r => {return r.json();})
+			.then(() => this.handlePage('contact'))
+			.catch(
+				err => console.error('Caught error: ', err)
+			);
+
+//			.then((data) => this.setState({ contact: data.contact }))
+//			.then((data) => this.handleSuccess())
+//			.then(function(r) {})
+//			.then(contact => this.setState({ contact: contact }));
 	}
 
 	handleLogin(r) {
@@ -346,6 +365,7 @@ class App extends React.Component {
 					handlePage={(p) => this.handlePage(p)}
 					handleBackToUpload={(e) => this.handleBackToUpload(e)}
 					status={this.status}
+					contactAjax={(data)=>this.contactAjax(data)}
 					statisticPage={this.state.statisticPage}
 					handleStartPage={() => this.handleStartPage()}
 					uploadAjax={(d, p) => this.uploadAjax(d, p)}

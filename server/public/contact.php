@@ -1,5 +1,7 @@
 <?php
 header("Content-Type: application/json");
+header('"Access-Control-Allow-Origin": "*"');
+header('"Access-Control-Allow-Headers": "*"');
 
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -32,4 +34,4 @@ $email->subject($issue);
 $email->from("spree.marc@gmx.de");
 $mailer->send($email);
 
-exit;
+return;
