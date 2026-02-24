@@ -156,7 +156,7 @@ class App extends React.Component {
 	}
 
 	contactAjax(data) {
-		fetch("http://localhost:8000/contact.php",
+		fetch(Route.contact,
 		// fetch(Route.contact,
 			{
 			method: 'POST',

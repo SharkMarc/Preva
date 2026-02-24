@@ -58,7 +58,7 @@ export default class Contact extends React.Component {
             contact: this.state.contact,
         };
 
-        fetch("/contact.php", {
+        fetch(Route.contact, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),
@@ -84,8 +84,7 @@ export default class Contact extends React.Component {
                 <hr/>
                 <div>
                     <SuccessBox PrevaIcon={PrevaIcon} dnone={dnone}/>
-                    <form role="form" onSubmit={(e) => this.handleSubmit(e)} action={Route.contact}
-                          encType="multipart/form-data" method="post">
+                    <form role="form" onSubmit={(e) => this.handleSubmit(e)}>
                         <div className="col-12 row">
                             <div className={'input-field col-12 col-sm-6'}>
                                 <label htmlFor={'firstname'}>Firstname:</label>

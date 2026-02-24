@@ -64,15 +64,15 @@ $text
         $mail->isHTML(false);
         $mail->send();
 
+        header('Content-Type: application/json');
         echo json_encode([
             "success" => true
-        ]);
+        ], JSON_THROW_ON_ERROR);
 
     } catch (Exception $e) {
-
         echo json_encode([
             "success" => false,
-            "error"   => $mail->ErrorInfo
+            "error" => $mail->ErrorInfo
         ]);
     }
 
