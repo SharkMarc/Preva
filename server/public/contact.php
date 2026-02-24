@@ -1,37 +1,80 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
-header('"Access-Control-Allow-Origin": "*"');
-header('"Access-Control-Allow-Headers": "*"');
 
-use Symfony\Component\Dotenv\Dotenv;
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
-require dirname(__DIR__)."/vendor/autoload.php";
+require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = new Dotenv();
-$dotenv->load(dirname(__DIR__).'/.env');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-$transport = \Symfony\Component\Mailer\Transport::fromDsn($_ENV["MAILER_DSN"]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-$mailer = new \Symfony\Component\Mailer\Mailer(
-	$transport
-);
+    $entityBody = file_get_contents('php://input');
+    $data = json_decode($entityBody, true);
 
-$email = new \Symfony\Component\Mime\Email();
-$email->to("spree.marc@gmx.de");
+    $firstname = $data['contact']['firstname'] ?? '';
+    $surname   = $data['contact']['surname'] ?? '';
+    $email     = $data['contact']['email'] ?? '';
+    $issue     = $data['contact']['issue'] ?? '';
+    $text      = $data['contact']['text'] ?? '';
 
-$firstname   = htmlspecialchars($_POST['firstname']);
-$surname     = htmlspecialchars($_POST['surname']);
-$emailAdress = htmlspecialchars($_POST['email']);
-$text        = htmlspecialchars($_POST['text']);
-$issue       = htmlspecialchars($_POST['issue']);
+    $mail = new PHPMailer(true);
 
-$everything  = '<h3>PREVA Konaktformular</h3>'.'<p>'.'<b>Name: </b>'.$firstname.'</p> '.'<p><b>Surname:</b> '.$surname.'</p>'.
-	'<p>'.'<b>The issue is:</b> '.$issue.'</p>'.'<p><b>E-mail:</b> '.$emailAdress.'</p>'.
-	'<p>'.'<b>Message:</b> '.$text.'</p>';
+    try {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+        $dotenv->load();
+        // 🔥 SMTP CONFIG (STRATO)
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.strato.de';
 
-$email->html($everything);
-$email->subject($issue);
-$email->from("spree.marc@gmx.de");
-$mailer->send($email);
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'info@processevaluation.de';
+        $mail->Password   =  $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
 
-echo "foo";
+        // 🔥 Absender
+        $mail->setFrom('info@processevaluation.de', 'Processevaluation');
+        $mail->addAddress('info@processevaluation.de');
+
+        $mail->Subject = "Neue Kontaktanfrage: " . $issue;
+
+        $mail->Body = "
+Neue Anfrage:
+
+Name: $firstname $surname
+Email: $email
+Betreff: $issue
+
+Nachricht:
+$text
+";
+
+        $mail->isHTML(false);
+        $mail->send();
+
+        echo json_encode([
+            "success" => true
+        ]);
+
+    } catch (Exception $e) {
+
+        echo json_encode([
+            "success" => false,
+            "error"   => $mail->ErrorInfo
+        ]);
+    }
+
+    exit;
+}

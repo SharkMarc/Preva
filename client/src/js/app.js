@@ -156,21 +156,24 @@ class App extends React.Component {
 	}
 
 	contactAjax(data) {
-		fetch(Route.contact, {
-			method:  'POST',
+		fetch("http://localhost:8000/contact.php",
+		// fetch(Route.contact,
+			{
+			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body:    JSON.stringify(data),
-			cache:   'no-cache'
-		}).then(r => {return r.json();})
-			.then(() => this.handlePage('contact'))
-			.catch(
-				err => console.error('Caught error: ', err)
-			);
-
-//			.then((data) => this.setState({ contact: data.contact }))
-//			.then((data) => this.handleSuccess())
-//			.then(function(r) {})
-//			.then(contact => this.setState({ contact: contact }));
+			body: JSON.stringify(data),
+			cache: 'no-cache'
+		})
+			.then(r => r.json())
+			.then(response => {
+				if (response.success) {
+					this.handleSuccess();
+				} else {
+					alert("Mail konnte nicht gesendet werden.");
+				}
+				this.handlePage('contact');
+			})
+			.catch(err => console.error('Caught error: ', err));
 	}
 
 	handleLogin(r) {

@@ -553,7 +553,7 @@ export default class Upload extends React.Component {
 					<div>
 						<div id="home" className="justify-content-center">
 							<div className="full-height-bg-height full-height-bg col-12">
-								<h1>The BPMN<br/>METRIC SUITE</h1><br/>
+								<h1>ThASDe BPMN<br/>METRIC SUITE</h1><br/>
 								<p>Generate unique insights by analyzing your business process models</p>
 								<div onClick={() => this.props.handlePage('product', true)} className="preva-btn">Learn more</div>
 							</div>
