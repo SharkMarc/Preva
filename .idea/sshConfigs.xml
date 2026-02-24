@@ -5,6 +5,9 @@
       <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="192.168.50.2" id="b3d6aa38-e059-42a6-a12c-669b4bfb1e16" keyPath="C:\Users\Marc\PhpstormProjects\marcsblog\.vagrant\machines\default\virtualbox\private_key" port="22" customName="marcsblog" nameFormat="CUSTOM" username="vagrant">
         <option name="customName" value="marcsblog" />
       </sshConfig>
+      <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="192.168.50.2" id="f42bdd57-47fa-4bd5-a629-71f4515843b6" keyPath="C:\Users\Marc\PhpstormProjects\marcsblog\.vagrant\machines\default\virtualbox\private_key" port="22" customName="marcsblog" nameFormat="CUSTOM" useOpenSSHConfig="true">
+        <option name="customName" value="marcsblog" />
+      </sshConfig>
     </configs>
   </component>
 </project>

@@ -34,4 +34,4 @@ $email->subject($issue);
 $email->from("spree.marc@gmx.de");
 $mailer->send($email);
 
-return;
+echo "foo";
