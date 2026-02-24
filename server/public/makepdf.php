@@ -1,14 +1,31 @@
 <?php
 //ini_set('log_errors', 1);
 //ini_set("display_errors", 1);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
 header("Content-Type: application/json");
-require_once dirname(__DIR__)."/vendor/autoload.php";
-require_once dirname(__DIR__)."/vendor/mpdf/mpdf/mpdf.php";
+$autoload = __DIR__ . '/../vendor/autoload.php';
+
+if (!file_exists($autoload)) {
+    $autoload = __DIR__ . '/vendor/autoload.php';
+}
+
+require_once $autoload;
 
 try {
 //$mpdf = new mPDF();
-	$mpdf = new mPDF('utf-8', 'A4', '', '', '15', '15', '16', '30', '9', '20');
+    $mpdf = new \Mpdf\Mpdf([
+        'mode' => 'utf-8',
+        'format' => 'A4',
+        'margin_left' => 15,
+        'margin_right' => 15,
+        'margin_top' => 16,
+        'margin_bottom' => 30,
+        'margin_header' => 9,
+        'margin_footer' => 20
+    ]);
 	$data = '';
 //get Attributes
 	$filehandler = new \Preva\Io\FileManager();

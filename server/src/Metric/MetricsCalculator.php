@@ -165,14 +165,21 @@ class MetricsCalculator
 		$getArrayAmount = 0;
 		function callMyself2(string $currentNode, array &$processList, array &$loops, array &$getArrays, array &$list, int &$getArrayAmount)
 		{
-			if ($processList[$currentNode]["visited"]) {
-				$loops[$currentNode]          = 1;
-				$getArrays[$getArrayAmount][] = $currentNode;
 
-				return [1, false];
-			}
+            if (!isset($processList[$currentNode]['visited'])) {
+                $processList[$currentNode]['visited'] = 0;
+            }
 
-			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+            // ✅ Wenn Node schon mehrfach besucht wurde
+            if ($processList[$currentNode]['visited'] > 0) {
+                $loops[$currentNode]          = 1;
+                $getArrays[$getArrayAmount][] = $currentNode;
+
+                return [1, false];
+            }
+
+
+            $amountOutgoing = $processList[$currentNode]["amountOutgoing"];
 			if (!$amountOutgoing) {
 				$getArrays[$getArrayAmount][] = $currentNode;
 
@@ -247,13 +254,21 @@ class MetricsCalculator
 
 		$testList = [];
 		for ($l = 0; $l < count($getArrays); $l++) {
-			if (is_array($getArrays[$l])) {
+                if (!isset($getArrays[$l]) || !is_array($getArrays[$l])) {
+                    continue;
+                }
 				for ($k = 0; $k < count($getArrays[$l]); $k++) {
-					$testList[$getArrays[$l][$k]]++;
+                    $key = $getArrays[$l][$k];
+
+                    if (!isset($testList[$key])) {
+                        $testList[$key] = 0;
+                    }
+
+                    $testList[$key]++;
 				}
-			}
 		}
 
+        $amount = 0;
 		if (count($endEventList) > 1) {
 			foreach ($endEventList as $item => $value) {
 				$amount += $testList[$value];
@@ -376,7 +391,7 @@ class MetricsCalculator
 
 		$this->diagnostics->diameterRuntime = microtime(true) - $runtimeStart;
 
-		return $longest->path + 1;
+        return $longest->length + 1;
 	}
 
 	public function maxNestingDepth(Process $process): int
@@ -492,16 +507,24 @@ class MetricsCalculator
 
 		function callMyself(string $currentNode, array &$processList, array &$loops): array
 		{
+            if (!isset($processList[$currentNode]['visited'])) {
+                $processList[$currentNode]['visited'] = 0;
+            }
+
 			if ($processList[$currentNode]["visited"]) {
 				$loops[$currentNode] = 1;
 
 				return [1, false];
 			}
 
-			$amountOutgoing = $processList[$currentNode]["amountOutgoing"];
+            $amountOutgoing = $processList[$currentNode]["amountOutgoing"] ?? 0;
 			if (!$amountOutgoing) {
 				return [0, false];
 			}
+
+            if (!isset($processList[$currentNode]['visited'])) {
+                $processList[$currentNode]['visited'] = 0;
+            }
 
 			$processList[$currentNode]["visited"]++;
 			$loopLength      = 0;

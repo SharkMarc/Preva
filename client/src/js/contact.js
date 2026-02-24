@@ -58,7 +58,7 @@ export default class Contact extends React.Component {
             contact: this.state.contact,
         };
 
-        fetch(Route.contact, {
+        fetch("/contact.php", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),

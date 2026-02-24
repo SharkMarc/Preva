@@ -21,7 +21,7 @@
     "php": ">=7.4",
     "ext-json": "*",
     "ext-xmlreader": "*",
-    "mpdf/mpdf": "^6.1",
+    "mpdf/mpdf": "^8",
     "phpmailer/phpmailer": "^7.0",
     "symfony/dotenv": "^5.4",
     "symfony/mailer": "^5.4",

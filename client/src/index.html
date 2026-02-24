@@ -19,13 +19,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script type="text/javascript">
+	const BASE_URL = window.location.origin;
+
 	var Route = {
-		upload:    'http://localhost:6318/public/index.php',
-		getBPMN:   'http://localhost:6318/test.xml',
-		createPdf: 'http://localhost:6318/public/makepdf.php',
-		register:  'http://localhost:6318/controller/register.php',
-		login:     'http://localhost:6318/controller/login.php',
-		contact:   'http://localhost:6318/public/contact.php',
+		upload:   BASE_URL + '/public/index.php',
+		getBPMN:  BASE_URL + '/test.xml',
+		createPdf: BASE_URL + '/public/makepdf.php',
+		register:  BASE_URL + '/controller/register.php',
+		login:     BASE_URL + '/controller/login.php',
+		contact:   BASE_URL + '/public/contact.php',
 	};
 </script>
 <script type="text/javascript" src="app.bundle.js"></script>

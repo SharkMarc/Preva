@@ -1,11 +1,15 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+$allowedOrigin = "https://processevaluation.de";
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] === $allowedOrigin) {
+    header("Access-Control-Allow-Origin: $allowedOrigin");
+    header("Access-Control-Allow-Credentials: true");
+}
+
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -13,7 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+$autoload = __DIR__ . '/../vendor/autoload.php';
+
+if (!file_exists($autoload)) {
+    $autoload = __DIR__ . '/vendor/autoload.php';
+}
+
+require $autoload;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -32,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail = new PHPMailer(true);
 
     try {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ );
         $dotenv->load();
         // 🔥 SMTP CONFIG (STRATO)
         $mail->isSMTP();
@@ -64,7 +74,6 @@ $text
         $mail->isHTML(false);
         $mail->send();
 
-        header('Content-Type: application/json');
         echo json_encode([
             "success" => true
         ], JSON_THROW_ON_ERROR);
